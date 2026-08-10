@@ -1,0 +1,180 @@
+/* ========== 毛玻璃卡片（参考 luotian.cyou） ========== */
+/* 隐藏侧边栏头像下方的站点描述 */
+#aside-content .author-info-description {
+    display: none !important;
+}
+/* 首页文章预览卡高度 */
+#recent-posts .recent-post-item {
+    height: 220px !important;
+}
+/* 页脚建站时长 */
+#site-runtime {
+    margin: 6px 0 2px;
+    color: var(--light-grey);
+    font-size: 0.95em;
+}
+/* 页脚运行时长/访客/访问数字统一样式（等宽数字，跳动时不晃） */
+#site-runtime .stand,
+#site-runtime #vercount_value_site_uv,
+#site-runtime #vercount_value_site_pv {
+    color: var(--text-highlight-color);
+    font-weight: 600;
+    margin: 0 2px;
+    /* 沿用站点默认字体（Segoe UI），等宽数字特性让数字宽度不变、不晃 */
+    font-variant-numeric: tabular-nums;
+}
+/* 页脚底部版权行 */
+.footer-copyright-line {
+    margin-top: 6px;
+    color: var(--light-grey);
+    font-size: 0.95em;
+}
+#aside-content .card-info .card-info-social-icons {
+    display: grid;
+    grid-template-columns: repeat(4, 55px);
+    width: fit-content;
+    gap: 6px;
+    margin: 12px auto 0;
+}
+/* 侧边栏社交图标：4 个等宽玻璃按钮 */
+#aside-content .card-info .card-info-social-icons .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 38px;
+    margin: 0;
+    border-radius: 8px;
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--font-color);
+    transition: all 0.3s ease;
+}
+#aside-content .card-info .card-info-social-icons .social-icon:hover {
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+#body-wrap .recent-post-item,
+#body-wrap #aside-content .card-widget,
+#body-wrap .layout > div:first-child:not(.recent-posts),
+#body-wrap #nav .menus_items .menus_item .menus_item_child,
+#body-wrap #pagination .page-number:not(.current),
+#body-wrap #pagination .extend,
+#page-header #post-info {
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 明亮模式（手动切到 light 时） */
+html:not([data-theme="dark"]) #body-wrap .recent-post-item,
+html:not([data-theme="dark"]) #body-wrap #aside-content .card-widget,
+html:not([data-theme="dark"]) #body-wrap .layout > div:first-child:not(.recent-posts),
+html:not([data-theme="dark"]) #body-wrap #nav .menus_items .menus_item .menus_item_child,
+html:not([data-theme="dark"]) #body-wrap #pagination .page-number:not(.current),
+html:not([data-theme="dark"]) #body-wrap #pagination .extend,
+html:not([data-theme="dark"]) #page-header #post-info {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 16px -4px rgba(138, 138, 138, 0.15);
+}
+
+/* ========== 上一篇/下一篇：去掉蓝色封面，边框加在外层容器上避免圆角断裂 ========== */
+#pagination.pagination-post {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+#pagination .pagination-related {
+    background: transparent;
+    border: none;
+}
+/* 上一篇/下一篇中间的分割线（第二张卡片左侧） */
+#pagination .pagination-related + .pagination-related {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+#pagination .pagination-related .cover {
+    display: none;
+}
+html:not([data-theme="dark"]) #pagination.pagination-post {
+    border-color: rgba(255, 255, 255, 0.85);
+}
+html:not([data-theme="dark"]) #pagination .pagination-related {
+    background: transparent;
+    border: none;
+}
+html:not([data-theme="dark"]) #pagination .pagination-related + .pagination-related {
+    border-left-color: rgba(255, 255, 255, 0.85);
+}
+
+/* ========== 目录：当前条目高亮改为柔和的白色玻璃条 ========== */
+#aside-content #card-toc .toc-content .toc-link.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+}
+#aside-content #card-toc .toc-content .toc-link:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+html:not([data-theme="dark"]) #aside-content #card-toc .toc-content .toc-link.active {
+    background: rgba(0, 0, 0, 0.06);
+    color: #1f2d3d;
+}
+html:not([data-theme="dark"]) #aside-content #card-toc .toc-content .toc-link:hover {
+    color: #1f2d3d;
+}
+
+/* ========== 页头透明：横幅与背景一体化 ========== */
+#page-header {
+    background-color: transparent !important;
+}
+#footer {
+    background: transparent !important;
+}
+#page-header.post-bg,
+#page-header.page-bg,
+#page-header.not-home-page {
+    background: transparent !important;
+}
+#page-header.post-bg::before,
+#page-header.page-bg::before,
+#page-header.not-home-page::before,
+#page-header.full_page::before {
+    background-color: transparent !important;
+}
+
+/* 首页横幅半屏 */
+#page-header.full_page {
+    height: 50vh !important;
+    min-height: 380px;
+}
+
+/* 文章顶部信息变成毛玻璃卡片 */
+#page-header #post-info {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(min(1200px, 100%) - 30px);
+    margin: 0;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    display: block;
+    text-align: left;
+    border-radius: 10px;
+}
+
+/* ========== 顶部菜单固定不动 ========== */
+#page-header #nav {
+    background: rgba(13, 13, 18, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* 移动端文章顶部信息调整 */
+@media screen and (max-width: 768px) {
+    #page-header #post-info {
+        padding: 15px 20px !important;
+        bottom: 20px !important;
+    }
+}
