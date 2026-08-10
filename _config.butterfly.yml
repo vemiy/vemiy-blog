@@ -750,10 +750,14 @@ ad:
 # --------------------------------------
 
 site_verification:
-  # - name: google-site-verification
-  #   content: xxxxxx
-  # - name: baidu-site-verification
-  #   content: xxxxxxx
+  - name: google-site-verification
+    content: V5UYqQvPSxtArdCpDgconpASBqf5IJeGsjFPxE2mxNo
+  - name: baidu-site-verification
+    content: codeva-tNXarU7mp6
+  - name: baidu-site-verification
+    content: codeva-HYXiIJzU29
+  - name: msvalidate.01
+    content: 5BA2CBE9D7FFB17A77899CFF1924E8E6
 
 # --------------------------------------
 # Beautify / Effect
