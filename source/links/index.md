@@ -7,13 +7,13 @@ comments: false
 
 ## 申请友链
 
-在 [GitHub Issues](https://github.com/vemiy/vemiy-blog/issues/new) 提交申请，格式：
+Fork [vemiy-blog](https://github.com/vemiy/vemiy-blog) 仓库，在 `source/_data/link.yml` 的 `link_list` 中添加你的信息，然后提交 Pull Request：
 
-```text
-名称：
-链接：
-头像：
-简介：
+```yaml
+- name: 站点名
+  link: https://example.com
+  avatar: https://example.com/avatar.png
+  descr: 一句话简介
 ```
 
-审核通过后会添加到下方列表。
+提交后机器人会自动校验格式，并检查你的网站是否包含本站回链（`https://www.vemiy.com`）。通过后站长合并即可上架。
