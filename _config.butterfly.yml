@@ -59,7 +59,7 @@ social:
 # Image Settings
 # --------------------------------------
 
-favicon: /img/site.ico
+favicon: /img/favicon.png
 
 avatar:
   img: /img/avatar.webp
