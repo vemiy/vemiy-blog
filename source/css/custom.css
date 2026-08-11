@@ -124,12 +124,6 @@ html:not([data-theme="dark"]) #aside-content #card-toc .toc-content .toc-link:ho
     color: #1f2d3d;
 }
 
-/* 首页横幅半屏 */
-#page-header.full_page {
-    height: 50vh !important;
-    min-height: 380px;
-}
-
 /* 文章顶部信息变成毛玻璃卡片 */
 #page-header #post-info {
     position: absolute;

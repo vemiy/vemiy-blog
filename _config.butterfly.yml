@@ -74,6 +74,9 @@ default_top_img: transparent
 # The banner image of index page
 index_img: transparent
 
+# 首页横幅高度（50vh 半屏）
+index_top_img_height: 50vh
+
 # The banner image of archive page
 archive_img:
 
