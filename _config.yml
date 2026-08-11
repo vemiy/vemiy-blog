@@ -1,103 +1,98 @@
-# Hexo Configuration
-## Docs: https://hexo.io/docs/configuration.html
-## Source: https://github.com/hexojs/hexo/
+# Hexo 配置文件
+## 文档: https://hexo.io/docs/configuration.html
+## 源码: https://github.com/hexojs/hexo/
 
-title: vemiyの小站
-subtitle: 个人技术博客
-description: vemiyの小站 - 个人技术博客，记录与分享自托管、建站运维及互联网技术实践经验。
-keywords: NAS,飞牛,博客,教程,vemiy,vimy,nitian
-author: vemiy
-language: zh-CN
-timezone: Asia/Shanghai
+# 站点信息
+title: vemiyの小站              # 网站标题
+subtitle: 个人技术博客           # 网站副标题
+description: vemiyの小站 - 个人技术博客，记录与分享自托管、建站运维及互联网技术实践经验。   # 网站描述
+keywords: NAS,飞牛,博客,教程,vemiy,vimy,nitian   # 网站关键词
+author: vemiy                  # 作者名
+language: zh-CN                # 站点语言
+timezone: Asia/Shanghai        # 时区
 
-## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://www.vemiy.com/
-permalink: posts/:title/
-permalink_defaults:
+# 站点网址与文章链接格式
+url: https://www.vemiy.com/    # 站点网址
+permalink: posts/:title/       # 文章链接格式
+permalink_defaults:            # 链接中变量的默认值
 pretty_urls:
-  trailing_index: true
-  trailing_html: true
+  trailing_index: true         # 链接是否去掉末尾的 index.html
+  trailing_html: true          # 链接是否去掉末尾的 .html
 
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
-i18n_dir: :lang
-skip_render:
+# 目录配置
+source_dir: source             # 源文件目录（文章、页面、图片）
+public_dir: public             # 生成的静态文件目录
+tag_dir: tags                  # 标签页目录
+archive_dir: archives          # 归档页目录
+category_dir: categories       # 分类页目录
+code_dir: downloads/code       # 代码文件目录
+i18n_dir: :lang                # 国际化目录
+skip_render:                   # 跳过渲染的文件
 
-new_post_name: :title.md
-default_layout: post
-titlecase: false
+# 文章设置
+new_post_name: :title.md       # 新文章的文件名格式
+default_layout: post           # 新建文章的默认布局
+titlecase: false               # 标题是否首字母大写
 external_link:
-  enable: true
-  field: site
-  exclude: ''
-filename_case: 0
-render_drafts: false
-post_asset_folder: false
-relative_link: false
-future: true
-syntax_highlighter: highlight.js
+  enable: true                 # 外部链接是否新标签页打开
+  field: site                  # 作用范围（site 全站 / post 仅文章）
+  exclude: ''                  # 不处理的链接
+filename_case: 0               # 文件名大小写（0 不转换 / 1 小写 / 2 大写）
+render_drafts: false           # 是否渲染草稿
+post_asset_folder: false       # 是否为文章启用资源文件夹
+relative_link: false           # 链接是否使用相对路径
+future: true                   # 是否渲染未来日期的文章
+syntax_highlighter: highlight.js   # 代码高亮器
 highlight:
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
-  wrap: true
-  hljs: false
+  line_number: true            # 代码块是否显示行号
+  auto_detect: false           # 是否自动检测代码语言
+  tab_replace: ''              # tab 替换字符
+  wrap: true                   # 代码块是否换行包裹
+  hljs: false                  # 是否使用 hljs 库
 prismjs:
-  preprocess: true
-  line_number: true
-  tab_replace: ''
+  preprocess: true             # 是否预处理代码
+  line_number: true            # 代码块是否显示行号
+  tab_replace: ''              # tab 替换字符
 
-# path: Root path for your blogs index page. (default = '')
-# per_page: Posts displayed per page. (0 = disable pagination)
-# order_by: Posts order. (Order by date descending by default)
+# 首页文章列表
 index_generator:
-  path: ''
-  per_page: 10
-  order_by: -date
+  path: ''                     # 首页路径（空为根路径）
+  per_page: 10                 # 每页文章数（0 为禁用分页）
+  order_by: -date              # 文章排序方式
 
-default_category: uncategorized
-category_map:
-tag_map:
+default_category: uncategorized   # 未设置分类时的默认分类
+category_map:                   # 分类别名映射
+tag_map:                        # 标签别名映射
 
-## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-meta_generator: true
+meta_generator: true           # 是否输出 meta generator 标签
 
-## Hexo uses Moment.js to parse and display date
-## You can customize the date format as defined in
-## http://momentjs.com/docs/#/displaying/format/
-date_format: YYYY-MM-DD
-time_format: HH:mm:ss
-## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
+# 日期格式
+date_format: YYYY-MM-DD        # 日期格式
+time_format: HH:mm:ss          # 时间格式
+updated_option: 'mtime'        # 更新时间来源（mtime 文件时间 / date 文章日期 / empty 空）
 
-## Set per_page to 0 to disable pagination
-per_page: 10
-pagination_dir: page
+# 分页设置
+per_page: 10                   # 每页文章数（0 为禁用分页）
+pagination_dir: page           # 分页目录名
 
-## include:/exclude: options only apply to the 'source/' folder
-include:
-exclude:
-ignore:
+# 文件过滤
+include:                       # 额外包含的文件
+exclude:                       # 排除的文件
+ignore:                        # 忽略的文件
 
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: butterfly
+theme: butterfly               # 使用的主题
 
-## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: ''                     # 部署方式（未使用，走 Cloudflare Pages）
 
+# RSS 订阅
 feed:
-  type: atom
-  path: atom.xml
-  limit: 20
+  type: atom                   # 订阅格式
+  path: atom.xml               # 订阅文件路径
+  limit: 20                    # 最大文章条数
 
-# 本地搜索（hexo-generator-searchdb）
+# 本地搜索
 search:
-  path: search.xml
-  field: post
-  content: true
+  path: search.xml             # 搜索数据文件路径
+  field: post                  # 搜索范围（post 文章 / page 页面 / all 全部）
+  content: true                # 是否索引文章内容
