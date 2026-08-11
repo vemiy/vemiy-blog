@@ -75,7 +75,7 @@ comments: false
     padding: 0.78rem 1.25rem;
     font-size: 0.95rem;
     font-weight: 600;
-    background: var(--text-highlight-color);
+    background: #49b1f5;
     color: #fff;
     flex-shrink: 0;
   }
@@ -110,7 +110,7 @@ comments: false
     margin-bottom: 0.85rem;
   }
   .vimy-image-color-preview.drag-over {
-    border-color: var(--text-highlight-color);
+    border-color: #49b1f5;
     background: rgba(73, 177, 245, 0.08);
   }
   .vimy-image-color-placeholder {

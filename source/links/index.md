@@ -14,4 +14,5 @@ comments: true
   link: https://example.com
   avatar: https://example.com/avatar.png
   descr: 一句话简介
+  rss: https://example.com/atom.xml（非必填）
 ```

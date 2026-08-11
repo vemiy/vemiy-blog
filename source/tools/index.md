@@ -53,7 +53,7 @@ comments: false
     margin-bottom: 1rem;
   }
   .vimy-tools-search:focus {
-    border-color: var(--text-highlight-color);
+    border-color: #49b1f5;
     box-shadow: 0 0 0 3px rgba(73, 177, 245, 0.12);
   }
   .vimy-tools-list {
@@ -65,8 +65,8 @@ comments: false
     display: flex;
     align-items: flex-start;
     gap: 0.9rem;
-    text-decoration: none;
-    color: inherit;
+    text-decoration: none !important;
+    color: inherit !important;
     padding: 1rem 1.1rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
@@ -75,6 +75,8 @@ comments: false
     transition: 0.2s;
   }
   .vimy-tools-item:hover {
+    color: inherit !important;
+    text-decoration: none !important;
     border-color: rgba(255, 255, 255, 0.18);
     transform: translateY(-2px);
   }

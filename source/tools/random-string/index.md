@@ -94,7 +94,7 @@ comments: false
   .vimy-random-string input[type="checkbox"] {
     width: 16px;
     height: 16px;
-    accent-color: var(--text-highlight-color);
+    accent-color: #49b1f5;
     flex-shrink: 0;
     cursor: pointer;
   }
@@ -124,7 +124,7 @@ comments: false
   .vimy-random-string input[type="text"]:focus,
   .vimy-random-string input[type="number"]:focus,
   .vimy-random-string textarea:focus {
-    border-color: var(--text-highlight-color);
+    border-color: #49b1f5;
     box-shadow: 0 0 0 3px rgba(73, 177, 245, 0.12);
   }
   .vimy-random-string input[type="text"] {
@@ -177,7 +177,7 @@ comments: false
   }
   .vimy-random-string-btn-primary {
     flex: 1;
-    background: var(--text-highlight-color);
+    background: #49b1f5;
     color: #fff;
   }
   .vimy-random-string-btn-primary:hover {
