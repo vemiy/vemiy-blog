@@ -122,7 +122,7 @@ post_meta:
 # 首页头图设置
 # 默认: 头图全屏，站点信息居中
 index_site_info_top:          # 首页站点信息位置（如 300px / 10%）
-index_top_img_height: 50vh    # 首页头图高度（如 300px / 50vh）
+index_top_img_height: 400px   # 首页头图高度
 
 # 首页副标题
 subtitle:
