@@ -69,19 +69,6 @@
     transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 明亮模式（手动切到 light 时） */
-html:not([data-theme="dark"]) #body-wrap .recent-post-item,
-html:not([data-theme="dark"]) #body-wrap #aside-content .card-widget,
-html:not([data-theme="dark"]) #body-wrap .layout > div:first-child:not(.recent-posts),
-html:not([data-theme="dark"]) #body-wrap #nav .menus_items .menus_item .menus_item_child,
-html:not([data-theme="dark"]) #body-wrap #pagination .page-number:not(.current),
-html:not([data-theme="dark"]) #body-wrap #pagination .extend,
-html:not([data-theme="dark"]) #page-header #post-info {
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 8px 16px -4px rgba(138, 138, 138, 0.15);
-}
-
 /* ========== 上一篇/下一篇：去掉蓝色封面，边框加在外层容器上避免圆角断裂 ========== */
 #pagination.pagination-post {
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -97,16 +84,6 @@ html:not([data-theme="dark"]) #page-header #post-info {
 #pagination .pagination-related .cover {
     display: none;
 }
-html:not([data-theme="dark"]) #pagination.pagination-post {
-    border-color: rgba(255, 255, 255, 0.85);
-}
-html:not([data-theme="dark"]) #pagination .pagination-related {
-    background: transparent;
-    border: none;
-}
-html:not([data-theme="dark"]) #pagination .pagination-related + .pagination-related {
-    border-left-color: rgba(255, 255, 255, 0.85);
-}
 
 /* ========== 目录：当前条目高亮改为柔和的白色玻璃条 ========== */
 #aside-content #card-toc .toc-content .toc-link.active {
@@ -115,13 +92,6 @@ html:not([data-theme="dark"]) #pagination .pagination-related + .pagination-rela
 }
 #aside-content #card-toc .toc-content .toc-link:hover {
     color: rgba(255, 255, 255, 0.9);
-}
-html:not([data-theme="dark"]) #aside-content #card-toc .toc-content .toc-link.active {
-    background: rgba(0, 0, 0, 0.06);
-    color: #1f2d3d;
-}
-html:not([data-theme="dark"]) #aside-content #card-toc .toc-content .toc-link:hover {
-    color: #1f2d3d;
 }
 
 /* 文章顶部信息变成毛玻璃卡片 */
