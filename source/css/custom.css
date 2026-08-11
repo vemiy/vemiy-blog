@@ -7,6 +7,10 @@
 #recent-posts .recent-post-item {
     height: 220px !important;
 }
+/* 广告位无广告时隐藏，避免文章底部空白 */
+.ads-wrap:has(.adsbygoogle:empty) {
+    display: none;
+}
 /* 页脚建站时长 */
 #site-runtime {
     margin: 6px 0 2px;
