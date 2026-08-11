@@ -14,16 +14,23 @@ name: vemiyの小站
 link: https://www.vemiy.com
 avatar: https://www.vemiy.com/img/avatar.webp
 descr: 个人技术博客，记录与分享自托管、建站运维及互联网技术实践经验
+rss: https://www.vemiy.com/atom.xml
 ```
 
 ## 申请友链
 
-在下方评论区按格式留言，审核通过后会添加到列表：
+#### 申请须知
+
+1. 我已添加本站友链，并愿意长期保持互链。
+2. 网站为非商业性博客，且不以商业推广为核心。
+3. 我的网站以原创内容为主，符合中国大陆法律法规。
+
+在下方评论区按此格式留言，审核通过后会添加到列表：
 
 ```yaml
-- name: 站点名
-  link: https://example.com
-  avatar: https://example.com/avatar.png
-  descr: 一句话简介
-  rss: https://example.com/atom.xml（非必填）
+- name: 
+  link: 
+  avatar: 
+  descr: 
 ```
+定时清理失效链接，如恢复访问可重新提交。
