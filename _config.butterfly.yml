@@ -1069,6 +1069,7 @@ css_prefix: true
 inject:
   head:
     - <link rel="stylesheet" href="/css/custom.css">
+    - <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2932938307892796" crossorigin="anonymous"></script>
   bottom:
     - <script>(function(){var el=document.getElementById('site-runtime');if(!el)return;var start=new Date('2026-03-18T05:00').getTime();function pad(n){return n<10?'0'+n:String(n)}function tick(){var diff=Math.floor((Date.now()-start)/1000);var s=diff%60;diff=Math.floor(diff/60);var m=diff%60;diff=Math.floor(diff/60);var h=diff%24;var d=Math.floor(diff/24);document.getElementById('rt-d').textContent=d;document.getElementById('rt-h').textContent=pad(h);document.getElementById('rt-m').textContent=pad(m);document.getElementById('rt-s').textContent=pad(s)}tick();setInterval(tick,1000)})();</script>
     - <script>(function(){var map={".card-categories .item-headline":"/categories/",".card-tags .item-headline":"/tags/",".card-archives .item-headline":"/archives/"};Object.keys(map).forEach(function(sel){var h=document.querySelector(sel);if(h&&!h.querySelector(".card-more-btn")){var a=document.createElement("a");a.className="card-more-btn";a.href=map[sel];a.title="查看更多";var i=document.createElement("i");i.className="fas fa-angle-right";a.appendChild(i);h.appendChild(a)}})})();</script>
