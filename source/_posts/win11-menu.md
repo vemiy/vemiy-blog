@@ -11,8 +11,7 @@ draft: false
 
 莫名奇妙的windows这个开始菜单给我看吐了，于是分享一下如何改回旧版。
 
-![新版开始菜单](https://img.vemiy.com/img/0966fe60-efab-4639-9271-6e7eb499b397.webp)
-
+![新版开始菜单](https://img.vemiy.com/img/15b649bc-2010-41a6-ae3c-8521166ca1fd.webp)
 
 ## 开始操作
 
@@ -23,7 +22,6 @@ draft: false
 下载后的压缩包解压到一个文件夹里。
 
 ![ViVeTool](https://img.vemiy.com/img/0fc807ff-84eb-4d4a-9704-c8643302caec.webp)
-
 
 按WIN+R，输入cmd，并按CTRL+SHIFT+ENTER。
 

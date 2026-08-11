@@ -83,8 +83,6 @@ draft: false
 
 ![自定义主机名](https://img.vemiy.com/img/78eb6847-f4fa-4879-8388-f6d0a4ce041c.webp)
 
-自定义主机名
-
 添加 `www.example.com` 这个自定义主机名后，底下会给出一条 TXT 验证记录，复制下来。
 
 回到 DNS 页面，新增对应的 TXT 记录即可：

@@ -39,7 +39,6 @@ draft: false
 
 ![NAS+UPS](https://img.vemiy.com/img/ccb99d36-610a-4175-b9ab-1fa2bde22039.webp)
 
-
 算上UPS一共将近1000元，在这个各种存储芯片涨价潮时期，只能说还算是有性价比了。
 
 ## 为什么选择这些
