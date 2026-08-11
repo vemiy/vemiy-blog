@@ -171,6 +171,16 @@ html:not([data-theme="dark"]) #aside-content #card-toc .toc-content .toc-link:ho
     -webkit-backdrop-filter: blur(20px);
 }
 
+/* 下拉菜单：子菜单紧贴父级底部，消除悬停断档 */
+#nav .menus_items .menus_item .menus_item_child {
+    top: 100%;
+    margin-top: 0;
+}
+#nav .menus_items .menus_item .menus_item_child:before {
+    top: -12px;
+    height: 24px;
+}
+
 /* 移动端文章顶部信息调整 */
 @media screen and (max-width: 768px) {
     #page-header #post-info {
