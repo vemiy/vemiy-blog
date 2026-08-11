@@ -136,12 +136,6 @@ html:not([data-theme="dark"]) #aside-content #card-toc .toc-content .toc-link:ho
 #page-header.not-home-page {
     background: transparent !important;
 }
-#page-header.post-bg::before,
-#page-header.page-bg::before,
-#page-header.not-home-page::before,
-#page-header.full_page::before {
-    background-color: transparent !important;
-}
 
 /* 首页横幅半屏 */
 #page-header.full_page {

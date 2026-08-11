@@ -802,8 +802,8 @@ text_align_justify: false
 
 # Add a mask to the header and footer
 mask:
-  header: true
-  footer: true
+  header: false
+  footer: false
 
 # Loading Animation
 preloader:
