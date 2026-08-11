@@ -124,19 +124,6 @@ html:not([data-theme="dark"]) #aside-content #card-toc .toc-content .toc-link:ho
     color: #1f2d3d;
 }
 
-/* ========== 页头透明：横幅与背景一体化 ========== */
-#page-header {
-    background-color: transparent !important;
-}
-#footer {
-    background: transparent !important;
-}
-#page-header.post-bg,
-#page-header.page-bg,
-#page-header.not-home-page {
-    background: transparent !important;
-}
-
 /* 首页横幅半屏 */
 #page-header.full_page {
     height: 50vh !important;
