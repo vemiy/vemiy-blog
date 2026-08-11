@@ -13,7 +13,7 @@ comments: true
 name: vemiyの小站
 link: https://www.vemiy.com
 avatar: https://www.vemiy.com/img/avatar.webp
-descr: 个人技术博客，记录与分享自托管、建站运维及互联网技术实践经验
+descr: One more day.
 rss: https://www.vemiy.com/atom.xml
 ```
 
