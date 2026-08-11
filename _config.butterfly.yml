@@ -18,10 +18,14 @@ nav:
   fixed: true
 
 menu:
+  首页: / || fas fa-home
   博客||fas fa-blog:
     归档: /archives/ || fas fa-archive
     分类: /categories/ || fas fa-folder-open
     标签: /tags/ || fas fa-tags
+  工具: /tools/ || fas fa-wrench
+  友链: /links/ || fas fa-link
+  关于: /about/ || fas fa-user
 
 # --------------------------------------
 # Code Blocks Settings
