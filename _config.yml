@@ -4,7 +4,7 @@
 
 # 站点信息
 title: vemiyの小站              # 网站标题
-subtitle: 个人技术博客           # 网站副标题
+subtitle: ''                    # 网站副标题（空则不显示在首页标签页标题里）
 description: vemiyの小站 - 个人技术博客，记录与分享自托管、建站运维及互联网技术实践经验。   # 网站描述
 keywords: NAS,飞牛,博客,教程,vemiy,vimy,nitian   # 网站关键词
 author: vemiy                  # 作者名
