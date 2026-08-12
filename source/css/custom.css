@@ -141,6 +141,7 @@
     #page-header #post-info {
         padding: 15px 20px !important;
         bottom: 20px !important;
+        width: calc(min(1200px, 100%) - 10px);
     }
 }
 
