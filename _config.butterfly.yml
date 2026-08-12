@@ -96,7 +96,7 @@ error_img:
 
 # 简单 404 页面
 error_404:
-  enable: false               # 是否启用 404 页面
+  enable: true                # 是否启用 404 页面
   subtitle: 'Page Not Found'  # 404 页面副标题
   background: /img/error-page.png   # 404 页面背景图片
 

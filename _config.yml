@@ -83,7 +83,29 @@ ignore:                        # 忽略的文件
 theme: butterfly               # 使用的主题
 
 deploy:
-  type: ''                     # 部署方式（未使用，走 Cloudflare Pages）
+- type: cjh_bing_url_submitter    # 推送 Bing
+- type: cjh_baidu_url_submitter   # 推送百度
+- type: cjh_google_url_submitter  # 推送 Google
+
+# 搜索引擎推送
+hexo_submit_urls_to_search_engine:
+  submit_condition: count       # 提交条件（count 提交最新 N 条）
+  count: 10                     # 提交最新文章数
+  period: 900                   # 提交修改时间在 N 秒内的链接（未使用）
+  google: 0                     # 是否推送 Google（0 否；需密钥文件+代理）
+  bing: 1                       # 是否推送 Bing
+  baidu: 0                      # 是否推送百度（0 否；未备案，百度不收录）
+  txt_path: submit_urls.txt     # 待推送链接清单文件
+  baidu_host: https://www.vemiy.com   # 百度站长平台注册域名
+  baidu_token: 0                # 百度推送密钥（0 表示从环境变量 BAIDU_TOKEN 读取）
+  bing_host: https://www.vemiy.com    # Bing 站长平台注册域名
+  bing_token: 0                 # Bing 推送密钥（0 表示从环境变量 BING_TOKEN 读取）
+  google_host: https://www.vemiy.com  # Google Search Console 域名
+  google_key_file: ''           # Google 服务账号密钥文件（启用 google 时填写）
+  google_proxy: 0               # 推送 Google 所用代理（0 不使用）
+  replace: 0                    # 是否替换链接中的部分字符串
+  find_what: ''
+  replace_with: ''
 
 # RSS 订阅
 feed:
