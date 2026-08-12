@@ -14,7 +14,6 @@ name: vemiyの小站
 link: https://www.vemiy.com
 avatar: https://www.vemiy.com/img/avatar.webp
 descr: One more day.
-rss: https://www.vemiy.com/atom.xml
 ```
 
 ## 申请友链
