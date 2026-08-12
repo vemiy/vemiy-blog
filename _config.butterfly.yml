@@ -129,6 +129,8 @@ subtitle:
   enable: true                # 是否启用副标题
   effect: true                # 是否启用打字机效果
   typed_option:               # typed.js 自定义配置
+    typeSpeed: 150    # 打字速度，越小越快（默认 150）
+    backSpeed: 50     # 删除速度，越小越慢（默认 50）
   source: false               # 副标题来源（false 关闭 / 1 一言 / 2 一言替代 / 3 今日诗词）
   sub:                        # 副标题内容
     - One more day.
@@ -552,7 +554,7 @@ google_adsense:
 ad:
   index:                      # 首页广告（每三篇文章插入一条）
   aside:                      # 侧边栏广告
-  post: '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2932938307892796" data-ad-slot="1005927038" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>'   # 文章底部广告（分页前）
+  post: '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2932938307892796" data-ad-slot="1005927038" data-ad-format="auto" data-full-width-responsive="true"></ins><script data-pjax>(adsbygoogle = window.adsbygoogle || []).push({});</script>'   # 文章底部广告（分页前，data-pjax 让 PJAX 跳转后也加载）
 
 # --------------------------------------
 # 站点验证
@@ -795,6 +797,7 @@ inject:
   bottom:
     - <script>(function(){var el=document.getElementById('site-runtime');if(!el)return;var start=new Date('2026-03-18T05:00').getTime();function pad(n){return n<10?'0'+n:String(n)}function tick(){var diff=Math.floor((Date.now()-start)/1000);var s=diff%60;diff=Math.floor(diff/60);var m=diff%60;diff=Math.floor(diff/60);var h=diff%24;var d=Math.floor(diff/24);document.getElementById('rt-d').textContent=d;document.getElementById('rt-h').textContent=pad(h);document.getElementById('rt-m').textContent=pad(m);document.getElementById('rt-s').textContent=pad(s)}tick();setInterval(tick,1000)})();</script>   # 建站运行时长
     - <script>(function(){var map={".card-categories .item-headline":"/categories/",".card-tags .item-headline":"/tags/",".card-archives .item-headline":"/archives/"};function addArrows(){Object.keys(map).forEach(function(sel){var h=document.querySelector(sel);if(h&&!h.querySelector(".card-more-btn")){var a=document.createElement("a");a.className="card-more-btn";a.href=map[sel];a.title="查看更多";var i=document.createElement("i");i.className="fas fa-angle-right";a.appendChild(i);h.appendChild(a)}})}addArrows();window.btf&&btf.addGlobalFn("pjaxComplete",addArrows,"cardMoreBtn")})();</script>   # 侧边栏卡片查看更多箭头（PJAX 跳转后重新添加）
+    - <script>(function(){function watch(){var n=0;var t=setInterval(function(){n++;var any=Array.from(document.querySelectorAll(".ads-wrap")).some(function(w){var ins=w.querySelector("ins.adsbygoogle");return ins&&(ins.children.length>0||(ins.textContent||"").trim())});if(any||n>=6){clearInterval(t);if(!any){document.querySelectorAll(".ads-wrap").forEach(function(w){var ins=w.querySelector("ins.adsbygoogle");if(!ins||(ins.children.length===0&&!(ins.textContent||"").trim()))w.style.display="none"})}}},1000)}watch();window.btf&&btf.addGlobalFn("pjaxComplete",watch,"watchAds")})();</script>   # 广告加载后仍为空再隐藏广告位（先让广告正常渲染）
     # - <script src="xxxx"></script>
 
 # CDN 设置（不要修改，除非知道用途）
