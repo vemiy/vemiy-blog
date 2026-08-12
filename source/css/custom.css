@@ -132,11 +132,19 @@
     height: 24px;
 }
 
-/* 移动端文章顶部信息调整 */
+/* 所有页面横幅统一高度 */
+#page-header.full_page,
+#page-header.not-home-page,
+#page-header.post-bg {
+    height: 320px;
+}
+
+/* 移动端横幅统一缩短，文章顶部信息调整 */
 @media screen and (max-width: 768px) {
-    /* 首页横幅缩短，避免正好占半屏 */
-    #page-header.full_page {
-        height: 300px;
+    #page-header.full_page,
+    #page-header.not-home-page,
+    #page-header.post-bg {
+        height: 240px;
     }
     #page-header #post-info {
         padding: 15px 20px !important;
