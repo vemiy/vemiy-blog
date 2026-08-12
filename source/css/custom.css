@@ -138,6 +138,10 @@
 
 /* 移动端文章顶部信息调整 */
 @media screen and (max-width: 768px) {
+    /* 首页横幅缩短，避免正好占半屏 */
+    #page-header.full_page {
+        height: 300px;
+    }
     #page-header #post-info {
         padding: 15px 20px !important;
         bottom: 20px !important;
