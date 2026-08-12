@@ -137,3 +137,10 @@
         bottom: 20px !important;
     }
 }
+
+/* 移动端非文章页：设置面板没有可显示的按钮，隐藏齿轮避免点击无反应 */
+@media screen and (max-width: 900px) {
+    #body-wrap.page ~ #rightside #rightside-config {
+        display: none;
+    }
+}
