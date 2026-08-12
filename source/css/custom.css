@@ -115,6 +115,16 @@
     }
 }
 
+/* 阅读模式：标题卡片跟随文章列宽度 */
+@media screen and (min-width: 900px) {
+    .read-mode #page-header #post-info {
+        width: calc((min(1200px, 100%) - 30px) * 0.74);
+    }
+    html.hide-aside .read-mode #page-header #post-info {
+        width: calc((min(1200px, 100%) - 30px) * 0.8);
+    }
+}
+
 /* ========== 顶部菜单固定不动 ========== */
 #page-header #nav {
     background: rgba(13, 13, 18, 0.55);
