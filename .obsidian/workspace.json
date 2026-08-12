@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/halo-to-hexo.md",
+                "file": "source/_posts/input-overlay-fix.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "halo-to-hexo"
+              "title": "input-overlay-fix"
             }
           }
         ]
@@ -190,6 +190,10 @@
   },
   "active": "00e368375899e0b6",
   "lastOpenFiles": [
+    "README.md",
+    "2026-08-12.md",
+    "2026-03-22.md",
+    "source/_posts/input-overlay-fix.md",
     "source/_posts/nas-journey.md",
     "source/_posts/halo-to-hexo.md",
     "source/_posts/cloudflare-saas.md",
