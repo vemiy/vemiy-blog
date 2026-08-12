@@ -138,9 +138,17 @@
     }
 }
 
-/* 移动端非文章页：设置面板没有可显示的按钮，隐藏齿轮避免点击无反应 */
+/* 移动端：齿轮面板在手机上没意义，隐藏齿轮；文章页把阅读模式直接显示出来 */
 @media screen and (max-width: 900px) {
     #body-wrap.page ~ #rightside #rightside-config {
         display: none;
+    }
+    #body-wrap.post ~ #rightside #rightside-config {
+        display: none;
+    }
+    #body-wrap.post ~ #rightside #rightside-config-hide {
+        height: auto;
+        opacity: 1;
+        transform: translate(0, 0);
     }
 }
