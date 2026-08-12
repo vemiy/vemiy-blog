@@ -165,3 +165,12 @@
         transform: none;
     }
 }
+
+/* 手机端帧率显示缩小并贴近角落 */
+@media screen and (max-width: 768px) {
+    #fps {
+        font-size: 10px;
+        bottom: 6px;
+        right: 8px;
+    }
+}
