@@ -1,5 +1,5 @@
 ---
-title: OBS input-overlay 鼠标移动箭头抽搐
+title: OBS input-overlay 鼠标移动箭头抽搐修复
 date: 2026-08-12 23:03:00
 tags:
   - OBS
