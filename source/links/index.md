@@ -5,9 +5,11 @@ date: 2026-08-11 00:00:00
 comments: true
 ---
 
-## 本站信息
+## 申请友链
 
-申请前请先将本站加入你的友链：
+#### 本站信息
+
+申请前请先将本站加入你的友链页面：
 
 ```yaml
 name: vemiyの小站
@@ -15,8 +17,6 @@ link: https://www.vemiy.com
 avatar: https://www.vemiy.com/img/avatar.webp
 descr: One more day.
 ```
-
-## 申请友链
 
 #### 申请须知
 
@@ -32,4 +32,4 @@ descr: One more day.
   avatar: 
   descr: 
 ```
-定时清理失效链接，如恢复访问可重新提交。
+本站会定时清理失效链接，如恢复访问可重新提交。

@@ -283,7 +283,7 @@ rightside_bottom:             # 右下角按钮距底部距离（px）
 
 # 简繁转换
 translate:
-  enable: false               # 是否启用简繁转换
+  enable: true               # 是否启用简繁转换
   default: 繁                 # 按钮文字
   defaultEncoding: 2          # 站点语言（1 繁体 / 2 简体）
   translateDelay: 0           # 转换延迟
