@@ -129,11 +129,13 @@ subtitle:
   enable: true                # 是否启用副标题
   effect: true                # 是否启用打字机效果
   typed_option:               # typed.js 自定义配置
-    typeSpeed: 150    # 打字速度，越小越快（默认 150）
+    typeSpeed: 120    # 打字速度，越小越快（默认 150）
     backSpeed: 50     # 删除速度，越小越慢（默认 50）
+    backDelay: 3000   # 打完停留时间（ms），默认 700
   source: false               # 副标题来源（false 关闭 / 1 一言 / 2 一言替代 / 3 今日诗词）
   sub:                        # 副标题内容
     - One more day.
+    - Make good use of this umbrella.
 
 # 首页文章布局
 index_layout: 3               # 布局样式（1 左图右文 / 2 右图左文 / 3 交替 / 4 上图下文 / 5 图上显示信息 / 6-7 瀑布流）
