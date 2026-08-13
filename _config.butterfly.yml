@@ -129,7 +129,7 @@ subtitle:
   enable: true                # 是否启用副标题
   effect: true                # 是否启用打字机效果
   typed_option:               # typed.js 自定义配置
-    typeSpeed: 120    # 打字速度，越小越快（默认 150）
+    typeSpeed: 150    # 打字速度，越小越快（默认 150）
     backSpeed: 50     # 删除速度，越小越慢（默认 50）
   source: false               # 副标题来源（false 关闭 / 1 一言 / 2 一言替代 / 3 今日诗词）
   sub:                        # 副标题内容
