@@ -37,6 +37,52 @@
         margin-top: 4px;
     }
 }
+
+/* 鼠标点击特效（点击出现雪碧图帧动画） */
+.click-effect {
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    z-index: 9999;
+    background-image: url("/img/click-effect.webp");
+    background-position: -300% -200%;
+    background-size: 400%;
+    -webkit-animation: click .5s steps(1, end);
+    animation: click .5s steps(1, end);
+    pointer-events: none;
+    user-select: none;
+}
+
+@-webkit-keyframes click {
+    0% { background-position: 0 0 }
+    8% { background-position: -100% 0 }
+    16% { background-position: -200% 0 }
+    16% { background-position: -300% 0 }
+    24% { background-position: 0 -100% }
+    32% { background-position: -100% -100% }
+    40% { background-position: -200% -100% }
+    48% { background-position: -300% -100% }
+    56% { background-position: 0 -200% }
+    64% { background-position: -100% -200% }
+    72% { background-position: -200% -200% }
+    100% { background-position: -300% -200% }
+}
+
+@keyframes click {
+    0% { background-position: 0 0 }
+    8% { background-position: -100% 0 }
+    16% { background-position: -200% 0 }
+    16% { background-position: -300% 0 }
+    24% { background-position: 0 -100% }
+    32% { background-position: -100% -100% }
+    40% { background-position: -200% -100% }
+    48% { background-position: -300% -100% }
+    56% { background-position: 0 -200% }
+    64% { background-position: -100% -200% }
+    72% { background-position: -200% -200% }
+    100% { background-position: -300% -200% }
+}
+
 #aside-content .card-info .card-info-social-icons {
     display: grid;
     grid-template-columns: repeat(4, 55px);
