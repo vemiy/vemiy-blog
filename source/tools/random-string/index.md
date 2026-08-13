@@ -135,7 +135,8 @@ comments: false
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
+    gap: 0.8rem;
   }
   .vimy-random-string-param {
     display: flex;
@@ -167,8 +168,8 @@ comments: false
   .vimy-random-string-btn {
     border: none;
     border-radius: 999px;
-    padding: 0.7rem 1.1rem;
-    font-size: 0.9rem;
+    padding: 0.82rem 1.25rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
