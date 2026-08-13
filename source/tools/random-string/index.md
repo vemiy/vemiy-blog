@@ -135,21 +135,21 @@ comments: false
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.8rem;
+    gap: 1rem;
   }
   .vimy-random-string-param {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.8rem;
+    flex: 1 1 140px;
   }
   .vimy-random-string-param label {
     font-weight: 500;
     white-space: nowrap;
   }
   .vimy-random-string-param input {
-    width: 120px;
+    width: 100%;
     padding: 0.58rem 0.7rem;
     text-align: center;
     font-weight: 500;
@@ -163,15 +163,18 @@ comments: false
   }
   .vimy-random-string-actions {
     display: flex;
+    flex: 1 1 200px;
     gap: 0.8rem;
   }
   .vimy-random-string-btn {
+    flex: 1;
     border: none;
     border-radius: 999px;
-    padding: 0.82rem 1.8rem;
+    padding: 0.82rem 1rem;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
+    text-align: center;
     transition: 0.2s;
     white-space: nowrap;
   }
@@ -246,6 +249,9 @@ comments: false
     .vimy-random-string-output-actions {
       flex-direction: column;
       align-items: stretch;
+    }
+    .vimy-random-string-actions {
+      flex-basis: auto;
     }
     .vimy-random-string-btn,
     .vimy-random-string-mini-btn {
