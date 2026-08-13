@@ -564,10 +564,6 @@ ad:
 site_verification:            # 搜索引擎站点验证
   - name: google-site-verification
     content: V5UYqQvPSxtArdCpDgconpASBqf5IJeGsjFPxE2mxNo
-  - name: baidu-site-verification
-    content: codeva-tNXarU7mp6
-  - name: baidu-site-verification
-    content: codeva-HYXiIJzU29
   - name: msvalidate.01
     content: 5BA2CBE9D7FFB17A77899CFF1924E8E6
 
@@ -755,9 +751,9 @@ snackbar:                     # 吐司通知
 instantpage: false            # 是否启用 Instant.page 预加载
 
 lazyload:
-  enable: false               # 是否启用图片懒加载
-  native: false               # 是否用浏览器原生懒加载
-  field: site                 # 作用范围（site / post）
+  enable: true                # 是否启用图片懒加载
+  native: true                # 是否用浏览器原生懒加载
+  field: post                 # 作用范围（site / post）
   placeholder:                # 占位图片
   blur: false                 # 加载前是否模糊
 
@@ -793,7 +789,7 @@ css_prefix: true              # 是否添加浏览器前缀
 # head 插入到 </head> 前，bottom 插入到 </body> 前
 inject:
   head:
-    - <link rel="stylesheet" href="/css/custom.css?v=20260813f">   # 自定义样式
+    - <link rel="stylesheet" href="/css/custom.css?v=20260814">   # 自定义样式
     - <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2932938307892796" crossorigin="anonymous"></script>   # Google AdSense 脚本
   bottom:
     - <script>(function(){var el=document.getElementById('site-runtime');if(!el)return;var start=new Date('2026-03-16T00:00:00.000Z').getTime();function pad(n){return n<10?'0'+n:String(n)}function tick(){var diff=Math.floor((Date.now()-start)/1000);var s=diff%60;diff=Math.floor(diff/60);var m=diff%60;diff=Math.floor(diff/60);var h=diff%24;var d=Math.floor(diff/24);document.getElementById('rt-d').textContent=d;document.getElementById('rt-h').textContent=pad(h);document.getElementById('rt-m').textContent=pad(m);document.getElementById('rt-s').textContent=pad(s)}tick();setInterval(tick,1000)})();</script>   # 建站运行时长

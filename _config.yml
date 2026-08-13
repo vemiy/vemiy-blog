@@ -16,7 +16,7 @@ url: https://www.vemiy.com/    # 站点网址
 permalink: posts/:title/       # 文章链接格式
 permalink_defaults:            # 链接中变量的默认值
 pretty_urls:
-  trailing_index: true         # 链接是否去掉末尾的 index.html
+  trailing_index: false        # 链接去掉末尾的 index.html
   trailing_html: true          # 链接是否去掉末尾的 .html
 
 # 目录配置

@@ -11,7 +11,7 @@ draft: false
 
 莫名奇妙的windows这个开始菜单给我看吐了，于是分享一下如何改回旧版。
 
-![新版开始菜单](https://img.vemiy.com/img/15b649bc-2010-41a6-ae3c-8521166ca1fd.webp)
+<img src="https://img.vemiy.com/img/15b649bc-2010-41a6-ae3c-8521166ca1fd.webp" alt="新版开始菜单" width="1035" height="995">
 
 ## 开始操作
 
@@ -21,7 +21,7 @@ draft: false
 
 下载后的压缩包解压到一个文件夹里。
 
-![ViVeTool](https://img.vemiy.com/img/0fc807ff-84eb-4d4a-9704-c8643302caec.webp)
+<img src="https://img.vemiy.com/img/0fc807ff-84eb-4d4a-9704-c8643302caec.webp" alt="ViVeTool" width="875" height="298">
 
 按WIN+R，输入cmd，并按CTRL+SHIFT+ENTER。
 
@@ -47,4 +47,4 @@ Successfully set feature configuration(s)
 
 让我们来欣赏一下原本的开始菜单。
 
-![旧版开始菜单](https://img.vemiy.com/img/20f9e359-bf06-439e-8df6-523e660a5ab8.webp)
+<img src="https://img.vemiy.com/img/20f9e359-bf06-439e-8df6-523e660a5ab8.webp" alt="旧版开始菜单" width="794" height="900">

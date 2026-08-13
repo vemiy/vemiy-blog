@@ -81,7 +81,7 @@ draft: false
 - 验证方式：`TXT 验证`
 - 自定义源服务器：`origin.example.com`
 
-![自定义主机名](https://img.vemiy.com/img/78eb6847-f4fa-4879-8388-f6d0a4ce041c.webp)
+<img src="https://img.vemiy.com/img/78eb6847-f4fa-4879-8388-f6d0a4ce041c.webp" alt="自定义主机名" width="1357" height="1027">
 
 添加 `www.example.com` 这个自定义主机名后，底下会给出一条 TXT 验证记录，复制下来。
 
@@ -91,7 +91,7 @@ draft: false
 - 名称：按 Cloudflare 提示填写
 - 值：按 Cloudflare 提示填写
 
-![TXT验证](https://img.vemiy.com/img/8ab36721-c10c-4de0-af9a-05bb6ae4a8fe.webp)
+<img src="https://img.vemiy.com/img/8ab36721-c10c-4de0-af9a-05bb6ae4a8fe.webp" alt="TXT验证" width="1309" height="561">
 
 ## 三、配置汇总
 

@@ -34,6 +34,10 @@
 #article-container {
     text-align: justify;
 }
+/* 文章图片：md 已带 width/height，加载前按宽高比占位，高度自适应不变形 */
+#article-container img {
+    height: auto;
+}
 
 /* Mermaid 图表容器背景透明 */
 .mermaid-wrap {
