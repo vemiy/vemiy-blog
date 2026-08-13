@@ -30,10 +30,10 @@ comments: false
       <label for="vimyBatchCount">数量</label>
       <input type="number" id="vimyBatchCount" value="10" min="1" max="200">
     </div>
-  </div>
-  <div class="vimy-random-string-actions">
-    <button class="vimy-random-string-btn vimy-random-string-btn-secondary" id="vimyResetBtn">重置设定</button>
-    <button class="vimy-random-string-btn vimy-random-string-btn-primary" id="vimyGenBtn">生成</button>
+    <div class="vimy-random-string-actions">
+      <button class="vimy-random-string-btn vimy-random-string-btn-secondary" id="vimyResetBtn">重置设定</button>
+      <button class="vimy-random-string-btn vimy-random-string-btn-primary" id="vimyGenBtn">生成</button>
+    </div>
   </div>
   <div class="vimy-random-string-output-wrap">
     <div class="vimy-random-string-output-head">
@@ -132,8 +132,9 @@ comments: false
     font-size: 0.85rem;
   }
   .vimy-random-string-params {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 1rem;
   }
   .vimy-random-string-param {
@@ -147,7 +148,7 @@ comments: false
     white-space: nowrap;
   }
   .vimy-random-string-param input {
-    width: 120px;
+    width: 76px;
     padding: 0.58rem 0.7rem;
     text-align: center;
     font-weight: 500;
@@ -161,15 +162,14 @@ comments: false
   }
   .vimy-random-string-actions {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin: 1.2rem 0 1rem;
+    gap: 0.8rem;
+    margin-left: auto;
   }
   .vimy-random-string-btn {
     border: none;
     border-radius: 999px;
-    padding: 0.82rem 1.25rem;
-    font-size: 0.95rem;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
@@ -241,9 +241,6 @@ comments: false
     text-align: center;
   }
   @media (max-width: 900px) {
-    .vimy-random-string-params {
-      grid-template-columns: 1fr;
-    }
     .vimy-random-string-actions,
     .vimy-random-string-output-head,
     .vimy-random-string-output-actions {
