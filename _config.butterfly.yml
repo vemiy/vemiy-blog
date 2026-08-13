@@ -464,7 +464,8 @@ twikoo:
   envId: https://twikoo.vemiy.com/   # Twikoo 环境 ID 或服务地址
   region:                     # 环境地域
   visitor: false              # 是否用 Twikoo 访问量作页面浏览量
-  option:                     # 配置
+  option:
+    placeholder: 写下你的评论...   # 评论框占位提示
 
 # Giscus
 giscus:
@@ -716,7 +717,7 @@ mermaid:                      # Mermaid 图表
     light: default            # 亮色主题
     dark: dark                # 暗色主题
   open_in_new_tab: true       # 是否显示新标签页打开按钮
-  zoom_pan: false             # 是否支持缩放平移
+  zoom_pan: true              # 是否支持缩放平移
 
 chartjs:                      # Chart.js 图表
   enable: false               # 是否启用
