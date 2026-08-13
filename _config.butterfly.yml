@@ -716,7 +716,7 @@ mermaid:                      # Mermaid 图表
     light: default            # 亮色主题
     dark: dark                # 暗色主题
   open_in_new_tab: true       # 是否显示新标签页打开按钮
-  zoom_pan: true              # 是否支持缩放平移
+  zoom_pan: false             # 是否支持缩放平移
 
 chartjs:                      # Chart.js 图表
   enable: false               # 是否启用
