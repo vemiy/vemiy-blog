@@ -792,7 +792,7 @@ css_prefix: true              # 是否添加浏览器前缀
 # head 插入到 </head> 前，bottom 插入到 </body> 前
 inject:
   head:
-    - <link rel="stylesheet" href="/css/custom.css">   # 自定义样式
+    - <link rel="stylesheet" href="/css/custom.css?v=20260813">   # 自定义样式
     - <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2932938307892796" crossorigin="anonymous"></script>   # Google AdSense 脚本
   bottom:
     - <script>(function(){var el=document.getElementById('site-runtime');if(!el)return;var start=new Date('2026-03-16T00:00:00.000Z').getTime();function pad(n){return n<10?'0'+n:String(n)}function tick(){var diff=Math.floor((Date.now()-start)/1000);var s=diff%60;diff=Math.floor(diff/60);var m=diff%60;diff=Math.floor(diff/60);var h=diff%24;var d=Math.floor(diff/24);document.getElementById('rt-d').textContent=d;document.getElementById('rt-h').textContent=pad(h);document.getElementById('rt-m').textContent=pad(m);document.getElementById('rt-s').textContent=pad(s)}tick();setInterval(tick,1000)})();</script>   # 建站运行时长
