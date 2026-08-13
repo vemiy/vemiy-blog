@@ -168,8 +168,8 @@ comments: false
   .vimy-random-string-btn {
     border: none;
     border-radius: 999px;
-    padding: 0.85rem 1.7rem;
-    font-size: 1rem;
+    padding: 0.82rem 1.8rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
