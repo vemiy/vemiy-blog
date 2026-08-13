@@ -1,7 +1,7 @@
 ---
 title: 工具
 date: 2026-08-11 00:00:00
-comments: false
+comments: true
 ---
 
 <div class="vimy-tools-page">
