@@ -179,7 +179,7 @@ comments: false
     white-space: nowrap;
   }
   .vimy-random-string-btn-primary {
-    flex: 1;
+    flex: 2;
     background: #49b1f5;
     color: #fff;
   }
