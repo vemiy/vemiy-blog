@@ -5,8 +5,6 @@ description: "记录为什么决定自己组装一台 NAS，以及搭建飞牛 O
 categories:
   - "NAS"
 tags:
-  - "NAS"
-  - "硬件"
   - "飞牛"
 draft: false
 ---
