@@ -213,10 +213,3 @@
     border-color: rgba(255, 255, 255, 0.18);
     transform: translateY(calc(-50% - 1px));
 }
-
-/* 锚点跳转避开固定导航栏 */
-#article-container h2,
-#article-container h3,
-#article-container h4 {
-    scroll-margin-top: 90px;
-}
