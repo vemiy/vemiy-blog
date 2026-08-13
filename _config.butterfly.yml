@@ -804,9 +804,9 @@ inject:
 # CDN 设置（不要修改，除非知道用途）
 CDN:
   internal_provider: local    # 内置脚本来源（local / jsdelivr / unpkg / cdnjs / custom）
-  third_party_provider: jsdelivr   # 第三方脚本来源
+  third_party_provider: custom # 第三方脚本来源（local / jsdelivr / unpkg / cdnjs / custom）
   version: true               # URL 是否带版本号
-  custom_format:              # 自定义 CDN 格式
+  custom_format: https://registry.npmmirror.com/${name}/${version}/files/${file}   # 自定义 CDN 格式（用 npmmirror 国内镜像，jsdelivr 国内不稳定）
   option:
     busuanzi: https://events.vercount.one/js   # 访问统计脚本
     # abcjs_basic_js:
