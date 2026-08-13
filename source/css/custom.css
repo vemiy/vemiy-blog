@@ -194,15 +194,26 @@
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    padding: 4px 16px;
+    padding: 3px 14px;
     border-radius: 8px;
-    background: var(--btn-bg);
-    color: var(--btn-color);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(30, 30, 30, 0.6);
+    color: inherit !important;
+    text-decoration: none !important;
     font-size: 0.55em;
     font-weight: 500;
-    transition: all 0.3s;
+    transition: all 0.2s;
 }
 .flink-apply-btn:hover {
-    background: var(--btn-hover-color);
-    color: var(--btn-color);
+    color: inherit !important;
+    text-decoration: none !important;
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(calc(-50% - 1px));
+}
+
+/* 锚点跳转避开固定导航栏 */
+#article-container h2,
+#article-container h3,
+#article-container h4 {
+    scroll-margin-top: 90px;
 }
