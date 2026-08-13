@@ -118,3 +118,11 @@ search:
   path: search.xml             # 搜索数据文件路径
   field: post                  # 搜索范围（post 文章 / page 页面 / all 全部）
   content: true                # 是否索引文章内容
+
+# 外链 nofollow（hexo-filter-nofollow，排除本站域名）
+nofollow:
+  enable: true                  # 是否启用
+  field: site                   # 作用范围（site 全站 / post 仅文章）
+  exclude:                      # 不处理的域名（写完整子域）
+    - 'vemiy.com'
+    - 'www.vemiy.com'
