@@ -3,7 +3,7 @@ title: "我的NAS折腾记录"
 date: 2026-03-22
 description: "记录为什么决定自己组装一台 NAS，以及搭建飞牛 OS 的思考。"
 categories:
-  - "技术"
+  - "NAS"
 tags:
   - "NAS"
   - "硬件"

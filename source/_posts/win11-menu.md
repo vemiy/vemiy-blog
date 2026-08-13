@@ -3,7 +3,7 @@ title: "Win11恢复旧版开始菜单"
 date: 2026-04-10
 description: "Win11 新版开始菜单不好用？用 ViVeTool 恢复旧版开始菜单的详细教程。"
 categories:
-  - "技术"
+  - "软件"
 tags:
   - "Windows"
 draft: false

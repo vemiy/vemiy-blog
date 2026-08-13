@@ -3,7 +3,7 @@ title: "Cloudflare SaaS 回源 优选域名配置"
 date: 2026-04-21
 description: "使用 Cloudflare SaaS 功能实现回源与优选域名配置的实操记录，单个域名即可完成接入。"
 categories:
-  - "技术"
+  - "建站"
 tags:
   - "Cloudflare"
 draft: false

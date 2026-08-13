@@ -3,10 +3,8 @@ title: 从 Halo 迁移到 Hexo 静态博客
 date: 2026-08-12T19:00:00
 tags:
   - Hexo
-  - 迁移
-  - 博客
 categories:
-  - 技术
+  - 建站
 description: 记录我的博客从 Halo 动态站迁移到 Hexo 静态站的全过程，包括文章、评论、图片和数据迁移，以及踩过的坑。
 draft: false
 ---

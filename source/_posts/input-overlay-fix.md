@@ -3,9 +3,8 @@ title: OBS input-overlay 鼠标移动箭头抽搐修复
 date: 2026-08-12 23:03:00
 tags:
   - OBS
-  - 插件
 categories:
-  - 技术
+  - 软件
 description: input-overlay 的鼠标移动箭头在鼠标停止后回到默认方向，斜向移动还会抖动。这篇文章记录问题原因和修复过程。
 draft: false
 ---
