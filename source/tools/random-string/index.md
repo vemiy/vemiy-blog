@@ -163,7 +163,6 @@ comments: false
   .vimy-random-string-actions {
     display: flex;
     gap: 0.8rem;
-    margin-left: auto;
   }
   .vimy-random-string-btn {
     border: none;
