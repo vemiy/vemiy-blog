@@ -204,6 +204,9 @@
     font-weight: 500;
     transition: all 0.2s;
 }
+.flink-apply-btn i {
+    margin-right: 4px;
+}
 .flink-apply-btn:hover {
     color: inherit !important;
     text-decoration: none !important;
