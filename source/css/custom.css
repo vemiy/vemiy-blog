@@ -30,6 +30,11 @@
     font-size: 0.95em;
 }
 
+/* 文章正文两端对齐 */
+#article-container {
+    text-align: justify;
+}
+
 /* 移动端页脚访客统计单独一行 */
 @media (max-width: 768px) {
     .footer-stats {
