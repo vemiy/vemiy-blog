@@ -184,3 +184,25 @@
         right: 8px;
     }
 }
+
+/* 友链标题行右侧的申请友链按钮 */
+#article-container .flink h2 {
+    position: relative;
+}
+.flink-apply-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px 16px;
+    border-radius: 8px;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    font-size: 0.55em;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+.flink-apply-btn:hover {
+    background: var(--btn-hover-color);
+    color: var(--btn-color);
+}
