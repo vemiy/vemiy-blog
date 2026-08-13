@@ -208,7 +208,7 @@ footer:
   copyright:
     enable: false             # 是否显示主题和框架版权
     version: true             # 是否显示版本号
-  custom_text: '<div id="site-runtime">已运行<span class="stand" id="rt-d">0</span>天<span class="stand" id="rt-h">00</span>时<span class="stand" id="rt-m">00</span>分<span class="stand" id="rt-s">00</span>秒 · 访客数 <span id="vercount_value_site_uv">0</span> · 访问量 <span id="vercount_value_site_pv">0</span></div><div class="footer-copyright-line">&copy;&nbsp;2026 By vemiy · <a href="https://icp.gov.moe/?keyword=20269230" target="_blank">萌ICP备20269230号</a></div>'   # 页脚自定义内容（建站时长、访客统计、版权、萌ICP备案）
+  custom_text: '<div id="site-runtime">已运行<span class="stand" id="rt-d">0</span>天<span class="stand" id="rt-h">00</span>时<span class="stand" id="rt-m">00</span>分<span class="stand" id="rt-s">00</span>秒<span class="footer-stats"> · 访客数 <span id="vercount_value_site_uv">0</span> · 访问量 <span id="vercount_value_site_pv">0</span></span></div><div class="footer-copyright-line">&copy;&nbsp;2026 By vemiy · <a href="https://icp.gov.moe/?keyword=20269230" target="_blank">萌ICP备20269230号</a></div>'   # 页脚自定义内容（建站时长、访客统计、版权、萌ICP备案）
 
 # --------------------------------------
 # 侧边栏设置
@@ -792,7 +792,7 @@ css_prefix: true              # 是否添加浏览器前缀
 # head 插入到 </head> 前，bottom 插入到 </body> 前
 inject:
   head:
-    - <link rel="stylesheet" href="/css/custom.css?v=20260813">   # 自定义样式
+    - <link rel="stylesheet" href="/css/custom.css?v=20260813b">   # 自定义样式
     - <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2932938307892796" crossorigin="anonymous"></script>   # Google AdSense 脚本
   bottom:
     - <script>(function(){var el=document.getElementById('site-runtime');if(!el)return;var start=new Date('2026-03-16T00:00:00.000Z').getTime();function pad(n){return n<10?'0'+n:String(n)}function tick(){var diff=Math.floor((Date.now()-start)/1000);var s=diff%60;diff=Math.floor(diff/60);var m=diff%60;diff=Math.floor(diff/60);var h=diff%24;var d=Math.floor(diff/24);document.getElementById('rt-d').textContent=d;document.getElementById('rt-h').textContent=pad(h);document.getElementById('rt-m').textContent=pad(m);document.getElementById('rt-s').textContent=pad(s)}tick();setInterval(tick,1000)})();</script>   # 建站运行时长

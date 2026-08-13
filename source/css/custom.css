@@ -29,6 +29,14 @@
     color: var(--light-grey);
     font-size: 0.95em;
 }
+
+/* 移动端页脚访客统计单独一行 */
+@media (max-width: 768px) {
+    .footer-stats {
+        display: block;
+        margin-top: 4px;
+    }
+}
 #aside-content .card-info .card-info-social-icons {
     display: grid;
     grid-template-columns: repeat(4, 55px);
