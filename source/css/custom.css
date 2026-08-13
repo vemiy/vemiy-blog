@@ -207,6 +207,13 @@
 .flink-apply-btn i {
     margin-right: 4px;
 }
+
+/* 锚点跳转避开固定导航栏 */
+#article-container h2,
+#article-container h3,
+#article-container h4 {
+    scroll-margin-top: 80px;
+}
 .flink-apply-btn:hover {
     color: inherit !important;
     text-decoration: none !important;
