@@ -149,7 +149,7 @@ comments: false
     white-space: nowrap;
   }
   .vimy-random-string-param input {
-    width: 76px;
+    width: 120px;
     padding: 0.58rem 0.7rem;
     text-align: center;
     font-weight: 500;
@@ -168,8 +168,8 @@ comments: false
   .vimy-random-string-btn {
     border: none;
     border-radius: 999px;
-    padding: 0.82rem 1.25rem;
-    font-size: 0.95rem;
+    padding: 0.85rem 1.7rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
