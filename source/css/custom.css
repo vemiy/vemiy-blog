@@ -35,8 +35,8 @@
     text-align: justify;
 }
 
-/* Mermaid 图表背景透明 */
-.mermaid {
+/* Mermaid 图表容器背景透明 */
+.mermaid-wrap {
     background: transparent !important;
 }
 
