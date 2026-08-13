@@ -711,7 +711,7 @@ abcjs:                        # ABC 乐谱插件
 
 mermaid:                      # Mermaid 图表
   enable: true                # 是否启用
-  code_write: true            # 是否用代码块写图
+  code_write: false           # 是否用代码块写图
   theme:                      # 主题
     light: default            # 亮色主题
     dark: dark                # 暗色主题
