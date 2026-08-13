@@ -142,14 +142,14 @@ comments: false
     align-items: center;
     justify-content: space-between;
     gap: 0.8rem;
-    flex: 1 1 140px;
+    flex: 0 1 auto;
   }
   .vimy-random-string-param label {
     font-weight: 500;
     white-space: nowrap;
   }
   .vimy-random-string-param input {
-    width: 100%;
+    width: 110px;
     padding: 0.58rem 0.7rem;
     text-align: center;
     font-weight: 500;
