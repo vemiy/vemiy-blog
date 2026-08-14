@@ -49,6 +49,9 @@ mixin rightsideItem(array)
     if showArray.length
       +rightsideItem(showArray)
 
+    button#copy-url(type="button" title=_p("rightside.copy_url"))
+      i.fas.fa-link
+
     button#go-up(type="button" title=_p("rightside.back_to_top"))
       span.scroll-percent
       i.fas.fa-arrow-up

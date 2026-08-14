@@ -104,6 +104,7 @@ rightside:
   setting: 설정
   aside: 단일/이중 열 전환
   chat: 채팅
+  copy_url: 링크 복사
 
 copy_copyright:
   author: 작성자

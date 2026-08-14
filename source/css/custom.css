@@ -224,16 +224,6 @@
     }
 }
 
-/* 右侧按钮全部直接显示，去掉齿轮收纳面板 */
-#rightside #rightside-config {
-    display: none;
-}
-#rightside #rightside-config-hide {
-    height: auto;
-    opacity: 1;
-    transform: translate(0, 0);
-}
-
 /* 触屏设备：悬停样式会卡住，重置为常态避免按钮点击后变色不恢复 */
 @media (hover: none) {
     #rightside > div > button:hover,
