@@ -134,7 +134,7 @@
     -webkit-backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease, width 0.3s;
 }
 
 /* ========== 上一篇/下一篇：去掉蓝色封面，边框加在外层容器上避免圆角断裂 ========== */

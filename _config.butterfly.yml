@@ -789,7 +789,7 @@ css_prefix: true              # 是否添加浏览器前缀
 # head 插入到 </head> 前，bottom 插入到 </body> 前
 inject:
   head:
-    - <link rel="stylesheet" href="/css/custom.css?v=20260814a">   # 自定义样式
+    - <link rel="stylesheet" href="/css/custom.css?v=20260814b">   # 自定义样式
     - <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2932938307892796" crossorigin="anonymous"></script>   # Google AdSense 脚本
     - <script>(function(){function fb(t){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}document.body.removeChild(a)}function copyUrl(){var u=location.href;var ok=function(){btf&&btf.snackbarShow?btf.snackbarShow("链接已复制"):alert("链接已复制")};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){fb(u);ok()})}else{fb(u);ok()}}document.addEventListener("click",function(e){var b=e.target.closest("#copy-url");if(b)copyUrl()})})();</script>   # 右侧复制链接按钮
   bottom:
