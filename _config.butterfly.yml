@@ -24,8 +24,9 @@ menu:
     标签: /tags/ || fas fa-tags
   工具: /tools/ || fas fa-wrench
   友链: /links/ || fas fa-link
-  关于: /about/ || fas fa-user
-  隐私: /privacy/ || fas fa-shield-halved
+  关于||fas fa-user:
+    关于: /about/ || fas fa-user
+    隐私: /privacy/ || fas fa-shield-halved
 
 # --------------------------------------
 # 代码块设置

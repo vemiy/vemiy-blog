@@ -16,8 +16,6 @@ comments: true
 
 ## 关于博主
 
-一名喜欢折腾的技术爱好者，日常折腾 NAS、自托管服务、博客搭建等。
-
 - 邮箱：`hi@vemiy.com`
 - GitHub：[vemiy](https://github.com/vemiy)
 - Bilibili：[vemiy](https://space.bilibili.com/520992461)
