@@ -16,6 +16,7 @@ name: vemiyの小站
 link: https://www.vemiy.com
 avatar: https://www.vemiy.com/img/avatar.webp
 descr: One more day.
+rss: https://www.vemiy.com/atom.xml
 ```
 
 #### 申请须知
@@ -31,5 +32,6 @@ descr: One more day.
   link: 
   avatar: 
   descr: 
+  rss: 
 ```
 本站会定时清理失效链接，如恢复访问可重新提交。
