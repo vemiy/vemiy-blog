@@ -183,7 +183,7 @@ post_edit:
 
 # 相关文章
 related_post:
-  enable: true                # 是否显示相关文章
+  enable: false               # 是否显示相关文章（文章多了再开）
   limit: 6                    # 相关文章数量
   date_type: created          # 排序依据（created / updated）
 
@@ -772,8 +772,8 @@ pwa:
 Open_Graph_meta:
   enable: true                # 是否启用
   option:                     # 配置
-    # twitter_card:
-    # twitter_image:
+    twitter_card: summary      # Twitter 卡片类型
+    twitter_image: /img/avatar.webp   # 社交卡片图片（网站 logo）
     # twitter_id:
     # twitter_site:
     # google_plus:
@@ -782,7 +782,7 @@ Open_Graph_meta:
 
 # 结构化数据
 structured_data:
-  enable: false               # 是否启用
+  enable: true                # 是否启用（JSON-LD 结构化数据）
   alternate_name:             # 站点别名（格式: ['name1', 'name2']）
 
 css_prefix: true              # 是否添加浏览器前缀
