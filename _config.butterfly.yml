@@ -750,7 +750,7 @@ snackbar:                     # 吐司通知
   bg_light: '#49b1f5'         # 亮色模式背景色
   bg_dark: '#1f1f1f'          # 暗色模式背景色
 
-instantpage: false            # 是否启用 Instant.page 预加载
+instantpage: true             # 是否启用 Instant.page 预加载
 
 lazyload:
   enable: true                # 是否启用图片懒加载
@@ -761,11 +761,11 @@ lazyload:
 
 # PWA
 pwa:
-  enable: false               # 是否启用 PWA
-  manifest:                   # manifest 文件
-  apple_touch_icon:           # 苹果触摸图标
-  favicon_32_32:              # 32x32 图标
-  favicon_16_16:              # 16x16 图标
+  enable: true                # 是否启用 PWA
+  manifest: /manifest.json    # manifest 文件
+  apple_touch_icon: /img/icon-192.png   # 苹果触摸图标
+  favicon_32_32: /img/icon-192.png      # 32x32 图标
+  favicon_16_16: /img/favicon.png       # 16x16 图标
   mask_icon:                  # 遮罩图标
 
 # Open Graph 元标签
@@ -800,7 +800,6 @@ inject:
     - <script>(function(){var map={".card-categories .item-headline":"/categories/",".card-tags .item-headline":"/tags/",".card-archives .item-headline":"/archives/"};function addArrows(){Object.keys(map).forEach(function(sel){var h=document.querySelector(sel);if(h&&!h.querySelector(".card-more-btn")){var a=document.createElement("a");a.className="card-more-btn";a.href=map[sel];a.title="查看更多";var i=document.createElement("i");i.className="fas fa-angle-right";a.appendChild(i);h.appendChild(a)}})}addArrows();window.btf&&btf.addGlobalFn("pjaxComplete",addArrows,"cardMoreBtn")})();</script>   # 侧边栏卡片查看更多箭头（PJAX 跳转后重新添加）
     - <script>(function(){function watch(){var n=0;var t=setInterval(function(){n++;var any=Array.from(document.querySelectorAll(".ads-wrap")).some(function(w){var ins=w.querySelector("ins.adsbygoogle");return ins&&ins.getAttribute("data-ad-status")==="filled"});if(any||n>=6){clearInterval(t);if(!any){document.querySelectorAll(".ads-wrap").forEach(function(w){var ins=w.querySelector("ins.adsbygoogle");if(!ins||ins.getAttribute("data-ad-status")!=="filled")w.style.display="none"})}}},1000)}watch();window.btf&&btf.addGlobalFn("pjaxComplete",watch,"watchAds")})();</script>   # 广告加载后未填充（无 data-ad-status=filled）再隐藏广告位
     - <script>(function(){var el=document.createElement("div");el.id="fps";el.style.cssText="position:fixed;right:12px;bottom:12px;z-index:999;font-size:12px;font-weight:normal;color:#aaa;background:none;border:none;padding:0;margin:0;backdrop-filter:none;box-shadow:none;text-shadow:none;pointer-events:none";document.body.appendChild(el);var fps=0;var last=Date.now();function step(){var now=Date.now();fps++;if(now-last>=1000){el.textContent=fps+" FPS";fps=0;last=now}requestAnimationFrame(step)}requestAnimationFrame(step)})();</script>   # 右下角帧率显示（60 FPS 纯文字）
-    # - <script src="xxxx"></script>
 
 # CDN 设置（不要修改，除非知道用途）
 CDN:
