@@ -761,12 +761,7 @@ lazyload:
 
 # PWA
 pwa:
-  enable: true                # 是否启用 PWA
-  manifest: /manifest.json    # manifest 文件
-  apple_touch_icon: /img/icon-192.png   # 苹果触摸图标
-  favicon_32_32: /img/icon-192.png      # 32x32 图标
-  favicon_16_16: /img/favicon.png       # 16x16 图标
-  mask_icon:                  # 遮罩图标
+  enable: false               # 是否启用 PWA
 
 # Open Graph 元标签
 Open_Graph_meta:
