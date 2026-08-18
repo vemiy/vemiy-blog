@@ -13,14 +13,14 @@
     color: var(--light-grey);
     font-size: 0.95em;
 }
-/* 页脚运行时长/访客/访问数字统一样式（等宽数字，跳动时不晃） */
+/* 页脚运行时长/访客/访问数字统一样式 */
 #site-runtime .stand,
 #site-runtime #vercount_value_site_uv,
 #site-runtime #vercount_value_site_pv {
     color: var(--text-highlight-color);
     font-weight: 600;
     margin: 0 2px;
-    /* 沿用站点默认字体（Segoe UI），等宽数字特性让数字宽度不变、不晃 */
+    /* 沿用站点默认字体，数字用等宽数字 */
     font-variant-numeric: tabular-nums;
 }
 /* 页脚底部版权行 */
@@ -34,7 +34,7 @@
 #article-container {
     text-align: justify;
 }
-/* 文章图片：md 已带 width/height，加载前按宽高比占位，高度自适应不变形 */
+/* 文章图片按宽高比占位，高度自适应 */
 #article-container img {
     height: auto;
 }
@@ -137,7 +137,7 @@
     transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease, width 0.3s;
 }
 
-/* ========== 上一篇/下一篇：去掉蓝色封面，边框加在外层容器上避免圆角断裂 ========== */
+/* ========== 上一篇/下一篇：封面置为无色，边框加在外层容器 ========== */
 #pagination.pagination-post {
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -200,7 +200,7 @@
     -webkit-backdrop-filter: blur(20px);
 }
 
-/* 下拉菜单：子菜单紧贴父级底部，消除悬停断档 */
+/* 下拉菜单：子菜单紧贴父级底部 */
 #nav .menus_items .menus_item .menus_item_child {
     top: 100%;
     margin-top: 0;
@@ -224,7 +224,7 @@
     }
 }
 
-/* 触屏设备：悬停样式会卡住，重置为常态避免按钮点击后变色不恢复 */
+/* 触屏设备：悬停样式重置为常态 */
 @media (hover: none) {
     #rightside > div > button:hover,
     #rightside > div > a:hover {
