@@ -4,86 +4,86 @@ date: 2026-04-17 00:00:00
 comments: false
 ---
 
-<div class="vimy-random-string" id="vimyRandomString">
-  <div class="vimy-random-string-sub">安全 token / 临时密码 / 一次性凭证</div>
-  <div class="vimy-random-string-section vimy-random-string-basic">
-    <label><input type="checkbox" id="vimyOptUpper" checked> 大写 A-Z</label>
-    <label><input type="checkbox" id="vimyOptLower" checked> 小写 a-z</label>
-    <label><input type="checkbox" id="vimyOptNum" checked> 数字 0-9</label>
+<div class="vemiy-random-string" id="vemiyRandomString">
+  <div class="vemiy-random-string-sub">安全 token / 临时密码 / 一次性凭证</div>
+  <div class="vemiy-random-string-section vemiy-random-string-basic">
+    <label><input type="checkbox" id="vemiyOptUpper" checked> 大写 A-Z</label>
+    <label><input type="checkbox" id="vemiyOptLower" checked> 小写 a-z</label>
+    <label><input type="checkbox" id="vemiyOptNum" checked> 数字 0-9</label>
   </div>
-  <div class="vimy-random-string-section vimy-random-string-custom">
-    <div class="vimy-random-string-custom-item">
-      <label><input type="checkbox" id="vimyOptCustomSym" checked> 包含符号</label>
-      <input type="text" id="vimyCustomSymbols" value="!@#$%^&amp;*()-_=+">
+  <div class="vemiy-random-string-section vemiy-random-string-custom">
+    <div class="vemiy-random-string-custom-item">
+      <label><input type="checkbox" id="vemiyOptCustomSym" checked> 包含符号</label>
+      <input type="text" id="vemiyCustomSymbols" value="!@#$%^&amp;*()-_=+">
     </div>
-    <div class="vimy-random-string-custom-item">
-      <label><input type="checkbox" id="vimyOptExclude"> 排除字符</label>
-      <input type="text" id="vimyExcludeChars" value="iIl1o0O">
-    </div>
-  </div>
-  <div class="vimy-random-string-section vimy-random-string-params">
-    <div class="vimy-random-string-param">
-      <label for="vimyStrLen">长度</label>
-      <input type="number" id="vimyStrLen" value="12" min="1" max="128">
-    </div>
-    <div class="vimy-random-string-param">
-      <label for="vimyBatchCount">数量</label>
-      <input type="number" id="vimyBatchCount" value="10" min="1" max="200">
-    </div>
-    <div class="vimy-random-string-actions">
-      <button class="vimy-random-string-btn vimy-random-string-btn-secondary" id="vimyResetBtn">重置设定</button>
-      <button class="vimy-random-string-btn vimy-random-string-btn-primary" id="vimyGenBtn">生成</button>
+    <div class="vemiy-random-string-custom-item">
+      <label><input type="checkbox" id="vemiyOptExclude"> 排除字符</label>
+      <input type="text" id="vemiyExcludeChars" value="iIl1o0O">
     </div>
   </div>
-  <div class="vimy-random-string-output-wrap">
-    <div class="vimy-random-string-output-head">
-      <div class="vimy-random-string-output-title">生成结果（每行一个）</div>
-      <div class="vimy-random-string-output-actions">
-        <button class="vimy-random-string-mini-btn" id="vimyDownloadBtn">下载结果</button>
-        <button class="vimy-random-string-mini-btn" id="vimyCopyAllBtn">复制全部</button>
+  <div class="vemiy-random-string-section vemiy-random-string-params">
+    <div class="vemiy-random-string-param">
+      <label for="vemiyStrLen">长度</label>
+      <input type="number" id="vemiyStrLen" value="12" min="1" max="128">
+    </div>
+    <div class="vemiy-random-string-param">
+      <label for="vemiyBatchCount">数量</label>
+      <input type="number" id="vemiyBatchCount" value="10" min="1" max="200">
+    </div>
+    <div class="vemiy-random-string-actions">
+      <button class="vemiy-random-string-btn vemiy-random-string-btn-secondary" id="vemiyResetBtn">重置设定</button>
+      <button class="vemiy-random-string-btn vemiy-random-string-btn-primary" id="vemiyGenBtn">生成</button>
+    </div>
+  </div>
+  <div class="vemiy-random-string-output-wrap">
+    <div class="vemiy-random-string-output-head">
+      <div class="vemiy-random-string-output-title">生成结果（每行一个）</div>
+      <div class="vemiy-random-string-output-actions">
+        <button class="vemiy-random-string-mini-btn" id="vemiyDownloadBtn">下载结果</button>
+        <button class="vemiy-random-string-mini-btn" id="vemiyCopyAllBtn">复制全部</button>
       </div>
     </div>
-    <textarea class="vimy-random-string-output" id="vimyBatchOutput" rows="12" readonly wrap="off" placeholder="点击「生成」按钮，结果将显示在此处..."></textarea>
+    <textarea class="vemiy-random-string-output" id="vemiyBatchOutput" rows="12" readonly wrap="off" placeholder="点击「生成」按钮，结果将显示在此处..."></textarea>
   </div>
-  <div class="vimy-random-string-foot">所有处理均在本地完成 - 数据不上传服务器</div>
+  <div class="vemiy-random-string-foot">所有处理均在本地完成 - 数据不上传服务器</div>
 </div>
 
 <style>
   /* 随机字符串工具样式（适配暗色玻璃主题） */
-  .vimy-random-string {
+  .vemiy-random-string {
     width: 100%;
     max-width: 100%;
     margin: 0;
     padding: 0.5rem 0 1rem;
   }
-  .vimy-random-string * {
+  .vemiy-random-string * {
     box-sizing: border-box;
   }
-  .vimy-random-string-sub {
+  .vemiy-random-string-sub {
     font-size: 0.95rem;
     line-height: 1.8;
     opacity: 0.75;
     margin-bottom: 1.5rem;
   }
-  .vimy-random-string-section {
+  .vemiy-random-string-section {
     margin-bottom: 1rem;
   }
-  .vimy-random-string-basic,
-  .vimy-random-string-custom,
-  .vimy-random-string-params,
-  .vimy-random-string-output-wrap {
+  .vemiy-random-string-basic,
+  .vemiy-random-string-custom,
+  .vemiy-random-string-params,
+  .vemiy-random-string-output-wrap {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 1rem;
     background: rgba(30, 30, 30, 0.6);
   }
-  .vimy-random-string-basic,
-  .vimy-random-string-custom {
+  .vemiy-random-string-basic,
+  .vemiy-random-string-custom {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem 1.2rem;
   }
-  .vimy-random-string label {
+  .vemiy-random-string label {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -91,27 +91,27 @@ comments: false
     cursor: pointer;
     user-select: none;
   }
-  .vimy-random-string input[type="checkbox"] {
+  .vemiy-random-string input[type="checkbox"] {
     width: 16px;
     height: 16px;
     accent-color: #49b1f5;
     flex-shrink: 0;
     cursor: pointer;
   }
-  .vimy-random-string-custom-item {
+  .vemiy-random-string-custom-item {
     flex: 1;
     min-width: 240px;
     display: flex;
     align-items: center;
     gap: 0.7rem;
   }
-  .vimy-random-string-custom-item label {
+  .vemiy-random-string-custom-item label {
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .vimy-random-string input[type="text"],
-  .vimy-random-string input[type="number"],
-  .vimy-random-string textarea {
+  .vemiy-random-string input[type="text"],
+  .vemiy-random-string input[type="number"],
+  .vemiy-random-string textarea {
     width: 100%;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
@@ -121,34 +121,34 @@ comments: false
     transition: 0.2s;
     font-family: Consolas, Monaco, "Courier New", monospace;
   }
-  .vimy-random-string input[type="text"]:focus,
-  .vimy-random-string input[type="number"]:focus,
-  .vimy-random-string textarea:focus {
+  .vemiy-random-string input[type="text"]:focus,
+  .vemiy-random-string input[type="number"]:focus,
+  .vemiy-random-string textarea:focus {
     border-color: #49b1f5;
     box-shadow: 0 0 0 3px rgba(73, 177, 245, 0.12);
   }
-  .vimy-random-string input[type="text"] {
+  .vemiy-random-string input[type="text"] {
     padding: 0.58rem 0.8rem;
     font-size: 0.85rem;
   }
-  .vimy-random-string-params {
+  .vemiy-random-string-params {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
   }
-  .vimy-random-string-param {
+  .vemiy-random-string-param {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.8rem;
     flex: 0 1 auto;
   }
-  .vimy-random-string-param label {
+  .vemiy-random-string-param label {
     font-weight: 500;
     white-space: nowrap;
   }
-  .vimy-random-string-param input {
+  .vemiy-random-string-param input {
     width: 110px;
     padding: 0.58rem 0.7rem;
     text-align: center;
@@ -156,17 +156,17 @@ comments: false
     -moz-appearance: textfield;
     appearance: textfield;
   }
-  .vimy-random-string-param input::-webkit-inner-spin-button,
-  .vimy-random-string-param input::-webkit-outer-spin-button {
+  .vemiy-random-string-param input::-webkit-inner-spin-button,
+  .vemiy-random-string-param input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-  .vimy-random-string-actions {
+  .vemiy-random-string-actions {
     display: flex;
     flex: 1 1 200px;
     gap: 0.8rem;
   }
-  .vimy-random-string-btn {
+  .vemiy-random-string-btn {
     flex: 1;
     border: none;
     border-radius: 999px;
@@ -178,22 +178,22 @@ comments: false
     transition: 0.2s;
     white-space: nowrap;
   }
-  .vimy-random-string-btn-primary {
+  .vemiy-random-string-btn-primary {
     flex: 2;
     background: #49b1f5;
     color: #fff;
   }
-  .vimy-random-string-btn-primary:hover {
+  .vemiy-random-string-btn-primary:hover {
     filter: brightness(0.88);
   }
-  .vimy-random-string-btn-secondary {
+  .vemiy-random-string-btn-secondary {
     background: rgba(255, 255, 255, 0.1);
     color: inherit;
   }
-  .vimy-random-string-btn-secondary:hover {
+  .vemiy-random-string-btn-secondary:hover {
     background: rgba(255, 255, 255, 0.16);
   }
-  .vimy-random-string-output-head {
+  .vemiy-random-string-output-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -201,17 +201,17 @@ comments: false
     margin-bottom: 0.75rem;
     flex-wrap: wrap;
   }
-  .vimy-random-string-output-title {
+  .vemiy-random-string-output-title {
     font-size: 0.95rem;
     font-weight: 600;
     opacity: 0.9;
   }
-  .vimy-random-string-output-actions {
+  .vemiy-random-string-output-actions {
     display: flex;
     gap: 0.8rem;
     flex-wrap: wrap;
   }
-  .vimy-random-string-mini-btn {
+  .vemiy-random-string-mini-btn {
     border: none;
     border-radius: 999px;
     padding: 0.45rem 1rem;
@@ -224,10 +224,10 @@ comments: false
     background: rgba(255, 255, 255, 0.1);
     color: inherit;
   }
-  .vimy-random-string-mini-btn:hover {
+  .vemiy-random-string-mini-btn:hover {
     background: rgba(255, 255, 255, 0.16);
   }
-  .vimy-random-string-output {
+  .vemiy-random-string-output {
     min-height: 320px;
     resize: vertical;
     padding: 1rem;
@@ -237,31 +237,31 @@ comments: false
     white-space: pre;
     overflow-x: auto;
   }
-  .vimy-random-string-foot {
+  .vemiy-random-string-foot {
     margin-top: 0.85rem;
     font-size: 0.82rem;
     opacity: 0.62;
     text-align: center;
   }
   @media (max-width: 900px) {
-    .vimy-random-string-actions,
-    .vimy-random-string-output-head,
-    .vimy-random-string-output-actions {
+    .vemiy-random-string-actions,
+    .vemiy-random-string-output-head,
+    .vemiy-random-string-output-actions {
       flex-direction: column;
       align-items: stretch;
     }
-    .vimy-random-string-actions {
+    .vemiy-random-string-actions {
       flex-basis: auto;
     }
-    .vimy-random-string-btn,
-    .vimy-random-string-mini-btn {
+    .vemiy-random-string-btn,
+    .vemiy-random-string-mini-btn {
       width: 100%;
     }
-    .vimy-random-string-param {
+    .vemiy-random-string-param {
       flex-direction: column;
       align-items: stretch;
     }
-    .vimy-random-string-param input {
+    .vemiy-random-string-param input {
       width: 100%;
     }
   }
@@ -273,11 +273,11 @@ comments: false
     const $ = id => document.getElementById(id);
     const D = { len: 12, cnt: 10, sym: '!@#$%^&*()-_=+', exc: 'iIl1o0O', minLen: 1, maxLen: 128, minCnt: 1, maxCnt: 200 };
     const els = {
-      out: $('vimyBatchOutput'), len: $('vimyStrLen'), cnt: $('vimyBatchCount'),
-      up: $('vimyOptUpper'), low: $('vimyOptLower'), num: $('vimyOptNum'),
-      cus: $('vimyOptCustomSym'), sym: $('vimyCustomSymbols'),
-      exc: $('vimyOptExclude'), excChars: $('vimyExcludeChars'),
-      gen: $('vimyGenBtn'), rst: $('vimyResetBtn'), dl: $('vimyDownloadBtn'), cp: $('vimyCopyAllBtn')
+      out: $('vemiyBatchOutput'), len: $('vemiyStrLen'), cnt: $('vemiyBatchCount'),
+      up: $('vemiyOptUpper'), low: $('vemiyOptLower'), num: $('vemiyOptNum'),
+      cus: $('vemiyOptCustomSym'), sym: $('vemiyCustomSymbols'),
+      exc: $('vemiyOptExclude'), excChars: $('vemiyExcludeChars'),
+      gen: $('vemiyGenBtn'), rst: $('vemiyResetBtn'), dl: $('vemiyDownloadBtn'), cp: $('vemiyCopyAllBtn')
     };
     const timers = new Map();
     let charset = '', dirty = true;

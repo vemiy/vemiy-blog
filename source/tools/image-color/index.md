@@ -4,74 +4,74 @@ date: 2026-04-17 00:00:00
 comments: false
 ---
 
-<div class="vimy-image-color" id="vimyImageColor">
-  <div class="vimy-image-color-head">
-    <button class="vimy-image-color-btn" id="vimyUploadBtn">选择图片</button>
-    <div class="vimy-image-color-sub">上传图片 - 点击图片任意位置取色 - 支持拖拽上传</div>
-    <input type="file" id="vimyFileInput" class="vimy-image-color-file-input" accept="image/jpeg,image/png,image/webp">
+<div class="vemiy-image-color" id="vemiyImageColor">
+  <div class="vemiy-image-color-head">
+    <button class="vemiy-image-color-btn" id="vemiyUploadBtn">选择图片</button>
+    <div class="vemiy-image-color-sub">上传图片 - 点击图片任意位置取色 - 支持拖拽上传</div>
+    <input type="file" id="vemiyFileInput" class="vemiy-image-color-file-input" accept="image/jpeg,image/png,image/webp">
   </div>
-  <div class="vimy-image-color-preview" id="vimyPreviewArea">
-    <div class="vimy-image-color-placeholder">
-      <div class="vimy-image-color-placeholder-inner">
-        <div id="vimyEmptyTip">拖拽图片至此区域</div>
-        <img id="vimyPreviewImage" class="vimy-image-color-img" alt="" draggable="false">
+  <div class="vemiy-image-color-preview" id="vemiyPreviewArea">
+    <div class="vemiy-image-color-placeholder">
+      <div class="vemiy-image-color-placeholder-inner">
+        <div id="vemiyEmptyTip">拖拽图片至此区域</div>
+        <img id="vemiyPreviewImage" class="vemiy-image-color-img" alt="" draggable="false">
       </div>
     </div>
   </div>
-  <div class="vimy-image-color-bottom">
-    <div class="vimy-image-color-block">
-      <div class="vimy-image-color-preview-block" id="vimyColorPreview"></div>
+  <div class="vemiy-image-color-bottom">
+    <div class="vemiy-image-color-block">
+      <div class="vemiy-image-color-preview-block" id="vemiyColorPreview"></div>
     </div>
-    <div class="vimy-image-color-block">
-      <div class="vimy-image-color-value-row">
+    <div class="vemiy-image-color-block">
+      <div class="vemiy-image-color-value-row">
         <label>HEX</label>
-        <code id="vimyHexValue">——</code>
-        <button class="vimy-image-color-mini-btn" id="vimyCopyHexBtn">复制</button>
+        <code id="vemiyHexValue">——</code>
+        <button class="vemiy-image-color-mini-btn" id="vemiyCopyHexBtn">复制</button>
       </div>
     </div>
-    <div class="vimy-image-color-block">
-      <div class="vimy-image-color-value-row">
+    <div class="vemiy-image-color-block">
+      <div class="vemiy-image-color-value-row">
         <label>RGB</label>
-        <code id="vimyRgbValue">——</code>
-        <button class="vimy-image-color-mini-btn" id="vimyCopyRgbBtn">复制</button>
+        <code id="vemiyRgbValue">——</code>
+        <button class="vemiy-image-color-mini-btn" id="vemiyCopyRgbBtn">复制</button>
       </div>
     </div>
   </div>
-  <div class="vimy-image-color-foot">所有处理均在本地完成 - 图片不上传服务器</div>
+  <div class="vemiy-image-color-foot">所有处理均在本地完成 - 图片不上传服务器</div>
 </div>
 
 <style>
   /* 图片取色工具样式（适配暗色玻璃主题） */
-  .vimy-image-color {
+  .vemiy-image-color {
     width: 100%;
     max-width: 100%;
     margin: 0;
     padding: 0.5rem 0 1rem;
   }
-  .vimy-image-color * {
+  .vemiy-image-color * {
     box-sizing: border-box;
   }
-  .vimy-image-color-head {
+  .vemiy-image-color-head {
     display: flex;
     align-items: center;
     gap: 0.9rem;
     flex-wrap: wrap;
     margin-bottom: 1rem;
   }
-  .vimy-image-color-sub {
+  .vemiy-image-color-sub {
     font-size: 0.95rem;
     line-height: 1.8;
     opacity: 0.75;
   }
-  .vimy-image-color-btn,
-  .vimy-image-color-mini-btn {
+  .vemiy-image-color-btn,
+  .vemiy-image-color-mini-btn {
     border: none;
     border-radius: 999px;
     cursor: pointer;
     transition: 0.2s;
     color: inherit;
   }
-  .vimy-image-color-btn {
+  .vemiy-image-color-btn {
     padding: 0.78rem 1.25rem;
     font-size: 0.95rem;
     font-weight: 600;
@@ -79,10 +79,10 @@ comments: false
     color: #fff;
     flex-shrink: 0;
   }
-  .vimy-image-color-btn:hover {
+  .vemiy-image-color-btn:hover {
     filter: brightness(0.88);
   }
-  .vimy-image-color-mini-btn {
+  .vemiy-image-color-mini-btn {
     min-width: 64px;
     height: 24px;
     padding: 0 0.72rem;
@@ -90,13 +90,13 @@ comments: false
     font-weight: 500;
     background: rgba(255, 255, 255, 0.1);
   }
-  .vimy-image-color-mini-btn:hover {
+  .vemiy-image-color-mini-btn:hover {
     background: rgba(255, 255, 255, 0.16);
   }
-  .vimy-image-color-file-input {
+  .vemiy-image-color-file-input {
     display: none;
   }
-  .vimy-image-color-preview {
+  .vemiy-image-color-preview {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 18px;
     background: rgba(30, 30, 30, 0.6);
@@ -109,11 +109,11 @@ comments: false
     justify-content: center;
     margin-bottom: 0.85rem;
   }
-  .vimy-image-color-preview.drag-over {
+  .vemiy-image-color-preview.drag-over {
     border-color: #49b1f5;
     background: rgba(73, 177, 245, 0.08);
   }
-  .vimy-image-color-placeholder {
+  .vemiy-image-color-placeholder {
     border-radius: 14px;
     min-height: 580px;
     display: flex;
@@ -122,15 +122,15 @@ comments: false
     padding: 1.4rem 1rem;
     opacity: 0.68;
   }
-  .vimy-image-color-placeholder-inner {
+  .vemiy-image-color-placeholder-inner {
     width: 100%;
   }
-  .vimy-image-color-drag-tip {
+  .vemiy-image-color-drag-tip {
     font-size: 0.78rem;
     margin-top: 0.45rem;
     opacity: 0.72;
   }
-  .vimy-image-color-img {
+  .vemiy-image-color-img {
     display: none;
     max-width: 100%;
     max-height: 620px;
@@ -142,38 +142,38 @@ comments: false
     user-select: none;
     -webkit-user-drag: none;
   }
-  .vimy-image-color-bottom {
+  .vemiy-image-color-bottom {
     display: grid;
     grid-template-columns: 140px minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.75rem;
     align-items: stretch;
   }
-  .vimy-image-color-block {
+  .vemiy-image-color-block {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     background: rgba(30, 30, 30, 0.6);
     padding: 0.55rem 0.65rem;
   }
-  .vimy-image-color-preview-block {
+  .vemiy-image-color-preview-block {
     width: 100%;
     height: 44px;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(255, 255, 255, 0.08);
   }
-  .vimy-image-color-value-row {
+  .vemiy-image-color-value-row {
     display: flex;
     align-items: center;
     gap: 0.65rem;
     min-height: 44px;
   }
-  .vimy-image-color-value-row label {
+  .vemiy-image-color-value-row label {
     width: 38px;
     flex-shrink: 0;
     font-size: 0.86rem;
     font-weight: 600;
   }
-  .vimy-image-color-value-row code {
+  .vemiy-image-color-value-row code {
     flex: 1;
     min-width: 0;
     padding: 0.28rem 0.68rem;
@@ -186,7 +186,7 @@ comments: false
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .vimy-image-color-foot {
+  .vemiy-image-color-foot {
     font-size: 0.76rem;
     opacity: 0.62;
     text-align: center;
@@ -195,28 +195,28 @@ comments: false
     border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
   @media (max-width: 980px) {
-    .vimy-image-color-preview {
+    .vemiy-image-color-preview {
       min-height: 420px;
     }
-    .vimy-image-color-placeholder {
+    .vemiy-image-color-placeholder {
       min-height: 380px;
     }
-    .vimy-image-color-img {
+    .vemiy-image-color-img {
       max-height: 420px;
     }
-    .vimy-image-color-bottom {
+    .vemiy-image-color-bottom {
       grid-template-columns: 1fr;
     }
   }
   @media (max-width: 640px) {
-    .vimy-image-color-head {
+    .vemiy-image-color-head {
       align-items: stretch;
     }
-    .vimy-image-color-btn,
-    .vimy-image-color-mini-btn {
+    .vemiy-image-color-btn,
+    .vemiy-image-color-mini-btn {
       width: 100%;
     }
-    .vimy-image-color-value-row {
+    .vemiy-image-color-value-row {
       flex-wrap: wrap;
     }
   }
@@ -227,16 +227,16 @@ comments: false
   (() => {
     const $ = id => document.getElementById(id);
     const els = {
-      fileInput: $('vimyFileInput'),
-      uploadBtn: $('vimyUploadBtn'),
-      previewArea: $('vimyPreviewArea'),
-      previewImage: $('vimyPreviewImage'),
-      emptyTip: $('vimyEmptyTip'),
-      colorPreview: $('vimyColorPreview'),
-      hexValue: $('vimyHexValue'),
-      rgbValue: $('vimyRgbValue'),
-      copyHexBtn: $('vimyCopyHexBtn'),
-      copyRgbBtn: $('vimyCopyRgbBtn')
+      fileInput: $('vemiyFileInput'),
+      uploadBtn: $('vemiyUploadBtn'),
+      previewArea: $('vemiyPreviewArea'),
+      previewImage: $('vemiyPreviewImage'),
+      emptyTip: $('vemiyEmptyTip'),
+      colorPreview: $('vemiyColorPreview'),
+      hexValue: $('vemiyHexValue'),
+      rgbValue: $('vemiyRgbValue'),
+      copyHexBtn: $('vemiyCopyHexBtn'),
+      copyRgbBtn: $('vemiyCopyRgbBtn')
     };
     let sourceCanvas = null;
     let sourceCtx = null;
