@@ -4,43 +4,43 @@ date: 2026-04-17 00:00:00
 comments: true
 ---
 
-<div class="vimy-tools-page">
-  <input id="vimyToolsSearch" class="vimy-tools-search" type="text" placeholder="搜索工具...">
-  <div id="vimyToolsList" class="vimy-tools-list">
-    <a class="vimy-tools-item" href="/tools/random-string/">
-      <div class="vimy-tools-icon" aria-hidden="true">
+<div class="vemiy-tools-page">
+  <input id="vemiyToolsSearch" class="vemiy-tools-search" type="text" placeholder="搜索工具...">
+  <div id="vemiyToolsList" class="vemiy-tools-list">
+    <a class="vemiy-tools-item" href="/tools/random-string/">
+      <div class="vemiy-tools-icon" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.7577 11.8281L18.6066 3.97919L20.0208 5.3934L18.6066 6.80761L21.0815 9.28249L19.6673 10.6967L17.1924 8.22183L15.7782 9.63604L17.8995 11.7574L16.4853 13.1716L14.364 11.0503L12.1719 13.2423C13.4581 15.1837 13.246 17.8251 11.5355 19.5355C9.58291 21.4882 6.41709 21.4882 4.46447 19.5355C2.51184 17.5829 2.51184 14.4171 4.46447 12.4645C6.17493 10.754 8.81633 10.5419 10.7577 11.8281ZM10.1213 18.1213C11.2929 16.9497 11.2929 15.0503 10.1213 13.8787C8.94975 12.7071 7.05025 12.7071 5.87868 13.8787C4.70711 15.0503 4.70711 16.9497 5.87868 18.1213C7.05025 19.2929 8.94975 19.2929 10.1213 18.1213Z"></path></svg>
       </div>
-      <div class="vimy-tools-text">
-        <div class="vimy-tools-name">随机字符串生成器</div>
-        <div class="vimy-tools-desc">生成安全 token、临时密码和一次性凭证。</div>
+      <div class="vemiy-tools-text">
+        <div class="vemiy-tools-name">随机字符串生成器</div>
+        <div class="vemiy-tools-desc">生成安全 token、临时密码和一次性凭证。</div>
       </div>
     </a>
-    <a class="vimy-tools-item" href="/tools/image-color/">
-      <div class="vimy-tools-icon" aria-hidden="true">
+    <a class="vemiy-tools-item" href="/tools/image-color/">
+      <div class="vemiy-tools-icon" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C17.5222 2 22 5.97778 22 10.8889C22 13.9556 19.5111 16.4444 16.4444 16.4444H14.4778C13.5556 16.4444 12.8111 17.1889 12.8111 18.1111C12.8111 18.5333 12.9778 18.9222 13.2333 19.2111C13.5 19.5111 13.6667 19.9 13.6667 20.3333C13.6667 21.2556 12.9 22 12 22C6.47778 22 2 17.5222 2 12C2 6.47778 6.47778 2 12 2ZM10.8111 18.1111C10.8111 16.0843 12.451 14.4444 14.4778 14.4444H16.4444C18.4065 14.4444 20 12.851 20 10.8889C20 7.1392 16.4677 4 12 4C7.58235 4 4 7.58235 4 12C4 16.19 7.2226 19.6285 11.324 19.9718C10.9948 19.4168 10.8111 18.7761 10.8111 18.1111ZM7.5 12C6.67157 12 6 11.3284 6 10.5C6 9.67157 6.67157 9 7.5 9C8.32843 9 9 9.67157 9 10.5C9 11.3284 8.32843 12 7.5 12ZM16.5 12C15.6716 12 15 11.3284 15 10.5C15 9.67157 15.6716 9 16.5 9C17.3284 9 18 9.67157 18 10.5C18 11.3284 17.3284 12 16.5 12ZM12 9C11.1716 9 10.5 8.32843 10.5 7.5C10.5 6.67157 11.1716 6 12 6C12.8284 6 13.5 6.67157 13.5 7.5C13.5 8.32843 12.8284 9 12 9Z"></path></svg>
       </div>
-      <div class="vimy-tools-text">
-        <div class="vimy-tools-name">图片颜色提取器</div>
-        <div class="vimy-tools-desc">点击图片任意位置提取颜色，支持 HEX / RGB。</div>
+      <div class="vemiy-tools-text">
+        <div class="vemiy-tools-name">图片颜色提取器</div>
+        <div class="vemiy-tools-desc">点击图片任意位置提取颜色，支持 HEX / RGB。</div>
       </div>
     </a>
   </div>
-  <div id="vimyToolsEmpty" class="vimy-tools-empty">没有匹配的工具。</div>
+  <div id="vemiyToolsEmpty" class="vemiy-tools-empty">没有匹配的工具。</div>
 </div>
 
 <style>
   /* 工具列表页样式（适配暗色玻璃主题） */
-  .vimy-tools-page {
+  .vemiy-tools-page {
     width: 100%;
     max-width: 100%;
     margin: 0;
     padding: 0.5rem 0 1rem;
   }
-  .vimy-tools-page * {
+  .vemiy-tools-page * {
     box-sizing: border-box;
   }
-  .vimy-tools-search {
+  .vemiy-tools-search {
     width: 100%;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
@@ -52,16 +52,16 @@ comments: true
     font-size: 0.95rem;
     margin-bottom: 1rem;
   }
-  .vimy-tools-search:focus {
+  .vemiy-tools-search:focus {
     border-color: #49b1f5;
     box-shadow: 0 0 0 3px rgba(73, 177, 245, 0.12);
   }
-  .vimy-tools-list {
+  .vemiy-tools-list {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
   }
-  .vimy-tools-item {
+  .vemiy-tools-item {
     display: flex;
     align-items: flex-start;
     gap: 0.9rem;
@@ -74,13 +74,13 @@ comments: true
     box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
     transition: 0.2s;
   }
-  .vimy-tools-item:hover {
+  .vemiy-tools-item:hover {
     color: inherit !important;
     text-decoration: none !important;
     border-color: rgba(255, 255, 255, 0.18);
     transform: translateY(-2px);
   }
-  .vimy-tools-icon {
+  .vemiy-tools-icon {
     width: 22px;
     flex-shrink: 0;
     opacity: 0.92;
@@ -90,48 +90,48 @@ comments: true
     align-items: center;
     justify-content: center;
   }
-  .vimy-tools-icon svg {
+  .vemiy-tools-icon svg {
     width: 1.1em;
     height: 1.1em;
     fill: currentColor;
     display: block;
   }
-  .vimy-tools-text {
+  .vemiy-tools-text {
     min-width: 0;
     flex: 1;
   }
-  .vimy-tools-name {
+  .vemiy-tools-name {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.5;
     margin-bottom: 0.18rem;
   }
-  .vimy-tools-desc {
+  .vemiy-tools-desc {
     font-size: 0.88rem;
     line-height: 1.7;
     opacity: 0.68;
   }
-  .vimy-tools-empty {
+  .vemiy-tools-empty {
     display: none;
     padding: 1rem 0.15rem;
     font-size: 0.9rem;
     opacity: 0.65;
   }
   @media (max-width: 640px) {
-    .vimy-tools-search {
+    .vemiy-tools-search {
       font-size: 0.92rem;
       padding: 0.75rem 0.9rem;
     }
-    .vimy-tools-name {
+    .vemiy-tools-name {
       font-size: 0.96rem;
     }
-    .vimy-tools-desc {
+    .vemiy-tools-desc {
       font-size: 0.84rem;
     }
-    .vimy-tools-item {
+    .vemiy-tools-item {
       gap: 0.75rem;
     }
-    .vimy-tools-icon {
+    .vemiy-tools-icon {
       width: 20px;
     }
   }
@@ -140,10 +140,10 @@ comments: true
 <script>
   /* 搜索过滤工具列表 */
   (function () {
-    const input = document.getElementById('vimyToolsSearch');
-    const list = document.getElementById('vimyToolsList');
-    const empty = document.getElementById('vimyToolsEmpty');
-    const items = Array.from(list.querySelectorAll('.vimy-tools-item'));
+    const input = document.getElementById('vemiyToolsSearch');
+    const list = document.getElementById('vemiyToolsList');
+    const empty = document.getElementById('vemiyToolsEmpty');
+    const items = Array.from(list.querySelectorAll('.vemiy-tools-item'));
 
     input.addEventListener('input', function () {
       const keyword = input.value.trim().toLowerCase();
