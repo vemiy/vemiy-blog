@@ -13,9 +13,8 @@ comments: false
 - **评论**：使用 Twikoo 评论系统（部署于 twikoo.vemiy.com）。提交评论时，你填写的昵称、邮箱、网址会存储于评论服务中，用于展示评论内容与接收回复通知。
 - **访问统计**：使用 Vercount 统计服务记录访问量与访客数，用于了解站点访问情况。统计数据不含可识别个人身份的信息。
 
-## Cookie 与广告
+## Cookie
 
-- **广告**：本站展示 Google AdSense 广告。Google 及其合作伙伴可能使用 Cookie 或类似技术，根据你的访问记录展示广告。详见 [Google 广告 Cookie 政策](https://policies.google.com/technologies/ads)。
 - **其他**：评论服务可能使用 Cookie 保存你的评论信息，方便下次填写。
 
 你可以在浏览器设置中禁用 Cookie，但可能影响部分功能（如评论）。
@@ -24,14 +23,13 @@ comments: false
 
 本站使用以下第三方服务，其数据处理遵循各自隐私政策：
 
-- Google AdSense（广告）
 - Twikoo（评论）
 - Vercount（统计）
 - Cloudflare（托管与 CDN）
 
 ## 信息使用
 
-本站收集的信息仅用于：展示评论内容、统计访问情况、投放广告。本站不出售、不出租你的任何信息。
+本站收集的信息仅用于：展示评论内容、统计访问情况。本站不出售、不出租你的任何信息。
 
 ## 你的权利
 

@@ -545,19 +545,19 @@ google_tag_manager:
 # 广告
 # --------------------------------------
 
-# Google AdSense（未启用，广告代码已通过 inject 和 ad 配置加入）
+# Google AdSense（未启用）
 google_adsense:
   enable: false               # 是否启用 AdSense
-  auto_ads: true              # 是否启用自动广告
-  js: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js   # 广告脚本地址
+  auto_ads: false             # 客户端显示自动广告
+  js:                         # 广告脚本地址
   client:                     # 广告客户端 ID
-  enable_page_level_ads: true # 是否启用网页级广告
+  enable_page_level_ads: false # 是否启用网页级广告
 
 # 手动插入广告（不需要留空）
 ad:
   index:                      # 首页广告（每三篇文章插入一条）
   aside:                      # 侧边栏广告
-  post: '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2932938307892796" data-ad-slot="1005927038" data-ad-format="auto" data-full-width-responsive="true"></ins><script data-pjax>(adsbygoogle = window.adsbygoogle || []).push({});</script>'   # 文章底部广告（分页前，data-pjax 让 PJAX 跳转后也加载）
+  post:                       # 文章底部广告
 
 # --------------------------------------
 # 站点验证
@@ -789,11 +789,9 @@ inject:
     - <link rel="stylesheet" href="/css/custom.css?v=20260814b">   # 自定义样式
     - <script>(function(){function fb(t){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}document.body.removeChild(a)}function copyUrl(){var u=location.href;var ok=function(){btf&&btf.snackbarShow?btf.snackbarShow("链接已复制"):alert("链接已复制")};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){fb(u);ok()})}else{fb(u);ok()}}document.addEventListener("click",function(e){var b=e.target.closest("#copy-url");if(b)copyUrl()})})();</script>   # 右侧复制链接按钮
   bottom:
-    - <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2932938307892796" crossorigin="anonymous"></script>   # Google AdSense 脚本（延迟加载，不阻塞首屏）
     - <script>(function(){var el=document.getElementById('site-runtime');if(!el)return;var start=new Date('2026-03-16T00:00:00.000Z').getTime();function pad(n){return n<10?'0'+n:String(n)}function tick(){var diff=Math.floor((Date.now()-start)/1000);var s=diff%60;diff=Math.floor(diff/60);var m=diff%60;diff=Math.floor(diff/60);var h=diff%24;var d=Math.floor(diff/24);document.getElementById('rt-d').textContent=d;document.getElementById('rt-h').textContent=pad(h);document.getElementById('rt-m').textContent=pad(m);document.getElementById('rt-s').textContent=pad(s)}tick();setInterval(tick,1000)})();</script>   # 建站运行时长
     - <script>(function(){if(window.__clickEffectLoaded)return;window.__clickEffectLoaded=true;document.addEventListener("mousedown",function(e){if(e.button!==0)return;var effect=document.createElement("div");effect.className="click-effect";document.body.appendChild(effect);var w=effect.offsetWidth,h=effect.offsetHeight;effect.style.left=(e.clientX-w*0.50)+"px";effect.style.top=(e.clientY-h*0.54)+"px";setTimeout(function(){effect.remove()},340)})})();</script>   # 鼠标点击特效（点击出现雪碧图动画）
     - <script>(function(){var map={".card-categories .item-headline":"/categories/",".card-tags .item-headline":"/tags/",".card-archives .item-headline":"/archives/"};function addArrows(){Object.keys(map).forEach(function(sel){var h=document.querySelector(sel);if(h&&!h.querySelector(".card-more-btn")){var a=document.createElement("a");a.className="card-more-btn";a.href=map[sel];a.title="查看更多";var i=document.createElement("i");i.className="fas fa-angle-right";a.appendChild(i);h.appendChild(a)}})}addArrows();window.btf&&btf.addGlobalFn("pjaxComplete",addArrows,"cardMoreBtn")})();</script>   # 侧边栏卡片查看更多箭头（PJAX 跳转后重新添加）
-    - <script>(function(){function watch(){var n=0;var t=setInterval(function(){n++;var any=Array.from(document.querySelectorAll(".ads-wrap")).some(function(w){var ins=w.querySelector("ins.adsbygoogle");return ins&&ins.getAttribute("data-ad-status")==="filled"});if(any||n>=6){clearInterval(t);if(!any){document.querySelectorAll(".ads-wrap").forEach(function(w){var ins=w.querySelector("ins.adsbygoogle");if(!ins||ins.getAttribute("data-ad-status")!=="filled")w.style.display="none"})}}},1000)}watch();window.btf&&btf.addGlobalFn("pjaxComplete",watch,"watchAds")})();</script>   # 广告加载后未填充（无 data-ad-status=filled）再隐藏广告位
     - <script>(function(){var el=document.createElement("div");el.id="fps";el.style.cssText="position:fixed;right:12px;bottom:12px;z-index:999;font-size:12px;font-weight:normal;color:#aaa;background:none;border:none;padding:0;margin:0;backdrop-filter:none;box-shadow:none;text-shadow:none;pointer-events:none";document.body.appendChild(el);var fps=0;var last=Date.now();function step(){var now=Date.now();fps++;if(now-last>=1000){el.textContent=fps+" FPS";fps=0;last=now}requestAnimationFrame(step)}requestAnimationFrame(step)})();</script>   # 右下角帧率显示（60 FPS 纯文字）
 
 # CDN 设置（不要修改，除非知道用途）
