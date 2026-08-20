@@ -14,14 +14,9 @@ comments: true
 - **内容方向**：建站运维、NAS、软件工具
 - **原创为主**：文章均为个人实践记录，转载会注明来源
 
-## 关于博主
-
-- 邮箱：`hi@vemiy.com`
-- GitHub：[vemiy](https://github.com/vemiy)
-- Bilibili：[vemiy](https://space.bilibili.com/520992461)
-
 ## 联系与交流
 
+- 联系邮箱：`hi@vemiy.com`
 - 文章相关疑问欢迎在评论区留言
 - 友链申请见[友链页](/links/)
 - 隐私相关见[隐私政策](/privacy/)
@@ -30,13 +25,7 @@ comments: true
 
 **版权与许可**
 
-本站原创文章、图片及其他原创内容，除特别注明外，均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)（知识共享-署名-非商业性使用-相同方式共享 4.0 国际）许可协议。
-
-署名请您在使用或转载时：
-- 注明作者与原文链接（本站文章标题通常带原文 URL）
-- 非商业性使用（不得用于商业目的）
-- 相同方式共享（衍生作品须使用相同许可协议发布）
-- 转载时请保留文章来源说明
+本站原创文章、图片及其他原创内容，除特别注明外，均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans) 许可协议。
 
 **评论与留言**
 
