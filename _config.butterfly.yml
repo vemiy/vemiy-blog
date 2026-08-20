@@ -467,7 +467,10 @@ twikoo:
   region:                     # 环境地域
   visitor: false              # 是否用 Twikoo 访问量作页面浏览量
   option:
-    placeholder: 写下你的评论...   # 评论框占位提示
+    placeholder: |-
+      写下你的评论...
+      填写QQ邮箱自动获取QQ头像
+      其他邮箱可在weavatar.com绑定头像
 
 # Giscus
 giscus:
