@@ -1,7 +1,7 @@
 ---
 title: 关于
 date: 2026-08-11 00:00:00
-updated: 2026-08-19
+updated: 2026-08-20
 comments: true
 ---
 
