@@ -278,3 +278,13 @@
     border-color: rgba(255, 255, 255, 0.18);
     transform: translateY(calc(-50% - 1px));
 }
+
+/* ========== Twikoo 评论输入框 ========== */
+/* 输入框默认加高（压过 Element UI autosize 内联 min-height） */
+.tk-input .el-textarea__inner {
+    min-height: 144px !important;
+}
+/* 占位符颜色写死，避免暗色模式 --font-color 解析成浅色 */
+.tk-input .el-textarea__inner::placeholder {
+    color: #9c9c9c !important;
+}
