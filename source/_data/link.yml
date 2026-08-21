@@ -1,6 +1,6 @@
 # 友链数据（格式：名称 / 链接 / 头像 / 简介）
 - class_name: 友情链接
-  class_desc: 按名称编码顺序排列
+  class_desc: 按名称编码顺序排列，点我申请友链
   link_list:
     - name: 安知鱼
       link: https://blog.anheyu.com/

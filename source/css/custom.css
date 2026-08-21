@@ -284,7 +284,23 @@
 .tk-input .el-textarea__inner {
     min-height: 144px !important;
 }
-/* 占位符颜色写死，避免暗色模式 --font-color 解析成浅色 */
+/* 评论输入框提示词颜色写死 */
 .tk-input .el-textarea__inner::placeholder {
     color: #9c9c9c !important;
+}
+
+/* 友链标题悬停变色 */
+h2[id="友情链接"]:hover {
+    color: #49b1f5;
+    cursor: pointer;
+}
+h2[id="友情链接"]:hover .flink-apply-btn {
+    color: var(--font-color) !important;
+}
+/* 介绍区申请链接 */
+.flink-apply-link {
+    cursor: pointer;
+}
+.flink-apply-link:hover {
+    color: #49b1f5;
 }
