@@ -1,6 +1,7 @@
 ---
 title: 从 Halo 迁移到 Hexo 静态博客
 date: 2026-08-12T19:00:00
+updated: 2026-08-12T19:00:00
 tags:
   - Hexo
 categories:

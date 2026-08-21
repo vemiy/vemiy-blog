@@ -1,6 +1,7 @@
 ---
 title: DeepSeek Harness初体验
 date: 2026-08-14T15:13:00
+updated: 2026-08-14T15:13:00
 description: DeepSeek 发布了开发者预览版 Harness，一个「一切皆插件」的开源智能体框架。记录第一次上手 Web UI 的初体验感受。
 categories:
   - 软件

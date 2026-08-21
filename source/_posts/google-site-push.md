@@ -1,6 +1,7 @@
 ---
 title: Google 站点推送配置
 date: 2026-08-15
+updated: 2026-08-15
 description: 静态博客接入 Google Indexing API 主动推送 URL 的完整配置流程，包括服务账号、API 启用、Search Console 权限设置与常见问题。
 categories:
   - 建站
