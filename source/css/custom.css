@@ -333,3 +333,13 @@ h2[id="友情链接"]:hover .flink-apply-btn {
 #content-inner > :first-child:not(#recent-posts) {
     animation: vemiy-content-focus 0.42s ease-out both;
 }
+
+/* 禁用主题旧的页面入场动画（旧 index.css 缓存可能仍绑定） */
+#content-inner,
+#footer,
+#page-header:not(.full_page),
+#nav.show,
+#site-title,
+#site-subtitle {
+    animation: none !important;
+}

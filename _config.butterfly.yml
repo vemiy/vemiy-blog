@@ -789,7 +789,7 @@ css_prefix: true              # 是否添加浏览器前缀
 # head 插入到 </head> 前，bottom 插入到 </body> 前
 inject:
   head:
-    - <link rel="stylesheet" href="/css/custom.css?v=20260822l">   # 自定义样式
+    - <link rel="stylesheet" href="/css/custom.css?v=20260822m">   # 自定义样式
     - <script>(function(){function fb(t){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}document.body.removeChild(a)}function copyUrl(){var u=location.href;var ok=function(){btf&&btf.snackbarShow?btf.snackbarShow("链接已复制"):alert("链接已复制")};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){fb(u);ok()})}else{fb(u);ok()}}document.addEventListener("click",function(e){var b=e.target.closest("#copy-url");if(b)copyUrl()})})();</script>   # 右侧复制链接按钮
   bottom:
     - <script>(function(){var el=document.getElementById('site-runtime');if(!el)return;var start=new Date('2026-03-16T00:00:00.000Z').getTime();function pad(n){return n<10?'0'+n:String(n)}function tick(){var diff=Math.floor((Date.now()-start)/1000);var s=diff%60;diff=Math.floor(diff/60);var m=diff%60;diff=Math.floor(diff/60);var h=diff%24;var d=Math.floor(diff/24);document.getElementById('rt-d').textContent=d;document.getElementById('rt-h').textContent=pad(h);document.getElementById('rt-m').textContent=pad(m);document.getElementById('rt-s').textContent=pad(s)}tick();setInterval(tick,1000)})();</script>   # 建站运行时长
