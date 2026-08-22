@@ -20,7 +20,7 @@
     color: var(--text-highlight-color);
     font-weight: 600;
     margin: 0 2px;
-    /* 沿用站点默认字体，数字用等宽数字 */
+    /* 数字用等宽数字 */
     font-variant-numeric: tabular-nums;
 }
 /* 页脚底部版权行 */
@@ -194,10 +194,13 @@
 }
 
 /* ========== 顶部菜单固定不动 ========== */
-#page-header #nav {
-    background: rgba(13, 13, 18, 0.55);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+#page-header #nav,
+#page-header.nav-visible #nav,
+#page-header.nav-fixed #nav,
+#page-header.not-top-img #nav {
+    background: rgba(13, 13, 18, 0.55) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
 }
 
 /* 下拉菜单：子菜单紧贴父级底部 */
@@ -208,6 +211,16 @@
 #nav .menus_items .menus_item .menus_item_child:before {
     top: -12px;
     height: 24px;
+}
+
+/* 导航栏保持静止 */
+#page-header,
+#page-header #nav,
+#page-header #nav.show,
+#page-header.nav-visible {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
 }
 
 /* 所有页面横幅与首页统一（移动端），文章顶部信息调整 */
@@ -280,7 +293,7 @@
 }
 
 /* ========== Twikoo 评论输入框 ========== */
-/* 输入框默认加高（压过 Element UI autosize 内联 min-height） */
+/* 输入框默认加高 */
 .tk-input .el-textarea__inner {
     min-height: 144px !important;
 }
@@ -303,4 +316,20 @@ h2[id="友情链接"]:hover .flink-apply-btn {
 }
 .flink-apply-link:hover {
     color: #49b1f5;
+}
+
+/* 内容区动态对焦 */
+@keyframes vemiy-content-focus {
+    from {
+        opacity: 0.72;
+        filter: blur(3px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+#recent-posts .recent-post-item,
+#content-inner > :first-child:not(#recent-posts) {
+    animation: vemiy-content-focus 0.42s ease-out both;
 }
