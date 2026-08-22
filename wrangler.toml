@@ -1,0 +1,7 @@
+name = "vemiy-blog"
+compatibility_date = "2026-08-22"
+
+# 纯静态资源模式：不写 Worker 脚本，所有请求走 Assets 通道（免费不限量）
+[assets]
+  directory = "./public"
+  not_found_handling = "404-page"

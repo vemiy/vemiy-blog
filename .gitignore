@@ -10,3 +10,4 @@ _multiconfig.yml
 # Google 服务账号密钥（不入库）
 google-key.json
 _config.yml.bak-*
+.wrangler/
