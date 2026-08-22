@@ -21,6 +21,9 @@
   Expires: 0
 
 # 静态资源：缓存一年（文件名带 hash 或版本号，更新时换新 URL）
+# index.css：主题生成，URL 版本号固定（?v=主题版本），不随内容变化，改短缓存以便更新生效
+/index.css
+  Cache-Control: public, max-age=3600, must-revalidate
 /*.css
   Cache-Control: public, max-age=31536000, immutable
 /*.js
