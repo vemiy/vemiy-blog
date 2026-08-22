@@ -126,3 +126,8 @@ nofollow:
   exclude:                      # 不处理的域名（写完整子域）
     - 'vemiy.com'
     - 'www.vemiy.com'
+
+# Hexo-hash：静态资源自动加内容哈希版本号（内容变 URL 变，破除缓存）
+hash:
+  enable: true                  # 是否启用
+
