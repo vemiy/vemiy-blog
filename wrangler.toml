@@ -1,5 +1,11 @@
 name = "vemiy-blog"
 compatibility_date = "2026-08-22"
+workers_dev = true
+
+# 路由：让 www.vemiy.com 的流量走这个 Worker
+routes = [
+  { pattern = "www.vemiy.com/*", zone_name = "vemiy.com" }
+]
 
 # 纯静态资源模式：不写 Worker 脚本，所有请求走 Assets 通道（免费不限量）
 [assets]
