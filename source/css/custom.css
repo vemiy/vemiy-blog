@@ -30,10 +30,7 @@
     font-size: 0.95em;
 }
 
-/* 文章正文两端对齐 */
-#article-container {
-    text-align: justify;
-}
+
 /* 文章图片按宽高比占位，高度自适应 */
 #article-container img {
     height: auto;
@@ -334,6 +331,28 @@ h2[id="友情链接"]:hover .flink-apply-btn {
     animation: vemiy-content-focus 0.42s ease-out both;
 }
 
+/* 导航菜单水平排列并文字垂直居中 */
+#menus {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+#nav .menus_items {
+  display: flex;
+  align-items: stretch;
+}
+#nav .menus_items .menus_item,
+#nav #search-button {
+  display: flex;
+  align-items: center;
+}
+/* 下划线占位位移补偿 */
+#nav .site-page {
+  transform: translateY(3px);
+}
+
+
+
 /* 禁用主题旧的页面入场动画（旧 index.css 缓存可能仍绑定） */
 #content-inner,
 #footer,
@@ -343,3 +362,6 @@ h2[id="友情链接"]:hover .flink-apply-btn {
 #site-subtitle {
     animation: none !important;
 }
+
+
+

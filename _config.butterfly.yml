@@ -601,7 +601,7 @@ tag_ui:                       # 标签页样式（index 同首页 / default 同�
 
 rounded_corners_ui: true      # 界面元素是否使用圆角
 
-text_align_justify: false     # 文章是否两端对齐
+text_align_justify: true      # 文章是否两端对齐
 
 mask:
   header: false               # 头部是否加遮罩
@@ -695,7 +695,7 @@ clickShowText:                # 鼠标点击文字特效
 # 灯箱设置
 # --------------------------------------
 
-lightbox:                     # 图片灯箱（fancybox / medium_zoom，空为不启用）
+lightbox: fancybox             # 图片灯箱（fancybox / medium_zoom，空为不启用）
 
 # --------------------------------------
 # 标签插件设置
