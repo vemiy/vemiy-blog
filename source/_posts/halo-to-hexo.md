@@ -1,7 +1,7 @@
 ---
 title: 从 Halo 迁移到 Hexo 静态博客
 date: 2026-08-12T19:00:00
-updated: 2026-08-12T19:00:00
+updated: 2026-08-23
 tags:
   - Hexo
 categories:
@@ -18,7 +18,7 @@ draft: false
 
 - **国内访问慢**：动态站每个页面都要实时渲染，套上 CDN 和缓存后虽然算能看，但缓存规则花了不少功夫，属于治标不治本。
 - **维护成本**：服务器要常驻跑容器和数据库，还有插件更新、备份这些事，博客本身却没什么动态功能，而静态站足够单纯，不会把一个简单的博客搞那么复杂。
-- **部署成本几乎为零**：不需要自己准备一台服务器，直接丢到 Cloudflare Pages 免费托管，域名绑定完就完事。
+- **部署成本几乎为零**：不需要自己准备一台服务器，直接部署到 Cloudflare 的 pages 或者 Workers上面。
 
 ## 迁移前备份
 
@@ -64,11 +64,10 @@ Halo 的评论分散在两个实体里：访客发的评论在 `comments`，回�
 
 ## 部署上线
 
-部署用的是 Cloudflare Pages：
+部署用的是 Cloudflare Workers（静态资源模式）+ Cloudflare Workers Builds 自动构建：
 
 1. 博客源码推到 GitHub 仓库。
-2. Cloudflare Pages 关联仓库，构建命令填 `npx hexo generate`，输出目录 `public`。
-3. 绑定自定义域名 `www.vemiy.com`。
-4. 确认线上正常后，停掉旧的 Halo 容器。
-
-之后的发布流程变成：写完文章 → git 推送 → 一两分钟后自动上线，全程不需要碰服务器。
+2. Cloudflare Workers 通过 `wrangler.toml` 配置，静态资源直接部署，免费不限量。
+3. CF 后台关联 GitHub 仓库，push 到 main 自动执行 `hexo generate` + `wrangler deploy`。
+4. 域名通过 DNSPod 线路分流：国内走优选 IP（加速），海外走标准 Cloudflare。
+5. 确认线上正常后，停掉旧的 Halo 容器。
