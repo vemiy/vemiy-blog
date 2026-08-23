@@ -335,30 +335,6 @@ h2[id="友情链接"]:hover .flink-apply-btn {
 }
 
 /* 禁用主题旧的页面入场动画（旧 index.css 缓存可能仍绑定） */
-
-/* 导航栏高度 */
-#page-header #nav {
-  height: 49px;
-}
-#page-header.nav-fixed #nav {
-  top: -49px;
-}
-#page-header.nav-visible:not(.fixed) #nav + .layout > .aside-content > .sticky_layout,
-#page-header.fixed #nav + .layout > .aside-content > .sticky_layout {
-  top: 59px;
-}
-#page-header.fixed #nav + .layout #card-toc .toc-content {
-  max-height: calc(100vh - 149px);
-}
-#menus {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-#nav .menus_items {
-  display: flex;
-  align-items: center;
-}
 #content-inner,
 #footer,
 #page-header:not(.full_page),
