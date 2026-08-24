@@ -47,14 +47,23 @@ export default {
   async fetch(request, env) {
     const response = await env.ASSETS.fetch(request)
 
-    // Only process HTML responses
     const contentType = response.headers.get('Content-Type') || ''
-    if (!contentType.includes('text/html')) return response
+    if (!contentType.includes('text/html')) {
+      console.log('[WORKER] skip non-HTML, type:', contentType)
+      return response
+    }
 
     try {
       const html = await response.text()
-      return new Response(obfuscateEmails(html), response)
-    } catch {
+      const hasEmail = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/i.test(html)
+      console.log('[WORKER] html len:', html.length, 'hasEmail:', hasEmail)
+      if (!hasEmail) return response
+      const out = obfuscateEmails(html)
+      const stillHas = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/i.test(out)
+      console.log('[WORKER] after obf stillHas:', stillHas)
+      return new Response(out, response)
+    } catch (e) {
+      console.log('[WORKER] error:', e.message)
       return response
     }
   }
