@@ -56,20 +56,22 @@ function obfuscateEmails(html) {
 
 export default {
   async fetch(request, env) {
+    console.log('[WORKER] fetch hit, url:', request.url)
     const response = await env.ASSETS.fetch(request)
-
-    // Only process HTML responses
-    const contentType = response.headers.get('Content-Type') || ''
-    if (!contentType.includes('text/html')) return response
+    const ct = response.headers.get('Content-Type') || ''
+    console.log('[WORKER] Content-Type:', ct)
+    if (!ct.includes('text/html')) return response
 
     try {
       const html = await response.text()
-      console.log('[DEBUG] html length:', html.length, 'contains email:', /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(html))
-      const obf = obfuscateEmails(html)
-      console.log('[DEBUG] obf length:', obf.length, 'still has email:', /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(obf))
-      return new Response(obf, response)
+      const hasEmail = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/i.test(html)
+      console.log('[WORKER] html len:', html.length, 'hasEmail:', hasEmail)
+      const out = obfuscateEmails(html)
+      const stillHas = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/i.test(out)
+      console.log('[WORKER] after obf stillHas:', stillHas)
+      return new Response(out, response)
     } catch (e) {
-      // On any error, return the original response unchanged
+      console.log('[WORKER] ERROR:', e.message)
       return response
     }
   }
