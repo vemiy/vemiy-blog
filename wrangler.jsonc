@@ -1,0 +1,12 @@
+{
+  "name": "vemiy-blog",
+  "compatibility_date": "2026-08-22",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "www.vemiy.com/*", "zone_name": "vemiy.com" }
+  ],
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}
