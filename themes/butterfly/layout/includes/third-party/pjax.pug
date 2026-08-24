@@ -27,8 +27,15 @@ script.
       scrollRestoration: true
     })
 
-    // 浏览器刷新时恢复滚动位置
-    history.scrollRestoration = 'auto'
+    // 普通刷新时恢复滚动位置
+    const savedScroll = sessionStorage.getItem('scrollPos')
+    if (savedScroll) {
+      const pos = JSON.parse(savedScroll)
+      window.scrollTo(pos[0], pos[1])
+    }
+    window.addEventListener('scroll', () => {
+      sessionStorage.setItem('scrollPos', JSON.stringify([window.scrollX, window.scrollY]))
+    }, { passive: true })
 
     const triggerPjaxFn = (val) => {
       if (!val) return
