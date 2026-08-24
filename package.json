@@ -12,7 +12,6 @@
     "version": "8.1.2"
   },
   "dependencies": {
-    "hexo-email-obfuscate": "file:E:\\Dev\\projects\\hexo-email-obfuscate",
     "hexo": "^8.0.0",
     "hexo-filter-nofollow": "^2.0.2",
     "hexo-generator-archive": "^2.0.0",
