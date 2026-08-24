@@ -10,13 +10,5 @@
     "directory": "./public",
     "binding": "ASSETS",
     "not_found_handling": "404-page"
-  },
-  "observability": {
-    "logs": {
-      "enabled": true,
-      "head_sampling_rate": 1,
-      "persist": true,
-      "invocation_logs": true
-    }
   }
 }
