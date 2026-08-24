@@ -51,7 +51,10 @@ export default {
 
     try {
       const html = await response.text()
-      return new Response(obfuscateEmails(html), response)
+      const out = obfuscateEmails(html)
+      const headers = new Headers(response.headers)
+      headers.set('X-Worker-Processed', 'true')
+      return new Response(out, { status: response.status, headers })
     } catch {
       return response
     }
