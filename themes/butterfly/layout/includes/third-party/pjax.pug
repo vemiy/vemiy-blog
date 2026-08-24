@@ -27,6 +27,9 @@ script.
       scrollRestoration: true
     })
 
+    // 浏览器刷新时恢复滚动位置
+    history.scrollRestoration = 'auto'
+
     const triggerPjaxFn = (val) => {
       if (!val) return
       Object.values(val).forEach(fn => {
