@@ -3,6 +3,7 @@ title: 关于
 date: 2026-08-11 00:00:00
 updated: 2026-08-20
 comments: true
+description: 本站介绍、建站运维与 NAS 技术分享，以及联系与友链说明
 ---
 
 欢迎访问 `www.vemiy.com`，这里分享自托管、建站运维、NAS 与互联网技术实践经验。

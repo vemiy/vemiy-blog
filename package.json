@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "hexo generate && node obfuscate-emails.js",
+    "build": "hexo generate && node obfuscate-emails.js --mode reveal-on-load",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
     "server": "hexo server"
