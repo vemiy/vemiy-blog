@@ -28,7 +28,7 @@ function revealSpan(email, label) {
   return `<span class="eo-reveal" data-e="${xorHex(email)}"${attr}>[email]</span>`
 }
 
-const DECODER_JS = '<script>(function(){function r(){for(var els=document.querySelectorAll("[data-e]"),i=0;i<els.length;i++){var el=els[i],h=el.getAttribute("data-e");if(!h)continue;for(var k=parseInt(h.slice(0,2),16),s="",j=2;j<h.length;j+=2)s+=String.fromCharCode(parseInt(h.substr(j,2),16)^k);var t=el.getAttribute("data-t");if(el.tagName==="A"){el.href="mailto:"+s;el.textContent=t||s}else{var a=document.createElement("a");a.href="mailto:"+s;a.textContent=t||s;el.textContent="";el.appendChild(a)}}}r();document.addEventListener("pjax:complete",r)})();</script>'
+const DECODER_JS = '<script>(function(){function r(){for(var els=document.querySelectorAll("[data-e]"),i=0;i<els.length;i++){var el=els[i],h=el.getAttribute("data-e");if(!h)continue;for(var k=parseInt(h.slice(0,2),16),s="",j=2;j<h.length;j+=2)s+=String.fromCharCode(parseInt(h.substr(j,2),16)^k);var t=el.getAttribute("data-t");if(el.tagName==="A"){el.href="mailto:"+s;if(t)el.textContent=t;else if(el.textContent==="[email]")el.textContent=s}else{var a=document.createElement("a");a.href="mailto:"+s;a.textContent=t||s;el.textContent="";el.appendChild(a)}}}r();document.addEventListener("pjax:complete",r)})();</script>'
 
 function splitHead(html) {
   const headEnd = html.indexOf('</head>')
@@ -55,14 +55,16 @@ function revealTransform(html) {
   const { head, body: b0 } = splitHead(html)
   const { body: b1, restore } = shieldBlocks(b0)
   let hits = 0
-  let body = b1.replace(/<a\b([^>]*?)href\s*=\s*(["'])mailto:([^"']*)\2([^>]*?)>([\s\S]*?)<\/a>/gi, (m, before, q, email, after, innerText) => {
+  let body = b1.replace(/<a\b([^>]*?)href\s*=\s*(["'])mailto:([^"']*)\2([^>]*?)>([\s\S]*?)<\/a>/gi, (m, before, q, email, after, innerHTML) => {
     if (!email.match(EMAIL_RE)) return m
     hits++
-    const label = innerText.replace(/<[^>]*>/g, '').trim()
     let attrs = (before + after).replace(/^\s+|\s+$/g, '')
     if (attrs) attrs += ' '
-    const dataT = label && !label.includes('@') ? ` data-t="${label.replace(/"/g, '&quot;')}"` : ''
-    return `<a ${attrs}data-e="${xorHex(email)}"${dataT}>[email]</a>`
+    const textContent = innerHTML.replace(/<[^>]*>/g, '').trim()
+    if (textContent.includes('@')) {
+      return `<a ${attrs}data-e="${xorHex(email)}">[email]</a>`
+    }
+    return `<a ${attrs}data-e="${xorHex(email)}">${innerHTML}</a>`
   })
   body = body.replace(EMAIL_RE, (s) => { hits++; return revealSpan(s) })
   body = restore(body)
