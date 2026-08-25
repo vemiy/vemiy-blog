@@ -68,10 +68,18 @@ function revealTransform(html) {
   })
   body = body.replace(EMAIL_RE, (s) => { hits++; return revealSpan(s) })
   body = restore(body)
-  if (!hits) return html
-  const closer = body.toLowerCase().lastIndexOf('</body>')
-  if (closer !== -1) body = body.slice(0, closer) + DECODER_JS + body.slice(closer)
-  else body += DECODER_JS
+  let codeHits = 0
+  body = body.replace(/<(code|pre)([^>]*)>([\s\S]*?)<\/\1>/gi, (m, tag, attrs, content) => {
+    if (!EMAIL_RE.test(content)) return m
+    codeHits++
+    return `<${tag}${attrs}>${content.replace(EMAIL_RE, obfuscate)}</${tag}>`
+  })
+  if (!hits && !codeHits) return html
+  if (hits) {
+    const closer = body.toLowerCase().lastIndexOf('</body>')
+    if (closer !== -1) body = body.slice(0, closer) + DECODER_JS + body.slice(closer)
+    else body += DECODER_JS
+  }
   return head + body
 }
 
