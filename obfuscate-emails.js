@@ -38,7 +38,7 @@ function splitHead(html) {
 
 function shieldBlocks(body) {
   const blocks = []
-  body = body.replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, (m) => { blocks.push(m); return '\u0000B' + (blocks.length - 1) + '\u0000' })
+  body = body.replace(/<(script|style|code|pre)[^>]*>[\s\S]*?<\/\1>/gi, (m) => { blocks.push(m); return '\u0000B' + (blocks.length - 1) + '\u0000' })
   const restore = (b) => b.replace(/\u0000B(\d+)\u0000/g, (m, i) => blocks[+i])
   return { body, restore }
 }
