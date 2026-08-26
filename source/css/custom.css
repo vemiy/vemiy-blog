@@ -346,8 +346,9 @@ h2[id="友情链接"]:hover .flink-apply-btn {
   display: flex;
   align-items: center;
 }
-/* 下划线占位位移补偿 */
-#nav .site-page {
+/* 下划线占位位移补偿（仅主导航一级选项） */
+#nav .menus_items > .menus_item > .site-page,
+#nav #search-button .site-page {
   transform: translateY(3px);
 }
 
@@ -362,6 +363,4 @@ h2[id="友情链接"]:hover .flink-apply-btn {
 #site-subtitle {
     animation: none !important;
 }
-
-
 
