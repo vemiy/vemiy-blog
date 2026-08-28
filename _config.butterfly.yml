@@ -799,6 +799,8 @@ inject:
     - <script src="/js/tools-page.js?v=20260822"></script>   # 工具页搜索
     - <script>(function(){function init(){var h=document.querySelector('h2[id="友情链接"]');if(!h)return;h.title="随机跳转";h.style.cursor="pointer";var btn=h.querySelector(".flink-apply-btn");if(btn)btn.remove();var descs=document.querySelectorAll(".flink-desc");for(var i=0;i<descs.length;i++){var d=descs[i];if(d.querySelector(".flink-apply-link"))continue;if(d.textContent.indexOf("点我申请友链")!==-1){d.innerHTML=d.innerHTML.replace("点我申请友链",'<span class="flink-apply-link">点我申请友链</span>');var link=d.querySelector(".flink-apply-link");if(link)link.addEventListener("click",function(e){e.stopPropagation();var t=document.getElementById("申请友链");if(t)t.scrollIntoView({behavior:"smooth"})})}}}function run(e){var t=e.target;if(!t||!t.closest)return;if(!t.closest('h2[id="友情链接"]'))return;if(t.closest(".flink-apply-link"))return;var links=Array.prototype.map.call(document.querySelectorAll(".flink-list-item a"),function(a){return a.getAttribute("href")}).filter(Boolean);if(links.length)window.open(links[Math.floor(Math.random()*links.length)],"_blank")}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init)}else{init()}document.addEventListener("pjax:complete",init);document.addEventListener("click",run)})();</script>   # 友链标题随机跳转 + 申请入口
 
+    - <script>(function(){if(document.getElementById('effects_universe'))return;window.DreamConfig=window.DreamConfig||{};window.DreamConfig.effects_universe_mode='all';var s=document.createElement('script');s.src='/js/universe.js?v=20260828';document.body.appendChild(s)})();</script>   # 星空粒子背景
+
 # CDN 设置（不要修改，除非知道用途）
 CDN:
   internal_provider: local    # 内置脚本来源（local / jsdelivr / unpkg / cdnjs / custom）
