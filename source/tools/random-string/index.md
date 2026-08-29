@@ -4,99 +4,60 @@ date: 2026-04-17 00:00:00
 comments: false
 ---
 
-<div class="vemiy-random-string" id="vemiyRandomString">
-  <div class="vemiy-random-string-sub">安全 token / 临时密码 / 一次性凭证</div>
-  <div class="vemiy-random-string-section vemiy-random-string-basic">
-    <label><input type="checkbox" id="vemiyOptUpper" checked> 大写 A-Z</label>
-    <label><input type="checkbox" id="vemiyOptLower" checked> 小写 a-z</label>
-    <label><input type="checkbox" id="vemiyOptNum" checked> 数字 0-9</label>
+<div class="vemiy-tool vemiy-random-string" id="vemiyRandomString">
+  <div class="vemiy-tool-sub vemiy-random-string-sub">安全 token / 临时密码 / 一次性凭证</div>
+  <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-basic">
+    <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptUpper" checked> 大写 A-Z</label>
+    <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptLower" checked> 小写 a-z</label>
+    <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptNum" checked> 数字 0-9</label>
   </div>
-  <div class="vemiy-random-string-section vemiy-random-string-custom">
+  <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-custom">
     <div class="vemiy-random-string-custom-item">
-      <label><input type="checkbox" id="vemiyOptCustomSym" checked> 包含符号</label>
-      <input type="text" id="vemiyCustomSymbols" value="!@#$%^&amp;*()-_=+">
+      <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptCustomSym" checked> 包含符号</label>
+      <input type="text" class="vemiy-tool-input" id="vemiyCustomSymbols" value="!@#$%^&amp;*()-_=+">
     </div>
     <div class="vemiy-random-string-custom-item">
-      <label><input type="checkbox" id="vemiyOptExclude"> 排除字符</label>
-      <input type="text" id="vemiyExcludeChars" value="iIl1o0O">
+      <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptExclude"> 排除字符</label>
+      <input type="text" class="vemiy-tool-input" id="vemiyExcludeChars" value="iIl1o0O">
     </div>
   </div>
-  <div class="vemiy-random-string-section vemiy-random-string-params">
+  <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-params">
     <div class="vemiy-random-string-param">
       <label for="vemiyStrLen">长度</label>
-      <input type="number" id="vemiyStrLen" value="12" min="1" max="128">
+      <input type="number" class="vemiy-tool-input" id="vemiyStrLen" value="12" min="1" max="128">
     </div>
     <div class="vemiy-random-string-param">
       <label for="vemiyBatchCount">数量</label>
-      <input type="number" id="vemiyBatchCount" value="10" min="1" max="200">
+      <input type="number" class="vemiy-tool-input" id="vemiyBatchCount" value="10" min="1" max="200">
     </div>
     <div class="vemiy-random-string-actions">
-      <button class="vemiy-random-string-btn vemiy-random-string-btn-secondary" id="vemiyResetBtn">重置设定</button>
-      <button class="vemiy-random-string-btn vemiy-random-string-btn-primary" id="vemiyGenBtn">生成</button>
+      <button class="vemiy-tool-btn vemiy-tool-btn-secondary" id="vemiyResetBtn">重置设定</button>
+      <button class="vemiy-tool-btn vemiy-tool-btn-primary" id="vemiyGenBtn">生成</button>
     </div>
   </div>
-  <div class="vemiy-random-string-output-wrap">
+  <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-output-wrap">
     <div class="vemiy-random-string-output-head">
       <div class="vemiy-random-string-output-title">生成结果（每行一个）</div>
-      <div class="vemiy-random-string-output-actions">
-        <button class="vemiy-random-string-mini-btn" id="vemiyDownloadBtn">下载结果</button>
-        <button class="vemiy-random-string-mini-btn" id="vemiyCopyAllBtn">复制全部</button>
+      <div class="vemiy-tool-actions vemiy-random-string-output-actions">
+        <button class="vemiy-tool-mini-btn" id="vemiyDownloadBtn">下载结果</button>
+        <button class="vemiy-tool-mini-btn" id="vemiyCopyAllBtn">复制全部</button>
       </div>
     </div>
-    <textarea class="vemiy-random-string-output" id="vemiyBatchOutput" rows="12" readonly wrap="off" placeholder="点击「生成」按钮，结果将显示在此处..."></textarea>
+    <textarea class="vemiy-tool-input vemiy-random-string-output" id="vemiyBatchOutput" rows="12" readonly wrap="off" placeholder="点击「生成」按钮，结果将显示在此处..."></textarea>
   </div>
-  <div class="vemiy-random-string-foot">所有处理均在本地完成 - 数据不上传服务器</div>
+  <div class="vemiy-tool-foot">所有处理均在本地完成 - 数据不上传服务器</div>
 </div>
 
 <style>
-  /* 随机字符串工具样式（适配暗色玻璃主题） */
-  .vemiy-random-string {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0.5rem 0 1rem;
-  }
-  .vemiy-random-string * {
-    box-sizing: border-box;
-  }
+  /* 随机字符串工具专属样式 */
   .vemiy-random-string-sub {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    opacity: 0.75;
     margin-bottom: 1.5rem;
-  }
-  .vemiy-random-string-section {
-    margin-bottom: 1rem;
-  }
-  .vemiy-random-string-basic,
-  .vemiy-random-string-custom,
-  .vemiy-random-string-params,
-  .vemiy-random-string-output-wrap {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 1rem;
-    background: rgba(30, 30, 30, 0.6);
   }
   .vemiy-random-string-basic,
   .vemiy-random-string-custom {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem 1.2rem;
-  }
-  .vemiy-random-string label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.92rem;
-    cursor: pointer;
-    user-select: none;
-  }
-  .vemiy-random-string input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: #49b1f5;
-    flex-shrink: 0;
-    cursor: pointer;
   }
   .vemiy-random-string-custom-item {
     flex: 1;
@@ -105,31 +66,9 @@ comments: false
     align-items: center;
     gap: 0.7rem;
   }
-  .vemiy-random-string-custom-item label {
+  .vemiy-random-string-custom-item .vemiy-tool-check {
     white-space: nowrap;
     flex-shrink: 0;
-  }
-  .vemiy-random-string input[type="text"],
-  .vemiy-random-string input[type="number"],
-  .vemiy-random-string textarea {
-    width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    color: inherit;
-    outline: none;
-    transition: 0.2s;
-    font-family: Consolas, Monaco, "Courier New", monospace;
-  }
-  .vemiy-random-string input[type="text"]:focus,
-  .vemiy-random-string input[type="number"]:focus,
-  .vemiy-random-string textarea:focus {
-    border-color: #49b1f5;
-    box-shadow: 0 0 0 3px rgba(73, 177, 245, 0.12);
-  }
-  .vemiy-random-string input[type="text"] {
-    padding: 0.58rem 0.8rem;
-    font-size: 0.85rem;
   }
   .vemiy-random-string-params {
     display: flex;
@@ -148,50 +87,19 @@ comments: false
     font-weight: 500;
     white-space: nowrap;
   }
-  .vemiy-random-string-param input {
+  .vemiy-random-string-param .vemiy-tool-input {
     width: 110px;
-    padding: 0.58rem 0.7rem;
-    text-align: center;
-    font-weight: 500;
-    -moz-appearance: textfield;
-    appearance: textfield;
-  }
-  .vemiy-random-string-param input::-webkit-inner-spin-button,
-  .vemiy-random-string-param input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
   }
   .vemiy-random-string-actions {
     display: flex;
     flex: 1 1 200px;
     gap: 0.8rem;
   }
-  .vemiy-random-string-btn {
+  .vemiy-random-string-actions .vemiy-tool-btn {
     flex: 1;
-    border: none;
-    border-radius: 999px;
-    padding: 0.82rem 1rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: center;
-    transition: 0.2s;
-    white-space: nowrap;
   }
-  .vemiy-random-string-btn-primary {
+  .vemiy-random-string-actions .vemiy-tool-btn-primary {
     flex: 2;
-    background: #49b1f5;
-    color: #fff;
-  }
-  .vemiy-random-string-btn-primary:hover {
-    filter: brightness(0.88);
-  }
-  .vemiy-random-string-btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: inherit;
-  }
-  .vemiy-random-string-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.16);
   }
   .vemiy-random-string-output-head {
     display: flex;
@@ -206,42 +114,11 @@ comments: false
     font-weight: 600;
     opacity: 0.9;
   }
-  .vemiy-random-string-output-actions {
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-  }
-  .vemiy-random-string-mini-btn {
-    border: none;
-    border-radius: 999px;
-    padding: 0.45rem 1rem;
-    font-size: 0.82rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: 0.2s;
-    min-width: 112px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.1);
-    color: inherit;
-  }
-  .vemiy-random-string-mini-btn:hover {
-    background: rgba(255, 255, 255, 0.16);
-  }
   .vemiy-random-string-output {
     min-height: 320px;
     resize: vertical;
-    padding: 1rem;
-    font-family: Consolas, Monaco, "Courier New", monospace;
-    font-size: 0.88rem;
-    line-height: 1.45;
     white-space: pre;
     overflow-x: auto;
-  }
-  .vemiy-random-string-foot {
-    margin-top: 0.85rem;
-    font-size: 0.82rem;
-    opacity: 0.62;
-    text-align: center;
   }
   @media (max-width: 900px) {
     .vemiy-random-string-actions,
@@ -253,15 +130,11 @@ comments: false
     .vemiy-random-string-actions {
       flex-basis: auto;
     }
-    .vemiy-random-string-btn,
-    .vemiy-random-string-mini-btn {
-      width: 100%;
-    }
     .vemiy-random-string-param {
       flex-direction: column;
       align-items: stretch;
     }
-    .vemiy-random-string-param input {
+    .vemiy-random-string-param .vemiy-tool-input {
       width: 100%;
     }
   }

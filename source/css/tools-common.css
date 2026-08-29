@@ -1,0 +1,243 @@
+/* 工具页通用样式 */
+.vemiy-tool {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.5rem 0 1rem;
+  color-scheme: dark;
+}
+.vemiy-tool * {
+  box-sizing: border-box;
+}
+.vemiy-tool-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.vemiy-tool-sub {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  opacity: 0.75;
+}
+.vemiy-tool-actions {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.vemiy-tool-btn,
+.vemiy-tool-mini-btn {
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s;
+  color: inherit;
+}
+.vemiy-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.78rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+}
+.vemiy-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.vemiy-tool-btn-primary {
+  background: #49b1f5;
+  color: #fff;
+}
+.vemiy-tool-btn-primary:hover {
+  filter: brightness(0.88);
+}
+.vemiy-tool-btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+}
+.vemiy-tool-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.vemiy-tool-mini-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 112px;
+  padding: 0.45rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+}
+.vemiy-tool-mini-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.vemiy-tool-mini-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.vemiy-tool-mini-btn:disabled:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.vemiy-tool-btn i,
+.vemiy-tool-mini-btn i {
+  font-size: 0.85rem;
+}
+.vemiy-tool-section {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(30, 30, 30, 0.6);
+  padding: 1rem;
+  margin-bottom: 0.85rem;
+}
+.vemiy-tool-section-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.7rem;
+}
+.vemiy-tool-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.86rem;
+  margin-bottom: 0.6rem;
+}
+.vemiy-tool-input {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  outline: none;
+  transition: 0.2s;
+}
+.vemiy-tool-input:focus {
+  border-color: #49b1f5;
+  box-shadow: 0 0 0 3px rgba(73, 177, 245, 0.12);
+}
+input[type="text"].vemiy-tool-input,
+input[type="date"].vemiy-tool-input {
+  padding: 0.58rem 0.8rem;
+  font-size: 0.85rem;
+}
+input[type="number"].vemiy-tool-input {
+  padding: 0.58rem 0.7rem;
+  font-size: 0.85rem;
+  text-align: center;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type="number"].vemiy-tool-input::-webkit-inner-spin-button,
+input[type="number"].vemiy-tool-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+textarea.vemiy-tool-input {
+  padding: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+}
+.vemiy-tool-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+  user-select: none;
+}
+.vemiy-tool-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #49b1f5;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.vemiy-tool-range {
+  display: block;
+  font-size: 0.86rem;
+  margin: 0.55rem 0;
+}
+.vemiy-tool-range input[type="range"] {
+  width: 100%;
+  accent-color: #49b1f5;
+}
+.vemiy-tool-range span {
+  display: inline-block;
+  min-width: 2.4em;
+  text-align: right;
+  font-weight: 600;
+}
+.vemiy-tool-color {
+  width: 42px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.vemiy-tool-seg {
+  display: flex;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  padding: 3px;
+  margin-bottom: 0.6rem;
+}
+.vemiy-tool-seg button {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  border-radius: 999px;
+  padding: 0.5rem 0.35rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+}
+.vemiy-tool-seg button.active {
+  background: #49b1f5;
+  color: #fff;
+}
+.vemiy-tool-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.vemiy-tool-foot {
+  margin-top: 0.85rem;
+  font-size: 0.82rem;
+  opacity: 0.62;
+  text-align: center;
+}
+.vemiy-tool-file-input {
+  display: none;
+}
+@media (max-width: 900px) {
+  .vemiy-tool-actions {
+    flex-direction: column;
+  }
+  .vemiy-tool-actions .vemiy-tool-btn,
+  .vemiy-tool-actions .vemiy-tool-mini-btn {
+    width: 100%;
+  }
+}
+@media (max-width: 640px) {
+  .vemiy-tool-head {
+    align-items: stretch;
+  }
+  .vemiy-tool-btn,
+  .vemiy-tool-mini-btn {
+    width: 100%;
+  }
+}

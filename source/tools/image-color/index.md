@@ -4,11 +4,11 @@ date: 2026-04-17 00:00:00
 comments: false
 ---
 
-<div class="vemiy-image-color" id="vemiyImageColor">
-  <div class="vemiy-image-color-head">
-    <button class="vemiy-image-color-btn" id="vemiyUploadBtn">选择图片</button>
-    <div class="vemiy-image-color-sub">上传图片 - 点击图片任意位置取色 - 支持拖拽上传</div>
-    <input type="file" id="vemiyFileInput" class="vemiy-image-color-file-input" accept="image/jpeg,image/png,image/webp">
+<div class="vemiy-tool vemiy-image-color" id="vemiyImageColor">
+  <div class="vemiy-tool-head vemiy-image-color-head">
+    <button class="vemiy-tool-btn vemiy-image-color-btn" id="vemiyUploadBtn">选择图片</button>
+    <div class="vemiy-tool-sub vemiy-image-color-sub">上传图片 - 点击图片任意位置取色 - 支持拖拽上传</div>
+    <input type="file" id="vemiyFileInput" class="vemiy-tool-file-input" accept="image/jpeg,image/png,image/webp">
   </div>
   <div class="vemiy-image-color-preview" id="vemiyPreviewArea">
     <div class="vemiy-image-color-placeholder">
@@ -19,82 +19,36 @@ comments: false
     </div>
   </div>
   <div class="vemiy-image-color-bottom">
-    <div class="vemiy-image-color-block">
+    <div class="vemiy-tool-section vemiy-image-color-block">
       <div class="vemiy-image-color-preview-block" id="vemiyColorPreview"></div>
     </div>
-    <div class="vemiy-image-color-block">
+    <div class="vemiy-tool-section vemiy-image-color-block">
       <div class="vemiy-image-color-value-row">
         <label>HEX</label>
         <code id="vemiyHexValue">——</code>
-        <button class="vemiy-image-color-mini-btn" id="vemiyCopyHexBtn">复制</button>
+        <button class="vemiy-tool-mini-btn vemiy-image-color-mini-btn" id="vemiyCopyHexBtn">复制</button>
       </div>
     </div>
-    <div class="vemiy-image-color-block">
+    <div class="vemiy-tool-section vemiy-image-color-block">
       <div class="vemiy-image-color-value-row">
         <label>RGB</label>
         <code id="vemiyRgbValue">——</code>
-        <button class="vemiy-image-color-mini-btn" id="vemiyCopyRgbBtn">复制</button>
+        <button class="vemiy-tool-mini-btn vemiy-image-color-mini-btn" id="vemiyCopyRgbBtn">复制</button>
       </div>
     </div>
   </div>
-  <div class="vemiy-image-color-foot">所有处理均在本地完成 - 图片不上传服务器</div>
+  <div class="vemiy-tool-foot vemiy-image-color-foot">所有处理均在本地完成 - 图片不上传服务器</div>
 </div>
 
 <style>
-  /* 图片取色工具样式（适配暗色玻璃主题） */
-  .vemiy-image-color {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0.5rem 0 1rem;
-  }
-  .vemiy-image-color * {
-    box-sizing: border-box;
-  }
-  .vemiy-image-color-head {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-  .vemiy-image-color-sub {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    opacity: 0.75;
-  }
-  .vemiy-image-color-btn,
-  .vemiy-image-color-mini-btn {
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: 0.2s;
-    color: inherit;
-  }
+  /* 图片取色工具专属样式 */
   .vemiy-image-color-btn {
-    padding: 0.78rem 1.25rem;
-    font-size: 0.95rem;
-    font-weight: 600;
+    flex-shrink: 0;
     background: #49b1f5;
     color: #fff;
-    flex-shrink: 0;
   }
   .vemiy-image-color-btn:hover {
     filter: brightness(0.88);
-  }
-  .vemiy-image-color-mini-btn {
-    min-width: 64px;
-    height: 24px;
-    padding: 0 0.72rem;
-    font-size: 0.72rem;
-    font-weight: 500;
-    background: rgba(255, 255, 255, 0.1);
-  }
-  .vemiy-image-color-mini-btn:hover {
-    background: rgba(255, 255, 255, 0.16);
-  }
-  .vemiy-image-color-file-input {
-    display: none;
   }
   .vemiy-image-color-preview {
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -125,11 +79,6 @@ comments: false
   .vemiy-image-color-placeholder-inner {
     width: 100%;
   }
-  .vemiy-image-color-drag-tip {
-    font-size: 0.78rem;
-    margin-top: 0.45rem;
-    opacity: 0.72;
-  }
   .vemiy-image-color-img {
     display: none;
     max-width: 100%;
@@ -149,10 +98,9 @@ comments: false
     align-items: stretch;
   }
   .vemiy-image-color-block {
-    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
-    background: rgba(30, 30, 30, 0.6);
     padding: 0.55rem 0.65rem;
+    margin-bottom: 0;
   }
   .vemiy-image-color-preview-block {
     width: 100%;
@@ -187,9 +135,6 @@ comments: false
     white-space: nowrap;
   }
   .vemiy-image-color-foot {
-    font-size: 0.76rem;
-    opacity: 0.62;
-    text-align: center;
     margin-top: 0.8rem;
     padding-top: 0.6rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -209,13 +154,6 @@ comments: false
     }
   }
   @media (max-width: 640px) {
-    .vemiy-image-color-head {
-      align-items: stretch;
-    }
-    .vemiy-image-color-btn,
-    .vemiy-image-color-mini-btn {
-      width: 100%;
-    }
     .vemiy-image-color-value-row {
       flex-wrap: wrap;
     }
