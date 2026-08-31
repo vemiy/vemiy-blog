@@ -405,3 +405,21 @@ h2[id="友情链接"]:hover .flink-apply-btn {
 #nav span.site-page:hover {
     color: var(--white) !important;
 }
+
+/* 让侧边栏在内容区域内保持固定，到页脚边界时随布局解除固定 */
+@media screen and (min-width: 901px) {
+    #body-wrap > #content-inner.layout {
+        align-items: flex-start;
+    }
+
+    #body-wrap > #content-inner.layout > #aside-content {
+        position: sticky !important;
+        top: 75px !important;
+        align-self: flex-start;
+    }
+
+    #body-wrap > #content-inner.layout > #aside-content > .sticky_layout {
+        position: static;
+        top: auto;
+    }
+}

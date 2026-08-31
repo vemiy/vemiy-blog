@@ -235,7 +235,7 @@ aside:
     enable: true              # 是否显示公告卡片
     content: This is my Blog  # 公告内容
   card_recent_post:
-    enable: true              # 是否显示最新文章卡片
+    enable: false             # 是否显示最新文章卡片
     limit: 5                  # 显示文章数（0 显示全部）
     sort: date                # 排序依据（date / updated）
     sort_order:               # 排序方向
@@ -246,7 +246,7 @@ aside:
     storage: 10               # 缓存时间（分钟，存 localStorage）
     avatar: true              # 是否显示头像
   card_categories:
-    enable: true              # 是否显示分类卡片
+    enable: false             # 是否显示分类卡片
     limit: 8                  # 显示分类数（0 显示全部）
     expand: none              # 展开方式（none / true / false）
     sort_order:               # 排序方向
@@ -259,7 +259,7 @@ aside:
     order: 1                  # 排序方向（1 升序 / -1 降序）
     sort_order:               # 排序方向
   card_archives:
-    enable: true              # 是否显示归档卡片
+    enable: false             # 是否显示归档卡片
     type: monthly             # 归档类型（monthly 按月 / yearly 按年）
     format: MMMM YYYY         # 日期格式
     order: -1                 # 排序方向（1 升序 / -1 降序）
