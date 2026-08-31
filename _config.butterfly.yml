@@ -10,10 +10,10 @@
 # --------------------------------------
 
 nav:
-  logo:                       # 导航栏 Logo 图片
-  display_title: true         # 是否显示站点标题
-  display_post_title: true    # 滚动时是否显示文章标题
-  fixed: true                 # 是否固定导航栏
+  logo: /img/vemiy.png              # 导航栏 Logo 图片
+  display_title: false              # 是否显示站点标题
+  display_post_title: true          # 滚动时是否显示文章标题
+  fixed: true                       # 是否固定导航栏
 
 menu:
   # 导航菜单（格式: 名称: 链接 || 图标）
@@ -860,3 +860,4 @@ CDN:
     # valine:
     # waline_css:
     # waline_js:
+

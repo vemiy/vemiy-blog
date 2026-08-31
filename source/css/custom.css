@@ -389,6 +389,9 @@ h2[id="友情链接"]:hover .flink-apply-btn {
 #nav .nav-site-title {
     display: inline-block !important;
 }
+#nav #blog-info .site-icon {
+    height: 26px !important;
+}
 
 /* 下拉菜单与导航间隙 */
 #nav .menus_item .menus_item_child {
