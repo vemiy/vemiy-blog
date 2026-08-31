@@ -352,6 +352,14 @@ h2[id="友情链接"]:hover .flink-apply-btn {
   transform: translateY(3px);
 }
 
+/* 移动端菜单按钮与搜索按钮垂直对齐 */
+@media screen and (max-width: 768px) {
+  #nav.hide-menu #toggle-menu {
+    position: relative;
+    top: 7px;
+  }
+}
+
 
 
 /* 禁用主题旧的页面入场动画（旧 index.css 缓存可能仍绑定） */
@@ -422,4 +430,35 @@ h2[id="友情链接"]:hover .flink-apply-btn {
         position: static;
         top: auto;
     }
+}
+
+/* 移动端隐藏指定侧边栏卡片并将公告置顶 */
+@media screen and (max-width: 900px) {
+    #body-wrap > #content-inner.layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #body-wrap > #content-inner.layout > #recent-posts {
+        order: 1;
+    }
+
+    #body-wrap > #content-inner.layout > #aside-content {
+        display: contents;
+    }
+
+    #body-wrap > #content-inner.layout > #aside-content > .card-announcement {
+        order: 0;
+    }
+
+    #body-wrap > #content-inner.layout > #aside-content > .sticky_layout {
+        order: 2;
+        width: 100%;
+    }
+
+    #body-wrap > #content-inner.layout > #aside-content .card-info,
+    #body-wrap > #content-inner.layout > #aside-content .card-tags {
+        display: none;
+    }
+
 }
