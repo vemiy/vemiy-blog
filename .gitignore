@@ -10,6 +10,3 @@ _multiconfig.yml
 google-key.json
 _config.yml.bak-*
 .wrangler/
-
-# 主题通过 git clone 安装，不纳入博客仓库追踪
-themes/butterfly/
