@@ -86,7 +86,7 @@ comments: false
     width: auto;
     height: auto;
     border-radius: 14px;
-    cursor: none;
+    cursor: crosshair;
     filter: none !important;
     margin: 0 auto;
     user-select: none;
@@ -128,12 +128,17 @@ comments: false
     padding: 0.28rem 0.68rem;
     border-radius: 999px;
     font-family: Consolas, "SF Mono", monospace;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(255, 255, 255, 0.05);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .vemiy-image-color-mini-btn {
+    min-width: auto;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.78rem;
   }
   .vemiy-image-color-foot {
     margin-top: 0.8rem;
@@ -158,47 +163,6 @@ comments: false
     .vemiy-image-color-value-row {
       flex-wrap: wrap;
     }
-  }
-  /* 取色放大镜 */
-  .vemiy-color-lens {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 9999;
-    width: 176px;
-    height: 176px;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
-    overflow: hidden;
-    background: #141414;
-    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.35);
-    transform: translate(-50%, -50%);
-    display: none;
-    pointer-events: none;
-  }
-  .vemiy-color-lens.show {
-    display: block;
-  }
-  .vemiy-color-lens canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    image-rendering: pixelated;
-  }
-  .vemiy-color-lens-badge {
-    position: absolute;
-    left: 50%;
-    bottom: 12px;
-    transform: translateX(-50%);
-    padding: 2px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(13, 13, 18, 0.85);
-    color: #fff;
-    font-family: Consolas, "SF Mono", monospace;
-    font-size: 11px;
-    line-height: 1.5;
-    white-space: nowrap;
   }
 </style>
 
@@ -245,90 +209,17 @@ comments: false
       els.colorPreview.style.backgroundColor = hex;
     }
 
-    function toSource(e) {
-      const rect = els.previewImage.getBoundingClientRect();
-      if (!rect.width || !rect.height) return null;
-      const x = Math.max(0, Math.min(sourceCanvas.width - 1, Math.floor((e.clientX - rect.left) * sourceCanvas.width / rect.width)));
-      const y = Math.max(0, Math.min(sourceCanvas.height - 1, Math.floor((e.clientY - rect.top) * sourceCanvas.height / rect.height)));
-      return { x, y };
-    }
-
     function pickColor(e) {
       e.preventDefault();
       e.stopPropagation();
       if (!sourceCanvas || !sourceCtx || !els.previewImage.src) return;
-      const pos = toSource(e);
-      if (!pos) return;
-      const pixel = sourceCtx.getImageData(pos.x, pos.y, 1, 1).data;
+      const rect = els.previewImage.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const x = Math.max(0, Math.min(sourceCanvas.width - 1, Math.round((e.clientX - rect.left) * sourceCanvas.width / rect.width)));
+      const y = Math.max(0, Math.min(sourceCanvas.height - 1, Math.round((e.clientY - rect.top) * sourceCanvas.height / rect.height)));
+      const pixel = sourceCtx.getImageData(x, y, 1, 1).data;
       setColor(pixel[0], pixel[1], pixel[2]);
     }
-
-    /* 取色放大镜 */
-    const LENS_CELLS = 11;
-    const LENS_ZOOM = 16;
-    const LENS_SIZE = LENS_CELLS * LENS_ZOOM;
-    const oldLens = document.getElementById('vemiyColorLens');
-    if (oldLens) oldLens.remove();
-    const lens = document.createElement('div');
-    lens.id = 'vemiyColorLens';
-    lens.className = 'vemiy-color-lens';
-    lens.setAttribute('aria-hidden', 'true');
-    const lensCanvas = document.createElement('canvas');
-    lensCanvas.id = 'vemiyLensCanvas';
-    const lensBadge = document.createElement('div');
-    lensBadge.id = 'vemiyLensBadge';
-    lensBadge.className = 'vemiy-color-lens-badge';
-    lensBadge.textContent = '——';
-    lens.appendChild(lensCanvas);
-    lens.appendChild(lensBadge);
-    document.body.appendChild(lens);
-    const dpr = window.devicePixelRatio || 1;
-    lensCanvas.width = LENS_SIZE * dpr;
-    lensCanvas.height = LENS_SIZE * dpr;
-    const lensCtx = lensCanvas.getContext('2d');
-    lensCtx.scale(dpr, dpr);
-    lensCtx.imageSmoothingEnabled = false;
-
-    function drawLens(e, pos) {
-      const ctx = lensCtx;
-      ctx.fillStyle = '#141414';
-      ctx.fillRect(0, 0, LENS_SIZE, LENS_SIZE);
-      const x0 = pos.x - Math.floor(LENS_CELLS / 2);
-      const y0 = pos.y - Math.floor(LENS_CELLS / 2);
-      ctx.drawImage(sourceCanvas, x0, y0, LENS_CELLS, LENS_CELLS, 0, 0, LENS_SIZE, LENS_SIZE);
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
-      ctx.beginPath();
-      for (let i = 1; i < LENS_CELLS; i++) {
-        const p = i * LENS_ZOOM + 0.5;
-        ctx.moveTo(p, 0);
-        ctx.lineTo(p, LENS_SIZE);
-        ctx.moveTo(0, p);
-        ctx.lineTo(LENS_SIZE, p);
-      }
-      ctx.stroke();
-      const c = Math.floor(LENS_CELLS / 2) * LENS_ZOOM;
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.65)';
-      ctx.strokeRect(c + 1.5, c + 1.5, LENS_ZOOM - 3, LENS_ZOOM - 3);
-      ctx.lineWidth = 1.5;
-      ctx.strokeStyle = '#fff';
-      ctx.strokeRect(c + 1.5, c + 1.5, LENS_ZOOM - 3, LENS_ZOOM - 3);
-      const px = sourceCtx.getImageData(pos.x, pos.y, 1, 1).data;
-      lensBadge.textContent = '#' + [px[0], px[1], px[2]].map(v => v.toString(16).padStart(2, '0')).join('').toUpperCase();
-      const half = 90;
-      lens.style.left = Math.min(Math.max(e.clientX, half), window.innerWidth - half) + 'px';
-      lens.style.top = Math.min(Math.max(e.clientY, half), window.innerHeight - half) + 'px';
-    }
-
-    els.previewImage.addEventListener('mousemove', e => {
-      if (!sourceCanvas || !sourceCtx || !els.previewImage.src) return;
-      const pos = toSource(e);
-      if (!pos) return;
-      lens.classList.add('show');
-      drawLens(e, pos);
-    });
-    els.previewImage.addEventListener('mouseleave', () => lens.classList.remove('show'));
 
     function showImage(src) {
       const img = new Image();
