@@ -128,7 +128,7 @@ comments: false
     padding: 0.28rem 0.68rem;
     border-radius: 999px;
     font-family: Consolas, "SF Mono", monospace;
-    font-size: 0.82rem;
+    font-size: 0.92rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(255, 255, 255, 0.05);
     overflow: hidden;
@@ -136,7 +136,7 @@ comments: false
     white-space: nowrap;
   }
   .vemiy-image-color-mini-btn {
-    min-width: auto;
+    min-width: 3.6rem;
     padding: 0.3rem 0.65rem;
     font-size: 0.78rem;
   }
