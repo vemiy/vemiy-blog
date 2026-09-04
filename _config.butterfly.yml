@@ -233,7 +233,7 @@ aside:
       enable: false           # 是否显示作者卡片按钮
   card_announcement:
     enable: true              # 是否显示公告卡片
-    content: This is my Blog  # 公告内容
+    content: 域名已从 vimy.top 迁移至 vemiy.com，旧域名会自动跳转  # 公告内容
   card_recent_post:
     enable: false             # 是否显示最新文章卡片
     limit: 5                  # 显示文章数（0 显示全部）
