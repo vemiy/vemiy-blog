@@ -228,7 +228,7 @@ aside:
     category: true            # 分类页是否显示侧边栏
   card_author:
     enable: true              # 是否显示作者信息卡片
-    description:              # 作者描述
+    description: 未铭          # 作者描述
     button:
       enable: false           # 是否显示作者卡片按钮
   card_announcement:
@@ -251,7 +251,7 @@ aside:
     expand: none              # 展开方式（none / true / false）
     sort_order:               # 排序方向
   card_tags:
-    enable: true              # 是否显示标签卡片
+    enable: false             # 是否显示标签卡片
     limit: 40                 # 显示标签数（0 显示全部）
     color: false              # 标签是否显示颜色
     custom_colors:            # 自定义标签颜色

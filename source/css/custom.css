@@ -1,8 +1,4 @@
 /* ========== 毛玻璃卡片 ========== */
-/* 隐藏侧边栏头像下方的站点描述 */
-#aside-content .author-info-description {
-    display: none !important;
-}
 /* 首页文章预览卡高度 */
 #recent-posts .recent-post-item {
     height: 220px !important;
