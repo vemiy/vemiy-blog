@@ -2,10 +2,6 @@
 - class_name: 友情链接
   class_desc: 按名称编码顺序排列，点我申请友链
   link_list:
-    - name: 安知鱼
-      link: https://blog.anheyu.com/
-      avatar: https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg
-      descr: 生活明朗，万物可爱
     - name: 晓空/宇风博客
       link: https://www.xkyfzs.top/
       avatar: https://tuchuang.xkyfzs.top/img/touxiang.jpg
@@ -28,7 +24,7 @@
       descr: 你开源的代码写的很不错，现在是我的了~
     - name: MmzMing的知识库
       link: https://tblog.mmzhiku.xyz/
-      avatar: https://i.stardots.io/784774835/StarDots-2026052116374135506.jpg
+      avatar: https://tblog.mmzhiku.xyz/_astro/logo.CAGjrlGQ_Zf30fy.webp
       descr: 哈基米，南北绿豆
     - name: 暖心向阳 335
       link: https://nxxy335.top/
@@ -38,3 +34,19 @@
       link: https://Vind.ink
       avatar: https://Vind.ink/icon.png
       descr: 风舞弦，墨凝影
+
+- class_name: 一些组织
+  class_desc: 博客聚合与导航平台
+  link_list:
+    - name: Blogroll
+      link: https://blogroll.online/
+      avatar: https://blogroll.online/favicon.ico
+      descr: 中文独立博客聚合列表
+    - name: BlogsClub
+      link: https://www.blogsclub.org/
+      avatar: https://images.weserv.nl/?url=www.blogsclub.org/usr/themes/default/favicon.png
+      descr: 互联网独立博客俱乐部
+    - name: 有个站
+      link: https://www.ygz.ink/
+      avatar: https://www.ygz.ink/favicon.svg
+      descr: 独立博客书架，收录 149 个优质中文独立博客
