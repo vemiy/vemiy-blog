@@ -368,15 +368,37 @@ h2[id="友情链接"]:hover .flink-apply-btn {
     animation: none !important;
 }
 
-/* 菜单下划线中间向两侧展开 */
-.site-page:not(.child)::after {
+/* 导航下划线样式 */
+#nav .site-page:not(.child)::after {
     left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 0 !important;
-    transition: width .3s ease-in-out !important;
-}
-.site-page:not(.child):hover::after {
+    bottom: 0 !important;
+    z-index: 1 !important;
     width: 100% !important;
+    height: 2px !important;
+    border-radius: 18px !important;
+    background-color: #49b1f5 !important;
+    transform: translate3d(-50%, -5px, 0) !important;
+    opacity: 0 !important;
+    transition: transform .2s ease, opacity .2s ease !important;
+}
+/* 当前页下划线常驻 */
+#nav .site-page:not(.child).active::after {
+    transform: translate3d(-50%, 0, 0) !important;
+    opacity: 1 !important;
+    transition: none !important;
+}
+/* 悬停时下划线上滑淡入 */
+#nav .menus_item:hover > .site-page:not(.child)::after {
+    transform: translate3d(-50%, 0, 0) !important;
+    opacity: 1 !important;
+}
+/* 导航悬停文字为白色 */
+#nav a:hover,
+#nav span.site-page:hover,
+#page-header.nav-fixed #nav a:hover,
+#page-header.nav-fixed #nav span.site-page:hover,
+#page-header.nav-fixed #nav #toggle-menu:hover {
+    color: var(--white) !important;
 }
 /* 滚动后导航显示站点名 */
 #nav .nav-page-title {
@@ -405,12 +427,6 @@ h2[id="友情链接"]:hover .flink-apply-btn {
     left: 0 !important;
     right: 0 !important;
     height: 6px !important;
-}
-
-/* 导航 hover 文字为白色 */
-#nav a:hover,
-#nav span.site-page:hover {
-    color: var(--white) !important;
 }
 
 /* 侧边栏固定：非文章页整个 aside-content sticky；文章页仅 .sticky_layout sticky（目录卡片） */
