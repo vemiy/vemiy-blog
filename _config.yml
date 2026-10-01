@@ -127,7 +127,8 @@ nofollow:
     - 'vemiy.com'
     - 'www.vemiy.com'
 
-# Hexo-hash：静态资源自动加内容哈希版本号（内容变 URL 变，破除缓存）
-hash:
+# 静态资源内容哈希：文件名加内容哈希（内容变文件名变，破除缓存）
+revisioning:
   enable: true                  # 是否启用
+  keep: false                   # 是否保留未加哈希的原始文件
 
