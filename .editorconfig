@@ -1,0 +1,7 @@
+# 编辑器与工具统一以 LF 换行、UTF-8 编码，文件末尾保留换行
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
