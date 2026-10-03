@@ -19,6 +19,20 @@
     /* 数字用等宽数字 */
     font-variant-numeric: tabular-nums;
 }
+/* 数字位与周围中文按基线对齐 */
+#site-runtime .stand,
+#site-runtime .odometer-digit,
+#site-runtime .odometer-digit-spacer {
+    vertical-align: baseline;
+}
+/* 逐位数字槽相邻时不额外留空隙 */
+#site-runtime .stand + .stand {
+    margin-left: 0;
+}
+/* 数字上滑动画时长 */
+#site-runtime .odometer-ribbon-inner {
+    transition-duration: 0.45s;
+}
 /* 页脚底部版权行 */
 .footer-copyright-line {
     margin-top: 6px;
