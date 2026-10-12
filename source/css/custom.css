@@ -25,9 +25,9 @@
 #site-runtime .odometer-digit-spacer {
     vertical-align: baseline;
 }
-/* 逐位数字槽相邻时不额外留空隙 */
+/* 逐位数字不额外留空隙 */
 #site-runtime .stand + .stand {
-    margin-left: 0;
+    margin: 0;
 }
 /* 数字上滑动画时长 */
 #site-runtime .odometer-ribbon-inner {
