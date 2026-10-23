@@ -46,17 +46,19 @@
 
   var CLICK_FREQ_NORMAL = 900;
   var CLICK_FREQ_ACCENT = 1050;
-  var CLICK_GAIN_NORMAL = 0.55;
-  var CLICK_GAIN_ACCENT = 0.7;
-  var CLICK_ATTACK = 0.004;
-  var CLICK_DURATION = 0.026;
-  var CLICK_DECAY = 0.022;
+  var CLICK_GAIN_NORMAL = 0.82;
+  var CLICK_GAIN_ACCENT = 1;
+  var CLICK_ATTACK = 0.003;
+  var CLICK_HOLD = 0.012;
+  var CLICK_DECAY = 0.048;
+  var CLICK_DURATION = 0.052;
 
   var BELL_FREQ = 1800;
-  var BELL_GAIN = 0.22;
-  var BELL_ATTACK = 0.005;
-  var BELL_DURATION = 0.16;
-  var BELL_DECAY = 0.14;
+  var BELL_GAIN = 0.65;
+  var BELL_ATTACK = 0.004;
+  var BELL_HOLD = 0.01;
+  var BELL_DECAY = 0.15;
+  var BELL_DURATION = 0.17;
 
   var MARKS = [
     40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 63, 66, 69, 72, 76, 80,
@@ -64,7 +66,7 @@
     160, 168, 176, 184, 192, 200, 208
   ];
 
-  var MASTER_VOLUME = 0.72;
+  var MASTER_VOLUME = 0.95;
   var engine = null;
 
   function clamp(value, min, max) {
@@ -199,6 +201,7 @@
 
       gain.gain.setValueAtTime(0.0001, at);
       gain.gain.linearRampToValueAtTime(accent ? CLICK_GAIN_ACCENT : CLICK_GAIN_NORMAL, at + CLICK_ATTACK);
+      gain.gain.setValueAtTime(accent ? CLICK_GAIN_ACCENT : CLICK_GAIN_NORMAL, at + CLICK_HOLD);
       gain.gain.exponentialRampToValueAtTime(0.0001, at + CLICK_DECAY);
 
       osc.connect(gain);
@@ -216,6 +219,7 @@
       osc.frequency.setValueAtTime(BELL_FREQ, at);
       gain.gain.setValueAtTime(0.0001, at);
       gain.gain.linearRampToValueAtTime(BELL_GAIN, at + BELL_ATTACK);
+      gain.gain.setValueAtTime(BELL_GAIN, at + BELL_HOLD);
       gain.gain.exponentialRampToValueAtTime(0.0001, at + BELL_DECAY);
       osc.connect(gain);
       gain.connect(master);
@@ -381,20 +385,6 @@
       dragId = null;
     }
 
-    function onKeyDown(evt) {
-      var step = evt.shiftKey ? 5 : 1;
-      if (evt.key === 'ArrowUp' || evt.key === 'ArrowRight') {
-        evt.preventDefault();
-        setTempo(bpm + step);
-      } else if (evt.key === 'ArrowDown' || evt.key === 'ArrowLeft') {
-        evt.preventDefault();
-        setTempo(bpm - step);
-      } else if (evt.key === ' ' || evt.key === 'Enter') {
-        evt.preventDefault();
-        togglePlay();
-      }
-    }
-
     function onWheel(evt) {
       var local = toLocal(toSvgPoint(evt));
       if (local.x < PIVOT_X - WHEEL_WIDTH || local.x > PIVOT_X + WHEEL_WIDTH) return;
@@ -422,7 +412,6 @@
     svg.addEventListener('pointermove', onPointerMove);
     svg.addEventListener('pointerup', onPointerUp);
     svg.addEventListener('pointercancel', onPointerUp);
-    svg.addEventListener('keydown', onKeyDown);
     svg.addEventListener('wheel', onWheel, { passive: false });
     startBtn.addEventListener('click', togglePlay);
     if (bellInput) bellInput.addEventListener('input', onBellInput);
@@ -438,7 +427,6 @@
         svg.removeEventListener('pointermove', onPointerMove);
         svg.removeEventListener('pointerup', onPointerUp);
         svg.removeEventListener('pointercancel', onPointerUp);
-        svg.removeEventListener('keydown', onKeyDown);
         svg.removeEventListener('wheel', onWheel);
         startBtn.removeEventListener('click', togglePlay);
         if (bellInput) bellInput.removeEventListener('input', onBellInput);

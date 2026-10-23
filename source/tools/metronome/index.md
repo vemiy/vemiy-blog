@@ -14,7 +14,7 @@ comments: false
 </div>
 </div>
 <div class="vemiy-metronome-stage">
-<svg id="vemiyMetroSvg" class="vemiy-metronome-svg" viewBox="0 0 340 580" role="img" aria-label="机械节拍器" tabindex="0">
+<svg id="vemiyMetroSvg" class="vemiy-metronome-svg" viewBox="0 0 340 580" role="img" aria-label="机械节拍器">
 <path class="vemiy-metronome-body" d="M112 20 L228 20 L300 556 Q300 572 284 572 L56 572 Q40 572 40 556 Z" fill="#2e2e32" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"></path>
 <path class="vemiy-metronome-plate" d="M118 108 L222 108 L284 552 L56 552 Z" fill="#26262a" stroke="rgba(255,255,255,0.06)" stroke-width="1"></path>
 <text class="vemiy-metronome-bpm" id="vemiyMetroBpm" x="170" y="56" text-anchor="middle">120</text>
@@ -202,9 +202,6 @@ comments: false
   .vemiy-metronome-svg:active {
     cursor: grabbing;
   }
-  .vemiy-metronome-svg:focus-visible {
-    filter: drop-shadow(0 0 8px rgba(73, 177, 245, 0.5));
-  }
   .vemiy-metronome-weight {
     cursor: ns-resize;
   }
@@ -252,10 +249,35 @@ comments: false
   }
   @media (max-width: 640px) {
     .vemiy-metronome-head {
-      gap: 0.6rem;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      justify-content: space-between;
+    }
+    .vemiy-metronome-start {
+      width: auto;
+      flex: 0 0 auto;
+      min-width: 76px;
+      height: 38px;
+      padding: 0 1rem;
+    }
+    .vemiy-metronome-bell {
+      flex: 1 1 auto;
+      min-width: 0;
+      height: 38px;
+      padding: 0 0.7rem;
+      gap: 0.45rem;
+    }
+    .vemiy-metronome-bell-label {
+      font-size: 0.85rem;
     }
     .vemiy-metronome-bell-range {
-      width: 72px;
+      width: auto;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .vemiy-metronome-bell-value {
+      font-size: 0.8rem;
+      min-width: 2.4em;
     }
   }
 </style>
