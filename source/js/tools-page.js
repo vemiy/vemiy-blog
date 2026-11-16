@@ -1309,6 +1309,8 @@
         if (!options.datacenter) botRisk *= 0.19;
 
         add('\u4eba\u673a\u6d41\u91cf\u6bd4', botRisk, '\u673a\u5668\u4eba ' + Math.round(options.radarBot) + '%');
+      } else if (options.radarBot === null) {
+        add('\u4eba\u673a\u6d41\u91cf\u6bd4\u672a\u77e5', 0.05, '\u6570\u636e\u6e90\u672a\u8fd4\u56de');
       }
 
       if (options.datacenter) {
