@@ -1126,6 +1126,7 @@
     var geoEl = root.querySelector('#vemiyIpGeo');
     var exitsEl = document.createElement('div');
     var exitsNote = document.createElement('div');
+    var exitsHost = null;
     exitsEl.className = 'vemiy-ipcheck-lists is-compact';
     exitsNote.className = 'vemiy-ipcheck-note';
 
@@ -1692,6 +1693,9 @@
       var asnConsistentValue = null;
 
       clear(envEl);
+      exitsHost = null;
+      exitsEl = null;
+      exitsNote = null;
       appendRow(envEl, '浏览器时区', d.browserTz || '未知');
       appendRow(envEl, 'IP 时区', d.timezone || '未知');
 
@@ -1734,7 +1738,18 @@
     }
 
     function renderExits(exitResults) {
-      if (!exitsEl || !envEl) return;
+      if (!envEl) return { okCount: 0, distinct: 0, mixed: false };
+
+      if (!exitsEl) {
+        exitsEl = document.createElement('div');
+        exitsEl.className = 'vemiy-ipcheck-lists is-compact';
+      }
+
+      if (!exitsNote) {
+        exitsNote = document.createElement('div');
+        exitsNote.className = 'vemiy-ipcheck-note';
+      }
+
       var exitSummary = { okCount: 0, distinct: 0, mixed: false };
       var distinctByFamily = { v4: {}, v6: {} };
       var countByFamily = { v4: 0, v6: 0 };
@@ -1743,18 +1758,18 @@
 
       clear(exitsEl);
 
-      if (!exitsEl.parentNode) {
-        var host = document.createElement('div');
-        host.className = 'vemiy-ipcheck-exits';
+      if (!exitsHost) {
+        exitsHost = document.createElement('div');
+        exitsHost.className = 'vemiy-ipcheck-exits';
 
         var sub = document.createElement('div');
         sub.className = 'vemiy-ipcheck-subtitle';
         sub.textContent = '出口一致性';
 
-        host.appendChild(sub);
-        host.appendChild(exitsEl);
-        if (exitsNote) host.appendChild(exitsNote);
-        envEl.appendChild(host);
+        exitsHost.appendChild(sub);
+        exitsHost.appendChild(exitsEl);
+        if (exitsNote) exitsHost.appendChild(exitsNote);
+        envEl.appendChild(exitsHost);
       }
 
       var grouped = { v4: [], v6: [] };
@@ -1817,7 +1832,9 @@
       var hasV6 = countByFamily.v6 > 0;
       var maxDistinct = Math.max(countByFamily.v4, countByFamily.v6);
 
-      if (!exitsNote) return;
+      var effectiveDistinct = (hasV4 && hasV6) ? 1 : maxDistinct;
+
+      if (!exitsNote) return { okCount: okCount, distinct: effectiveDistinct, mixed: hasV4 && hasV6 };
 
       if (okCount === 0) {
         exitsNote.textContent = '所有出口源均不可达。';
@@ -1830,7 +1847,7 @@
       }
 
       exitSummary.okCount = okCount;
-      exitSummary.distinct = maxDistinct;
+      exitSummary.distinct = effectiveDistinct;
       exitSummary.mixed = hasV4 && hasV6;
 
       return exitSummary;
