@@ -1132,6 +1132,9 @@
     var running = false;
     var destroyed = false;
     var runToken = 0;
+    var radarRowEl = null;
+    var radarRatioEl = null;
+    var lastScoreOptions = null;
     var exitAddr4 = '';
     var exitAddr6 = '';
     var fpEl = root.querySelector('#vemiyIpFp');
@@ -1333,63 +1336,213 @@
 
     function runExits(ip) {
       currentExitIp = ip || '';
-      var results = [];
-      var index = 0;
 
-      function next() {
-        if (index >= EXIT_SOURCES.length) return Promise.resolve(results);
-        var source = EXIT_SOURCES[index++];
-        return probeExit(source).then(function (result) {
-          results.push(result);
-          return next();
+      var tasks = EXIT_SOURCES.map(function (source) {
+        return withTimeout(probeExit(source), EXIT_TIMEOUT).then(function (result) {
+          return result || { name: source.name, ip: null };
+        }).catch(function () {
+          return { name: source.name, ip: null };
         });
-      }
+      });
 
-      return next();
+      return Promise.all(tasks);
     }
 
-    function renderBasics(data) {
+    function updateRadarRow(botPct) {
+      if (!radarRatioEl) return;
+
+      var botRound = Math.round(num(botPct));
+      var humanPct = 100 - botRound;
+      var level = botRound >= 70 ? 'bad' : botRound >= 40 ? 'warn' : 'good';
+
+      clear(radarRatioEl);
+      radarRatioEl.appendChild(tagEl('真人 ' + humanPct + '% / 机器人 ' + botRound + '%', level));
+
+      if (lastScoreOptions) {
+        lastScoreOptions.radarBot = botRound;
+      }
+    }
+
+    function renderRisks(d) {
+      clear(riskEl);
+
+      var typeEl = document.createElement('span');
+      typeEl.appendChild(tagEl(d.datacenter ? '机房 IP' : (d.residential ? '住宅 IP' : '用途未识别'),
+        d.datacenter ? 'warn' : (d.residential ? 'good' : 'idle')));
+      appendRow(riskEl, 'IP 属性', typeEl);
+
+      radarRatioEl = document.createElement('span');
+      radarRowEl = document.createElement('div');
+      radarRowEl.className = 'vemiy-ipcheck-row';
+
+      var radarKeyEl = document.createElement('div');
+      radarKeyEl.className = 'vemiy-ipcheck-key';
+      radarKeyEl.textContent = '人机流量比';
+
+      radarRowEl.appendChild(radarKeyEl);
+      radarRowEl.appendChild(radarRatioEl);
+      riskEl.appendChild(radarRowEl);
+
+      if (d.radarBot !== null) {
+        updateRadarRow(d.radarBot);
+      } else {
+        radarRatioEl.appendChild(tagEl('查询中', 'idle'));
+      }
+
+      var proxyEl = document.createElement('span');
+      var proxySignals = d.proxySignals;
+
+      if (proxySignals.length === 0) {
+        proxyEl.appendChild(tagEl('未发现代理迹象', 'good'));
+      } else if (proxySignals.indexOf('WARP') !== -1 || proxySignals.length >= 2) {
+        proxyEl.appendChild(tagEl('高度疑似代理或 VPN', 'bad'));
+      } else {
+        proxyEl.appendChild(tagEl('疑似代理或 VPN', 'warn'));
+      }
+
+      appendRow(riskEl, '代理 / VPN', proxyEl);
+
+      if (proxySignals.length > 0) {
+        appendRow(riskEl, '判定依据', proxySignals.join(' · '));
+      }
+
+      var counts = d.counts;
+      var listEl = document.createElement('span');
+
+      if (counts.listed > 0) {
+        listEl.appendChild(tagEl(counts.listed + ' 个命中', 'bad'));
+      } else if (counts.checked > 0) {
+        listEl.appendChild(tagEl('已查 ' + counts.checked + ' 个，未命中', 'good'));
+      } else {
+        listEl.appendChild(tagEl('未取得有效结果', 'idle'));
+      }
+
+      if (counts.blocked > 0) {
+        listEl.appendChild(document.createTextNode(' '));
+        listEl.appendChild(tagEl(counts.blocked + ' 个公共 DNS 受限', 'warn'));
+      }
+
+      if (counts.timeout > 0) {
+        listEl.appendChild(document.createTextNode(' '));
+        listEl.appendChild(tagEl(counts.timeout + ' 个超时', 'idle'));
+      }
+
+      if (counts.unsupported > 0) {
+        listEl.appendChild(document.createTextNode(' '));
+        listEl.appendChild(tagEl(counts.unsupported + ' 个不支持当前协议', 'idle'));
+      }
+
+      if (d.dnsblNote) {
+        listEl.appendChild(document.createTextNode(' '));
+        listEl.appendChild(tagEl(d.dnsblNote, 'idle'));
+      }
+
+      appendRow(riskEl, '实时黑名单', listEl);
+
+      if (d.block !== null) {
+        var blockEl = document.createElement('span');
+
+        if (d.block.listed) {
+          blockEl.appendChild(tagEl('命中威胁网段', 'bad'));
+        } else if (d.block.ok) {
+          blockEl.appendChild(tagEl('未命中（' + d.block.total + ' 条）', 'good'));
+        } else {
+          blockEl.appendChild(tagEl('查询失败', 'idle'));
+        }
+
+        appendRow(riskEl, '威胁情报库', blockEl);
+      }
+
+      if (d.ipv6) {
+        appendRow(riskEl, '开放端口', tagEl('IPv6 不支持查询', 'idle'));
+      } else if (d.shodan !== null) {
+        var portEl = document.createElement('span');
+
+        if (d.shodan.ports.length > 0) {
+          portEl.appendChild(tagEl(d.shodan.ports.length + ' 个：' + d.shodan.ports.slice(0, 8).join(' '), 'warn'));
+        } else {
+          portEl.appendChild(tagEl('无开放端口', 'good'));
+        }
+
+        appendRow(riskEl, '开放端口', portEl);
+
+        if (d.shodan.vulns.length > 0) {
+          appendRow(riskEl, '已知漏洞',
+            tagEl(d.shodan.vulns.length + ' 个：' + d.shodan.vulns.slice(0, 3).join(' '), 'bad'));
+        }
+      }
+
+      if (d.abuse !== null) {
+        var abuseEl = document.createElement('span');
+        var abuseTotal = d.abuse.frequency + d.abuse.appears;
+
+        if (abuseTotal > 0) {
+          abuseEl.appendChild(tagEl('记录 ' + abuseTotal + ' 次', 'bad'));
+        } else {
+          abuseEl.appendChild(tagEl('无记录', 'good'));
+        }
+
+        appendRow(riskEl, '滥用记录', abuseEl);
+      }
+
+      if (d.hostname) {
+        appendRow(riskEl, '反向解析', d.hostname);
+      }
+
+      if (d.anycast) {
+        appendRow(riskEl, '路由异常', tagEl('疑似任播', 'warn'));
+      }
+    }
+
+    function renderBasics(d) {
       clear(infoEl);
 
-      var addr4 = (data.stackInfo && data.stackInfo.v4) || '';
-      var addr6 = (data.stackInfo && data.stackInfo.v6) || '';
+      var addr4 = str(d.stackInfo.v4);
+      var addr6 = str(d.stackInfo.v6);
 
-      if (!addr4 && data.ip && ipFamily(data.ip) === 'v4') addr4 = data.ip;
-      if (!addr6 && data.ip && ipFamily(data.ip) === 'v6') addr6 = data.ip;
+      if (!addr4 && d.ipv6 === false && d.ip) addr4 = d.ip;
+      if (!addr6 && d.ipv6 === true && d.ip) addr6 = d.ip;
 
       appendRow(infoEl, 'IPv4 地址', addr4 || '不可用');
       appendRow(infoEl, 'IPv6 地址', addr6 || '不可用');
 
       var preferText = '未知';
+
       if (addr4 && addr6) {
-        preferText = ipFamily(data.ip) === 'v6' ? 'IPv6 优先' : 'IPv4 优先';
+        preferText = d.ipv6 ? 'IPv6 优先' : 'IPv4 优先';
       } else if (addr4) {
         preferText = '仅 IPv4';
       } else if (addr6) {
         preferText = '仅 IPv6';
       }
+
       appendRow(infoEl, '当前出口协议', preferText);
 
-      appendRow(infoEl, '国家 / 地区', data.country || '未知');
-      if (data.region || data.city) {
-        appendRow(infoEl, '省份 / 城市', [data.region, data.city].filter(Boolean).join(' · '));
+      appendRow(infoEl, '国家 / 地区', d.country || '未知');
+
+      if (d.region || d.city) {
+        appendRow(infoEl, '省份 / 城市', [d.region, d.city].filter(Boolean).join(' · '));
       }
-      if (data.ipSource) appendRow(infoEl, 'IP 来源', data.ipSource);
 
-      if (data.asn) appendRow(infoEl, 'ASN', data.asn);
-      if (data.org) appendRow(infoEl, '所属组织', data.org);
-      if (data.isp) appendRow(infoEl, '运营商', data.isp);
-      if (data.traceLoc) appendRow(infoEl, 'Cloudflare 位置', String(data.traceLoc).toUpperCase());
-      if (data.colo) appendRow(infoEl, 'Cloudflare 边缘节点', data.colo);
+      if (d.ipSource) appendRow(infoEl, 'IP 来源', d.ipSource);
+      if (d.asn) appendRow(infoEl, 'ASN', d.asn);
+      if (d.org) appendRow(infoEl, '所属组织', d.org);
+      if (d.isp && d.isp !== d.org) appendRow(infoEl, '运营商', d.isp);
+      if (d.colo) appendRow(infoEl, 'Cloudflare 边缘节点', d.colo);
 
-      if (data.traceIp && data.ip) {
-        var traceFamily = ipFamily(data.traceIp);
-        var ipFamilyValue = ipFamily(data.ip);
+      if (d.traceIp && d.ip) {
+        var traceFamily = ipFamily(d.traceIp);
+        var ipFamilyValue = ipFamily(d.ip);
+        var traceViaCdn = /^2a09:bac3:/i.test(d.traceIp) || /^2a06:98c0:/i.test(d.traceIp);
 
         if (traceFamily !== ipFamilyValue) {
-          appendRow(infoEl, 'IPv6 出口', data.traceIp);
-        } else if (data.traceIp !== data.ip) {
-          appendRow(infoEl, '多源结果不一致', 'Cloudflare 为 ' + data.traceIp + '，其他数据源为 ' + data.ip);
+          appendRow(infoEl, '另一协议出口', d.traceIp);
+        } else if (d.traceIp !== d.ip) {
+          if (traceViaCdn) {
+            appendRow(infoEl, 'Cloudflare 中转地址', d.traceIp + '（非真实出口）');
+          } else {
+            appendRow(infoEl, '多源结果不一致', 'Cloudflare 为 ' + d.traceIp + '，其他数据源为 ' + d.ip);
+          }
         }
       }
 
@@ -1401,8 +1554,9 @@
       if (!geoEl) return;
 
       var section = geoEl.closest('.vemiy-tool-section');
+      var list = arr(geoList);
 
-      if (!geoList || geoList.length < 2) {
+      if (list.length < 2) {
         if (section) section.style.display = 'none';
         return;
       }
@@ -1411,277 +1565,127 @@
 
       clear(geoEl);
 
-      if (geoList.length === 0) {
-        appendRow(geoEl, '状态', '未取得结果');
-        return;
-      }
-
-      var index;
-
-      for (index = 0; index < geoList.length; index++) {
-        var g = geoList[index];
-        var parts = [g.country, g.region, g.city].filter(Boolean);
+      for (var i = 0; i < list.length; i++) {
+        var g = obj(list[i]);
+        var parts = [str(g.country), str(g.region), str(g.city)].filter(Boolean);
         var text = parts.length ? parts.join(' · ') : '未知';
+        var isp = str(g.isp);
 
-        if (g.isp) text += '  ' + g.isp;
+        if (isp) text += '  ' + isp;
 
-        var grow = document.createElement('div');
-        grow.className = 'vemiy-ipcheck-list-row';
+        var row = document.createElement('div');
+        row.className = 'vemiy-ipcheck-list-row';
 
-        var gname = document.createElement('div');
-        gname.className = 'vemiy-ipcheck-list-name';
-        gname.textContent = g.name;
+        var nameEl = document.createElement('div');
+        nameEl.className = 'vemiy-ipcheck-list-name';
+        nameEl.textContent = str(g.name, '未知源');
 
-        var gval = document.createElement('div');
-        gval.className = 'vemiy-ipcheck-list-value';
-        gval.textContent = text;
+        var valEl = document.createElement('div');
+        valEl.className = 'vemiy-ipcheck-list-value';
+        valEl.textContent = text;
 
-        grow.appendChild(gname);
-        grow.appendChild(gval);
-        geoEl.appendChild(grow);
+        row.appendChild(nameEl);
+        row.appendChild(valEl);
+        geoEl.appendChild(row);
       }
     }
 
-    var radarRowEl = null;
-    var radarRatioEl = null;
-    var lastScoreOptions = null;
-
-    function updateRadarRow(botPct) {
-      if (!radarRatioEl) return;
-
-      var humanPct = 100 - Math.round(botPct);
-      var botRound = Math.round(botPct);
-      var level = botRound >= 70 ? 'bad' : botRound >= 40 ? 'warn' : 'good';
-
-      clear(radarRatioEl);
-      radarRatioEl.appendChild(tagEl('\u771f\u4eba ' + humanPct + '% / \u673a\u5668\u4eba ' + botRound + '%', level));
-
-      if (lastScoreOptions) {
-        lastScoreOptions.radarBot = botPct;
-      }
-    }
-
-    function renderRisks(d) {
-      clear(riskEl);
-
-      var typeEl = document.createElement('span');
-      if (d.datacenter) {
-          typeEl.appendChild(tagEl('机房 IP', 'warn'));
-      } else if (d.residential) {
-          typeEl.appendChild(tagEl('住宅 IP', 'good'));
-      } else {
-        typeEl.appendChild(tagEl('用途未识别', 'idle'));
-      }
-      appendRow(riskEl, 'IP 属性', typeEl);
-
-      radarRatioEl = document.createElement('span');
-      radarRowEl = document.createElement('div');
-      radarRowEl.className = 'vemiy-ipcheck-row';
-
-      var radarKeyEl = document.createElement('div');
-      radarKeyEl.className = 'vemiy-ipcheck-key';
-      radarKeyEl.textContent = '\u4eba\u673a\u6d41\u91cf\u6bd4';
-
-      radarRowEl.appendChild(radarKeyEl);
-      radarRowEl.appendChild(radarRatioEl);
-      riskEl.appendChild(radarRowEl);
-
-      if (d.radarBot !== null && d.radarBot !== undefined) {
-        updateRadarRow(d.radarBot);
-      } else {
-        radarRatioEl.appendChild(tagEl('\u67e5\u8be2\u4e2d', 'idle'));
-      }
-
-      var proxyEl = document.createElement('span');
-      if (d.proxySignals.length === 0) {
-        proxyEl.appendChild(tagEl('未发现代理迹象', 'good'));
-      } else if (d.proxySignals.indexOf('WARP') !== -1 || d.proxySignals.length >= 2) {
-        proxyEl.appendChild(tagEl('高度疑似代理或 VPN', 'bad'));
-      } else {
-        proxyEl.appendChild(tagEl('疑似代理或 VPN', 'warn'));
-      }
-      appendRow(riskEl, '代理 / VPN', proxyEl);
-
-      if (d.proxySignals.length > 0) {
-        appendRow(riskEl, '判定依据', d.proxySignals.join(' · '));
-      }
-
-      var listEl = document.createElement('span');
-      if (d.listedCount > 0) {
-        listEl.appendChild(tagEl(d.listedCount + ' 个黑名单命中', 'bad'));
-      } else if (d.checkedCount > 0) {
-        listEl.appendChild(tagEl('已查 ' + d.checkedCount + ' 个，未命中', 'good'));
-      } else {
-        listEl.appendChild(tagEl('未取得有效结果', 'idle'));
-      }
-      if (d.blockedCount > 0) {
-        listEl.appendChild(document.createTextNode(' '));
-        listEl.appendChild(tagEl(d.blockedCount + ' 个因公共 DNS 受限未查', 'warn'));
-      }
-      if (d.timeoutCount > 0) {
-        listEl.appendChild(document.createTextNode(' '));
-        listEl.appendChild(tagEl(d.timeoutCount + ' 个查询超时', 'idle'));
-      }
-      if (d.unsupportedCount > 0) {
-        listEl.appendChild(document.createTextNode(' '));
-        listEl.appendChild(tagEl('当前为 IPv6，黑名单不适用', 'idle'));
-      }
-      if (d.dnsblNote) {
-        listEl.appendChild(document.createTextNode(' '));
-        listEl.appendChild(tagEl(d.dnsblNote, 'idle'));
-      }
-
-        appendRow(riskEl, '实时黑名单', listEl);
-
-      if (d.blocklistInfo) {
-        var fhEl = document.createElement('span');
-
-        if (d.blocklistInfo.listed) {
-          fhEl.appendChild(tagEl('命中威胁网段', 'bad'));
-        } else if (d.blocklistInfo.ok) {
-          fhEl.appendChild(tagEl('未命中（' + d.blocklistInfo.total + ' 条）', 'good'));
-        } else {
-          fhEl.appendChild(tagEl('查询失败', 'idle'));
-        }
-
-        appendRow(riskEl, '威胁情报库', fhEl);
-      }
-
-      if (d.isIpv6) {
-        appendRow(riskEl, '开放端口', tagEl('IPv6 不适用', 'idle'));
-      } else if (d.shodanInfo) {
-        var portEl = document.createElement('span');
-        if (d.shodanInfo.ports.length > 0) {
-          portEl.appendChild(tagEl(d.shodanInfo.ports.length + ' 个开放端口：' + d.shodanInfo.ports.slice(0, 8).join(' '), 'warn'));
-        } else {
-          portEl.appendChild(tagEl('无开放端口', 'good'));
-        }
-        appendRow(riskEl, '开放端口', portEl);
-
-        if (d.shodanInfo.vulns.length > 0) {
-          var vulnEl = document.createElement('span');
-          vulnEl.appendChild(tagEl(d.shodanInfo.vulns.length + ' 个已知漏洞：' + d.shodanInfo.vulns.slice(0, 3).join(' '), 'bad'));
-          appendRow(riskEl, '已知漏洞', vulnEl);
-        }
-
-      }
-
-      if (d.abuseInfo) {
-        var abuseEl = document.createElement('span');
-        var abuseTotal = d.abuseInfo.frequency + d.abuseInfo.appears;
-        if (abuseTotal > 0) {
-          abuseEl.appendChild(tagEl('滥用记录 ' + d.abuseInfo.appears + ' 次', 'bad'));
-        } else {
-          abuseEl.appendChild(tagEl('无滥用记录', 'good'));
-        }
-        appendRow(riskEl, '滥用记录', abuseEl);
-      }
-
-      if (d.hostname) {
-        appendRow(riskEl, '反向解析', d.hostname);
-      }
-
-      if (d.anycast) {
-        var anyEl = document.createElement('span');
-        anyEl.appendChild(tagEl('疑似 Anycast 广播，归属地可能偏差', 'warn'));
-        appendRow(riskEl, '路由特征', anyEl);
-      }
-    }
 
     function renderFingerprint(preLeak) {
-        if (true) {
-          clear(fpEl);
+      clear(fpEl);
 
-          var fp = collectFingerprint();
-          var uaInfo = parseUserAgent(fp.ua);
+      var fp = collectFingerprint();
+      var uaInfo = parseUserAgent(fp.ua);
 
-          var fpIdEl = document.createElement('span');
-          fpIdEl.appendChild(tagEl('计算中', 'idle'));
-          appendRow(fpEl, '指纹 ID', fpIdEl);
+      var fpIdEl = document.createElement('span');
+      fpIdEl.appendChild(tagEl('计算中', 'idle'));
+      appendRow(fpEl, '指纹 ID', fpIdEl);
 
-          loadFingerprintJs().then(function (FingerprintJS) {
-            if (destroyed) return;
+      loadFingerprintJs().then(function (FingerprintJS) {
+        if (destroyed) return;
 
-            if (!FingerprintJS) {
-              clear(fpIdEl);
-              fpIdEl.appendChild(tagEl('加载失败', 'idle'));
-              return;
-            }
-
-            FingerprintJS.load().then(function (agent) {
-              return agent.get();
-            }).then(function (detail) {
-              if (destroyed) return;
-              clear(fpIdEl);
-              fpIdEl.appendChild(tagEl(detail.visitorId, 'good'));
-            }).catch(function () {
-              if (destroyed) return;
-              clear(fpIdEl);
-              fpIdEl.appendChild(tagEl('计算失败', 'idle'));
-            });
-          });
-
-          var uaText = [uaInfo.browser, uaInfo.os].filter(Boolean).join(' / ') || '未知';
-          appendRow(fpEl, '浏览器 / 系统', uaText);
-
-          var headlessEl = document.createElement('span');
-          var headlessFlags = fp.headless.slice();
-
-          if (headlessFlags.length === 0) {
-            headlessEl.appendChild(tagEl('未发现自动化特征', 'good'));
-          } else {
-            headlessEl.appendChild(tagEl('检测到自动化特征：' + headlessFlags.join('、'), 'bad'));
-          }
-          appendRow(fpEl, '自动化检测', headlessEl);
-
-          appendRow(fpEl, '屏幕 / 可视区', '屏幕 ' + fp.screen + ' · 视口 ' + fp.viewport + ' · ' + fp.pixelRatio + 'x');
-
-          var hwParts = [];
-          if (fp.cores) hwParts.push(fp.cores + ' 核');
-          if (fp.memory) hwParts.push(fp.memory + ' GB 内存');
-          if (hwParts.length) appendRow(fpEl, '硬件', hwParts.join('  ·  '));
-
-          if (fp.canvasHash) appendRow(fpEl, 'Canvas 指纹', fp.canvasHash);
-          if (fp.webglRenderer) appendRow(fpEl, '显卡渲染器', fp.webglRenderer);
-
-          var webrtcEl = document.createElement('span');
-
-          var leakPromise = preLeak ? Promise.resolve(preLeak) : detectWebrtcLeak();
-
-          leakPromise.then(function (leak) {
-            if (destroyed) return;
-
-            if (!leak.supported) {
-              webrtcEl.appendChild(tagEl('浏览器不支持检测', 'idle'));
-              return;
-            }
-
-            if (leak.addrs.length === 0) {
-              webrtcEl.appendChild(tagEl(leak.hasMdns ? '未泄露（已启用 mDNS 混淆）' : '未泄露公网地址', 'good'));
-              return;
-            }
-
-            var leakedList = [];
-            var ai;
-
-            for (ai = 0; ai < leak.addrs.length; ai++) {
-              var addrValue = leak.addrs[ai];
-
-              if (addrValue !== exitAddr4 && addrValue !== exitAddr6) {
-                leakedList.push(addrValue);
-              }
-            }
-
-            if (leakedList.length === 0) {
-              webrtcEl.appendChild(tagEl('未泄露，仅当前出口', 'good'));
-              return;
-            }
-
-            webrtcEl.appendChild(tagEl('泄露：' + leakedList.join('  '), 'bad'));
-          });
-          appendRow(fpEl, 'WebRTC 检测', webrtcEl);
+        if (!FingerprintJS) {
+          clear(fpIdEl);
+          fpIdEl.appendChild(tagEl('加载失败', 'idle'));
+          return;
         }
 
+        FingerprintJS.load().then(function (agent) {
+          return agent.get();
+        }).then(function (detail) {
+          if (destroyed) return;
+          clear(fpIdEl);
+          fpIdEl.appendChild(tagEl(str(detail.visitorId, '未知'), 'good'));
+        }).catch(function () {
+          if (destroyed) return;
+          clear(fpIdEl);
+          fpIdEl.appendChild(tagEl('计算失败', 'idle'));
+        });
+      });
+
+      var uaText = [str(uaInfo.browser), str(uaInfo.os)].filter(Boolean).join(' / ');
+      appendRow(fpEl, '浏览器 / 系统', uaText || '未知');
+
+      var headlessEl = document.createElement('span');
+      var flags = arr(fp.headless);
+
+      if (flags.length === 0) {
+        headlessEl.appendChild(tagEl('未发现自动化特征', 'good'));
+      } else {
+        headlessEl.appendChild(tagEl('检测到自动化特征：' + flags.join('、'), 'bad'));
+      }
+
+      appendRow(fpEl, '自动化检测', headlessEl);
+
+      appendRow(fpEl, '屏幕 / 可视区',
+        '屏幕 ' + str(fp.screen, '未知') + ' · 视口 ' + str(fp.viewport, '未知') + ' · ' + num(fp.pixelRatio, 1) + 'x');
+
+      var hwParts = [];
+
+      if (num(fp.cores) > 0) hwParts.push(num(fp.cores) + ' 核');
+      if (num(fp.memory) > 0) hwParts.push(num(fp.memory) + ' GB 内存');
+      if (hwParts.length) appendRow(fpEl, '硬件', hwParts.join(' · '));
+
+      if (fp.canvasHash) appendRow(fpEl, 'Canvas 指纹', fp.canvasHash);
+      if (fp.webglRenderer) appendRow(fpEl, '显卡渲染器', fp.webglRenderer);
+
+      var webrtcEl = document.createElement('span');
+      appendRow(fpEl, 'WebRTC 检测', webrtcEl);
+
+      var leakPromise = preLeak ? Promise.resolve(preLeak) : detectWebrtcLeak();
+
+      leakPromise.then(function (leak) {
+        if (destroyed) return;
+
+        var data = obj(leak);
+        var addrs = arr(data.addrs);
+
+        if (data.supported !== true) {
+          webrtcEl.appendChild(tagEl('浏览器不支持检测', 'idle'));
+          return;
+        }
+
+        if (addrs.length === 0) {
+          webrtcEl.appendChild(tagEl(data.hasMdns ? '未泄露（已启用 mDNS 混淆）' : '未泄露公网地址', 'good'));
+          return;
+        }
+
+        var leakedList = [];
+
+        for (var i = 0; i < addrs.length; i++) {
+          var addrValue = str(addrs[i]);
+
+          if (addrValue && addrValue !== exitAddr4 && addrValue !== exitAddr6) {
+            leakedList.push(addrValue);
+          }
+        }
+
+        if (leakedList.length === 0) {
+          webrtcEl.appendChild(tagEl('未泄露，仅当前出口', 'good'));
+        } else {
+          webrtcEl.appendChild(tagEl('泄露：' + leakedList.join('  '), 'bad'));
+        }
+      });
     }
 
     function renderEnvironment(d) {
@@ -2017,43 +2021,103 @@
       });
     }
 
-    function renderAll(ctx) {
-      if (destroyed) return;
+    function num(value, fallback) {
+      var n = Number(value);
+      return isFinite(n) ? n : (typeof fallback === 'number' ? fallback : 0);
+    }
 
-      var ip = ctx.ip;
-      var trace = ctx.trace;
-      var info = ctx.info;
-      var stackInfo = ctx.stackInfo;
+    function str(value, fallback) {
+      if (value === null || value === undefined) return typeof fallback === 'string' ? fallback : '';
+      return String(value);
+    }
 
-      if (!ctx.country || !ctx.region || !ctx.city) {
-        var ci;
+    function arr(value) {
+      return Array.isArray(value) ? value : [];
+    }
 
-        for (ci = 0; ci < ctx.geoList.length; ci++) {
-          if (!ctx.country && ctx.geoList[ci].country) ctx.country = ctx.geoList[ci].country;
-          if (!ctx.region && ctx.geoList[ci].region) ctx.region = ctx.geoList[ci].region;
-          if (!ctx.city && ctx.geoList[ci].city) ctx.city = ctx.geoList[ci].city;
-        }
+    function obj(value) {
+      return value && typeof value === 'object' ? value : {};
+    }
+
+    function normalizeContext(ctx) {
+      var shodan = ctx.shodanInfo ? obj(ctx.shodanInfo) : null;
+      var abuse = ctx.abuseInfo ? obj(ctx.abuseInfo) : null;
+      var block = ctx.blocklistData ? obj(ctx.blocklistData) : null;
+      var worker = ctx.workerData ? obj(ctx.workerData) : null;
+
+      var counts = { listed: 0, blocked: 0, checked: 0, unsupported: 0, timeout: 0 };
+      var listResults = arr(ctx.listResults);
+
+      for (var i = 0; i < listResults.length; i++) {
+        var item = obj(listResults[i]);
+        var st = str(item.status);
+
+        if (st === 'listed') counts.listed++;
+        else if (st === 'blocked') counts.blocked++;
+        else if (st === 'unsupported') counts.unsupported++;
+        else if (st === 'timeout') counts.timeout++;
+        else if (st === 'clean') counts.checked++;
       }
 
-      var sourceText = judgeIpSourceText(ctx);
+      return {
+        ip: str(ctx.ip),
+        ipv6: ipFamily(str(ctx.ip)) === 'v6',
+        trace: obj(ctx.trace),
+        whois: obj(ctx.whois),
+        info: obj(ctx.info),
+        stackInfo: obj(ctx.stackInfo),
+        workerData: worker,
+        country: str(ctx.country),
+        region: str(ctx.region),
+        city: str(ctx.city),
+        timezone: str(ctx.timezone),
+        asn: str(ctx.asn),
+        org: str(ctx.org),
+        isp: str(ctx.isp),
+        colo: str(ctx.colo),
+        traceLoc: str(ctx.traceLoc),
+        traceIp: str(ctx.traceIp),
+        hostname: str(ctx.hostname),
+        residential: ctx.residential === true,
+        datacenter: ctx.datacenter === true,
+        radarBot: typeof ctx.radarBot === 'number' && isFinite(ctx.radarBot) ? ctx.radarBot : null,
+        geoList: arr(ctx.geoList),
+        exitResults: arr(ctx.exitResults),
+        webrtcLeak: ctx.webrtcLeak ? obj(ctx.webrtcLeak) : null,
+        listResults: listResults,
+        counts: counts,
+        shodan: shodan ? {
+          ok: true,
+          ports: arr(shodan.ports),
+          vulns: arr(shodan.vulns)
+        } : null,
+        abuse: abuse ? {
+          ok: true,
+          frequency: num(abuse.frequency),
+          appears: num(abuse.appears)
+        } : null,
+        block: block ? {
+          ok: block.ok === true,
+          listed: block.listed === true,
+          total: num(block.total)
+        } : null
+      };
+    }
 
-      renderBasics({
-        ip: ip,
-        whois: ctx.whois,
-        info: info,
-        trace: trace,
-        stackInfo: stackInfo,
-        country: ctx.country,
-        region: ctx.region,
-        city: ctx.city,
-        asn: ctx.asn,
-        org: ctx.org,
-        isp: ctx.isp,
-        colo: ctx.colo,
-        traceLoc: ctx.traceLoc,
-        traceIp: ctx.traceIp,
-        ipSource: sourceText
-      });
+    function renderAll(rawContext) {
+      if (destroyed) return;
+
+      var ctx = normalizeContext(rawContext);
+      var i;
+
+      if (!ctx.country || !ctx.region || !ctx.city) {
+        for (i = 0; i < ctx.geoList.length; i++) {
+          var g = obj(ctx.geoList[i]);
+          if (!ctx.country && g.country) ctx.country = str(g.country);
+          if (!ctx.region && g.region) ctx.region = str(g.region);
+          if (!ctx.city && g.city) ctx.city = str(g.city);
+        }
+      }
 
       var browserTz = '';
 
@@ -2069,38 +2133,40 @@
         timezoneMatch = ctx.timezone === browserTz;
       }
 
-      var coloCountry = ctx.colo ? String(ctx.traceLoc).toUpperCase() : '';
-      var ipCountry = ((ctx.whois && ctx.whois.country_code) || '').toUpperCase();
+      var coloCountry = ctx.colo ? ctx.traceLoc.toUpperCase() : '';
+      var ipCountry = str(ctx.whois.country_code).toUpperCase();
       var anycast = coloCountry !== '' && ipCountry !== '' && coloCountry !== ipCountry;
-
-      renderGeo(ctx.geoList);
 
       var proxySignals = [];
 
-      if (trace && trace.warp === 'on') proxySignals.push('WARP');
-
+      if (str(ctx.trace.warp) === 'on') proxySignals.push('WARP');
       if (PROXY_PATTERN.test(ctx.org + ' ' + ctx.isp)) proxySignals.push('组织名含代理词');
       if (ctx.datacenter && timezoneMatch === false) proxySignals.push('机房出口与浏览器时区不符');
       if (ctx.datacenter && ctx.radarBot !== null && ctx.radarBot >= 50) proxySignals.push('机房出口与真实访客流量不符');
 
-      if (ctx.workerData && ctx.workerData.ipapi && ctx.workerData.ipapi.ok) {
-        if (ctx.workerData.ipapi.hosting === true) ctx.datacenter = true;
-        if (ctx.workerData.ipapi.proxy === true) proxySignals.push('代理定位已确认');
+      var ipapi = ctx.workerData && ctx.workerData.ipapi ? obj(ctx.workerData.ipapi) : null;
+
+      if (ipapi && ipapi.ok === true) {
+        if (ipapi.hosting === true) ctx.datacenter = true;
+        if (ipapi.proxy === true) proxySignals.push('代理定位已确认');
       }
 
-      var counts = { listed: 0, blocked: 0, checked: 0, unsupported: 0, timeout: 0 };
-      var index;
+      renderBasics({
+        ip: ctx.ip,
+        ipv6: ctx.ipv6,
+        stackInfo: ctx.stackInfo,
+        country: ctx.country,
+        region: ctx.region,
+        city: ctx.city,
+        asn: ctx.asn,
+        org: ctx.org,
+        isp: ctx.isp,
+        colo: ctx.colo,
+        traceIp: ctx.traceIp,
+        ipSource: judgeIpSourceText(ctx)
+      });
 
-      for (index = 0; index < ctx.listResults.length; index++) {
-        var st = ctx.listResults[index].status;
-
-        if (st === 'listed') counts.listed++;
-        else if (st === 'blocked') counts.blocked++;
-        else if (st === 'unsupported') counts.unsupported++;
-        else if (st === 'timeout') counts.timeout++;
-        else if (st === 'clean') counts.checked++;
-      }
-
+      renderGeo(ctx.geoList);
       renderLists(ctx.listResults);
 
       renderRisks({
@@ -2108,19 +2174,15 @@
         residential: ctx.residential,
         radarBot: ctx.radarBot,
         proxySignals: proxySignals,
-        listedCount: counts.listed,
-        checkedCount: counts.checked,
-        blockedCount: counts.blocked,
-        timeoutCount: counts.timeout,
-        unsupportedCount: counts.unsupported,
-        shodanInfo: ctx.shodanInfo,
-        abuseInfo: ctx.abuseInfo,
+        counts: ctx.counts,
+        shodan: ctx.shodan,
+        abuse: ctx.abuse,
+        block: ctx.block,
         hostname: ctx.hostname,
+        ipv6: ctx.ipv6,
         anycast: anycast,
-        blocklistInfo: ctx.blocklistData,
-        isIpv6: ipFamily(ip) === 'v6',
-        dnsblNote: (ipFamily(ip) === 'v6' && stackInfo && stackInfo.v4)
-          ? ('已改用 IPv4 ' + stackInfo.v4 + ' 查询')
+        dnsblNote: (ctx.ipv6 && str(ctx.stackInfo.v4))
+          ? ('已改用 IPv4 ' + str(ctx.stackInfo.v4) + ' 查询')
           : ''
       });
 
@@ -2131,7 +2193,7 @@
         timezone: ctx.timezone,
         timezoneMatch: timezoneMatch,
         asn: ctx.asn,
-        info: info,
+        infoorg: str(ctx.info.org),
         org: ctx.org,
         browserLang: navigator.language || ''
       });
@@ -2140,17 +2202,17 @@
 
       var scoreOptions = {
         datacenter: ctx.datacenter,
+        residential: ctx.residential,
+        radarBot: ctx.radarBot,
         proxyCount: proxySignals.length,
-        listedCount: counts.unsupported === 0 ? counts.listed : 0,
+        listedCount: ctx.counts.unsupported === 0 ? ctx.counts.listed : 0,
         timezoneMatch: timezoneMatch,
         asnConsistent: asnConsistent,
         suspiciousHostname: ctx.hostname ? HOSTNAME_PATTERN.test(ctx.hostname) && !ctx.residential : false,
-        abuseCount: ctx.abuseInfo ? (ctx.abuseInfo.frequency + ctx.abuseInfo.appears) : 0,
+        abuseCount: ctx.abuse ? (ctx.abuse.frequency + ctx.abuse.appears) : 0,
         anycast: anycast,
-        radarBot: ctx.radarBot,
-        residential: ctx.residential,
         exitDistinct: exitSummary ? exitSummary.distinct : 0,
-        blockListed: ctx.blocklistData ? ctx.blocklistData.listed : false
+        blockListed: ctx.block ? ctx.block.listed : false
       };
 
       lastScoreOptions = scoreOptions;
@@ -2186,6 +2248,12 @@
       destroy: function () {
         destroyed = true;
         startBtn.removeEventListener('click', onStart);
+      },
+      __testRender: function (rawContext) {
+        renderAll(rawContext);
+      },
+      __testNormalize: function (rawContext) {
+        return normalizeContext(rawContext);
       }
     };
   }
@@ -2199,11 +2267,13 @@
     if (ipCheckEngine) {
       ipCheckEngine.destroy();
       ipCheckEngine = null;
+      window.__vemiyIpCheck__ = null;
     }
 
     if (!root) return;
 
     ipCheckEngine = createIpCheck(root);
+    window.__vemiyIpCheck__ = ipCheckEngine;
   }
 
   initIpCheck();
