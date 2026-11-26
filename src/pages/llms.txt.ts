@@ -24,7 +24,6 @@ const KEY_PAGES: KeyPage[] = [
 	{
 		labelKey: I18nKey.friends,
 		path: "/links/",
-		descKey: I18nKey.friendsDescription,
 		pageKey: "friends",
 	},
 	{

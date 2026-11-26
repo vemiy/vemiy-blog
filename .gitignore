@@ -14,17 +14,30 @@ public/vndb-covers/
 node_modules/
 
 # logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# environment variables
+# 环境变量
 .env
 .env.production
+.env.*
+!.env.example
+.dev.vars
+google-key.json
 
-# macOS-specific files
+# 系统文件
 .DS_Store
+Thumbs.db
+
+# 备份与临时文件
+*.bak
+*.bak-*
+
+# Cloudflare
+.wrangler/
 
 .vercel
 
@@ -50,6 +63,3 @@ package/
 .codex*
 .claude
 .mimocode
-
-# 本地工作文件
-TODO.md
