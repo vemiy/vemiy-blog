@@ -14,13 +14,11 @@ import {
 	getDefaultCardFollowThemeEnabled,
 	getDefaultFullscreenLayout,
 	getDefaultGradientEnabled,
-	getDefaultHue,
 	getDefaultOverlayBlur,
 	getDefaultOverlayCardOpacity,
 	getDefaultOverlayOpacity,
 	getDefaultSakuraEnabled,
 	getDefaultWavesEnabled,
-	getHue,
 	getStoredBannerCarouselEnabled,
 	getStoredBannerTitleEnabled,
 	getStoredCardBorderEnabled,
@@ -39,7 +37,6 @@ import {
 	setCardFollowThemeEnabled,
 	setFullscreenLayout,
 	setGradientEnabled,
-	setHue,
 	setOverlayBlur,
 	setOverlayCardOpacity,
 	setOverlayOpacity,
@@ -71,8 +68,6 @@ type OverlaySliderItem = {
 
 type TabKey = "appearance" | "wallpaper" | "effects";
 
-let hue = $state(getHue());
-const defaultHue = getDefaultHue();
 let wallpaperMode: WALLPAPER_MODE = $state(backgroundWallpaper.mode);
 const defaultWallpaperMode = backgroundWallpaper.mode;
 let fullscreenLayout: FullscreenWallpaperLayout = $state(
@@ -124,7 +119,6 @@ const allowLayoutSwitch = displaySettingsConfig.layoutSwitchable;
 let effectiveDefaultLayout = $derived(
 	isMobileWidth ? mobileDefaultLayout : defaultLayout,
 );
-const showThemeColor = displaySettingsConfig.themeColorSwitchable;
 const isWavesSwitchable = displaySettingsConfig.wavesSwitchable;
 const isGradientSwitchable = displaySettingsConfig.gradientSwitchable;
 // 检查是否启用横幅标题配置（功能开关，非用户切换开关）
@@ -193,8 +187,7 @@ let cardSettingsIsDefault = $derived(
 );
 
 const hasAnyContent = $derived(
-	showThemeColor ||
-		isWallpaperSwitchable ||
+	isWallpaperSwitchable ||
 		isFullscreenLayoutSwitchable ||
 		allowLayoutSwitch ||
 		hasBannerSettings ||
@@ -204,8 +197,7 @@ const hasAnyContent = $derived(
 
 // --- Tab visibility ---
 const hasAppearanceTab = $derived(
-	showThemeColor ||
-		allowLayoutSwitch ||
+	allowLayoutSwitch ||
 		isCardBorderSwitchable ||
 		isCardFollowThemeSwitchable,
 );
@@ -318,11 +310,6 @@ let overlaySliderItems = $derived<OverlaySliderItem[]>([
 let hasVisibleOverlaySlider = $derived(
 	overlaySliderItems.some((item) => item.enabled),
 );
-
-function resetHue() {
-	hue = getDefaultHue();
-	requestAnimationFrame(refreshAllRangeProgress);
-}
 
 function resetWallpaperMode() {
 	wallpaperMode = defaultWallpaperMode;
@@ -626,12 +613,6 @@ onMount(() => {
 });
 
 $effect(() => {
-	if (hue || hue === 0) {
-		setHue(hue);
-	}
-});
-
-$effect(() => {
 	if (wallpaperMode === WALLPAPER_OVERLAY) {
 		if (isOverlayOpacitySwitchable) {
 			setOverlayOpacity(overlayOpacity);
@@ -681,32 +662,8 @@ $effect(() => {
 	</div>
 	{/if}
 
-	<!-- Appearance Tab: Theme Color + Layout -->
+	<!-- Appearance Tab: Layout -->
 	{#if activeTab === "appearance"}
-		<!-- Theme Color Section -->
-		{#if showThemeColor}
-		<div class="">
-			<div class="section-title">
-				{i18n(I18nKey.themeColor)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
-						class:opacity-0={hue === defaultHue} class:pointer-events-none={hue === defaultHue}
-						disabled={hue === defaultHue} aria-hidden={hue === defaultHue ? "true" : undefined} onclick={resetHue}>
-					<div class="text-(--btn-content)">
-						<Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.75rem]"></Icon>
-					</div>
-				</button>
-				<div id="hueValue" class="transition bg-(--btn-regular-bg) rounded-md flex justify-center
-				font-bold items-center text-(--btn-content)">
-					{hue}
-				</div>
-			</div>
-			<div class="hue-slider-shell w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded-md select-none">
-				<input aria-label={i18n(I18nKey.themeColor)} type="range" min="0" max="360" bind:value={hue}
-					   class="slider" id="colorSlider" step="5" style="width: 100%">
-			</div>
-		</div>
-		{/if}
-
 		<!-- Layout Switch Section -->
 		{#if allowLayoutSwitch}
 		<div class="">

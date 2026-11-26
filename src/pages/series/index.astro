@@ -23,7 +23,7 @@ const totalPosts = seriesList.reduce((sum, series) => sum + series.count, 0);
             <div class="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] items-start gap-3">
                 {
                     seriesList.map((series) => (
-                        <div class="series-acc app-panel overflow-hidden">
+                        <div class="series-acc app-card overflow-hidden">
                             <button
                                 type="button"
                                 aria-expanded="false"
@@ -83,7 +83,7 @@ const totalPosts = seriesList.reduce((sum, series) => sum + series.count, 0);
                 }
             </div>
         ) : (
-            <AppPanel>
+            <AppPanel class="app-card">
                 <div class="app-empty">
                     <Icon name="material-symbols:layers" class="text-4xl" />
                     <p>{i18n(I18nKey.noSeries)}</p>

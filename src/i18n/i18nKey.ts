@@ -515,10 +515,6 @@ enum I18nKey {
 	videoNext = "videoNext",
 	videoLoadError = "videoLoadError",
 
-	// 沉浸阅读 (immersive reading)
-	immersiveReading = "immersiveReading",
-	enterImmersiveReading = "enterImmersiveReading",
-	exitImmersiveReading = "exitImmersiveReading",
 	tocExpand = "tocExpand",
 	tocCollapse = "tocCollapse",
 }

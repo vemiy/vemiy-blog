@@ -7,7 +7,6 @@ import type {
 	WALLPAPER_NONE,
 	WALLPAPER_OVERLAY,
 } from "../constants/constants";
-import type { ImmersiveReadingConfig } from "./immersiveReadingConfig";
 import type { NsfwMode } from "./nsfw";
 
 export type LIGHT_DARK_MODE =
@@ -39,7 +38,6 @@ export type SiteConfig = {
 	lang: "en" | "zh_CN" | "zh_TW" | "ja" | "ru" | "ko";
 
 	themeColor: {
-		hue: number;
 		defaultMode?: LIGHT_DARK_MODE; // 默认模式：浅色、深色或跟随系统
 	};
 
@@ -171,7 +169,6 @@ export type SiteConfig = {
 		// OpenGraph图片功能
 		generateOgImages: boolean;
 		// 沉浸阅读配置
-		immersiveReading?: ImmersiveReadingConfig;
 	};
 
 	// bangumi配置

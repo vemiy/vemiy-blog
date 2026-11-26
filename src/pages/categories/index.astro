@@ -39,7 +39,7 @@ const totalPosts = categories.reduce((sum, cat) => sum + cat.count, 0);
                 ))}
             </div>
         ) : (
-            <AppPanel>
+            <AppPanel class="app-card">
                 <div class="app-empty">
                     <Icon name="material-symbols:folder-off" class="text-4xl" />
                     <p>{i18n(I18nKey.noData)}</p>

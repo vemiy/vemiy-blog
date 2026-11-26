@@ -22,7 +22,7 @@ const topMaxCount = topTags.length > 0 ? topTags[0].count : 1;
 
     {
         tags.length > 0 ? (
-            <AppPanel>
+            <AppPanel class="app-card">
                 <div class="flex flex-wrap gap-2.5">
                     {tags.map((t) => (
                         <a
@@ -39,7 +39,7 @@ const topMaxCount = topTags.length > 0 ? topTags[0].count : 1;
                 </div>
             </AppPanel>
         ) : (
-            <AppPanel>
+            <AppPanel class="app-card">
                 <div class="app-empty">
                     <Icon name="material-symbols:tag-rounded" class="text-4xl" />
                     <p>{i18n(I18nKey.noData)}</p>

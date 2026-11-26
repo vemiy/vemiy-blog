@@ -532,9 +532,6 @@ export const ko: Translation = {
 	[Key.videoLoadError]: "영상을 불러오지 못했습니다",
 
 	// 몰입형 읽기
-	[Key.immersiveReading]: "몰입형 읽기",
-	[Key.enterImmersiveReading]: "몰입형 읽기 시작",
-	[Key.exitImmersiveReading]: "몰입형 읽기 종료",
 	[Key.tocExpand]: "목차 펼치기",
 	[Key.tocCollapse]: "목차 접기",
 };

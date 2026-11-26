@@ -227,11 +227,10 @@ export async function GET({
 		iconPath = (pngFavicon ?? siteConfig.favicon[0]).src;
 	}
 
-	const hue = siteConfig.themeColor.hue;
-	const primaryColor = `hsl(${hue}, 90%, 65%)`;
+	const primaryColor = "hsl(0, 0%, 92%)";
 	const textColor = "hsl(0, 0%, 95%)";
-	const subtleTextColor = `hsl(${hue}, 10%, 75%)`;
-	const backgroundColor = `hsl(${hue}, 15%, 12%)`;
+	const subtleTextColor = "hsl(0, 0%, 70%)";
+	const backgroundColor = "hsl(0, 0%, 10%)";
 
 	const pubDate = post.data.published.toLocaleDateString("en-US", {
 		year: "numeric",
