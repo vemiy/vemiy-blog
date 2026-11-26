@@ -1,11 +1,11 @@
 /* 站点自定义覆盖样式 */
 
-/* 暗色背景改为中性黑，弱化主题色相渗透；色相跟随站点主题 */
+/* 暗色背景改为中性黑 */
 :root.dark {
-	--page-bg: oklch(0.17 0.004 var(--hue));
-	--card-bg: oklch(0.215 0.005 var(--hue));
-	--codeblock-bg: oklch(0.15 0.004 var(--hue));
-	--codeblock-topbar-bg: oklch(0.12 0.004 var(--hue));
+	--page-bg: oklch(0.17 0 0);
+	--card-bg: oklch(0.215 0 0);
+	--codeblock-bg: oklch(0.15 0 0);
+	--codeblock-topbar-bg: oklch(0.12 0 0);
 }
 
 /* 无封面文章隐藏右侧箭头条，保持卡片简洁 */
@@ -15,10 +15,7 @@
 
 /* 文章卡片悬停时强调色边框 */
 .post-card-wrapper.card-base {
-	transition:
-		border-color 0.2s ease,
-		transform 0.2s ease,
-		box-shadow 0.2s ease;
+	transition: border-color 0.2s ease;
 }
 
 .post-card-wrapper.card-base:hover {

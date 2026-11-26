@@ -90,7 +90,7 @@ const topbarLabel = topbarTitle ?? resolveTopbarLabel(Astro.url.pathname);
       </div>
     </div>
 
-    <div class:list={["app-shell__content", { "app-shell__content--article": articleDetail }]}>
+    <div class="app-shell__content">
       <main
         id="swup-container"
         class="transition-main app-shell__main-col"
@@ -100,12 +100,11 @@ const topbarLabel = topbarTitle ?? resolveTopbarLabel(Astro.url.pathname);
         <div id="content-wrapper" class="onload-animation transition-leaving app-shell__wrapper">
           <slot />
         </div>
+        {articleDetail && <ArticleToc />}
       </main>
     </div>
   </div>
 </div>
-
-<ArticleToc />
 
 <FloatingControls headings={headings} encrypted={encrypted} />
 

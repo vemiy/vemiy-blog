@@ -12,13 +12,14 @@
 	display: none;
 }
 
-@media (min-width: 96rem) and (hover: hover) and (pointer: fine) {
+@media (min-width: 90rem) and (hover: hover) and (pointer: fine) {
+	/* 与正文并排的一栏，参与布局不遮挡内容 */
 	.article-toc {
-		position: fixed;
-		top: 8rem;
-		left: calc(50% + 28.25rem + 1rem);
+		position: sticky;
+		top: 6rem;
 		z-index: 30;
 		display: block;
+		flex: 0 0 var(--toc-width);
 		width: var(--toc-width);
 		max-height: var(--toc-max-height);
 	}

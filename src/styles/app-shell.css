@@ -1,5 +1,13 @@
 /* 应用外壳布局 */
 
+/* 卡片外形令牌：浮动控件等外壳之外的节点同样取用，故定义在根元素 */
+:root {
+	/* 卡片统一 4px 圆角，不使用毛玻璃与阴影 */
+	--app-radius-card: 0.25rem;
+	/* 卡片描边：占位但不可见，保持尺寸稳定 */
+	--app-card-stroke: 2px solid transparent;
+}
+
 /* 设计令牌：内页统一以这套变量取值，避免各处硬编码 */
 .app-shell {
 	--app-radius: 0.25rem;
@@ -7,9 +15,11 @@
 	--app-pad: 1.25rem;
 	--app-sidebar-width: 17.5rem;
 	--app-sidebar-rail: 4.25rem;
+	/* 文章正文的阅读宽度上限 */
+	--app-reading-width: 72rem;
+	/* 文章页横向内缩：正文与底部区块共用，保证左右边缘一致 */
+	--article-inline-pad: 1.25rem;
 
-	/* 卡片：实底 + 硬描边，不使用毛玻璃与阴影 */
-	--app-radius-card: 0.25rem;
 	--app-glass-bg: var(--card-bg);
 	--app-border: var(--line-color);
 	--app-surface: var(--app-glass-bg);
@@ -46,7 +56,7 @@
 		transform 0.22s ease;
 }
 
-/* 主区域：左侧留出侧栏宽度 */
+/* 主区域：左侧留出侧栏宽度，随侧栏收起同步左移 */
 .app-shell__main {
 	display: flex;
 	flex-direction: column;
@@ -104,9 +114,43 @@
 .app-shell__content {
 	flex: 1;
 	width: 100%;
-	max-width: 82rem;
+	max-width: var(--app-content-width, 82rem);
 	margin: 0 auto;
 	padding: 1.5rem;
+	box-sizing: border-box;
+}
+
+/* 文章详情页：正文与目录并排。
+   判据取容器内的目录节点，swup 替换容器内容后自动跟随，不依赖外层 class */
+#swup-container:has(#article-toc) {
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 2rem;
+}
+
+/* 文章页放宽外层上限，避免正文被内容区上限压住 */
+.app-shell__content:has(#article-toc) {
+	max-width: none;
+}
+
+/* 正文宽度随可用空间伸缩，上限限制在舒适阅读行宽 */
+#swup-container:has(#article-toc) #content-wrapper {
+	flex: 1 1 auto;
+	width: auto;
+	max-width: var(--app-reading-width, 54rem);
+	min-width: 0;
+	/* 横向内缩集中在此层，正文与底部区块共享同一边界 */
+	padding-inline: var(--article-inline-pad);
+}
+
+/* 文章详情：正文直接铺在页面上，不做卡片 */
+#swup-container:has(#article-toc) #post-container {
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	/* 横向内缩已由 #content-wrapper 承担，此处清零避免与底部区块错位 */
+	padding-inline: 0;
 }
 
 .app-shell__main-col {
@@ -125,15 +169,22 @@
 	min-width: 0;
 }
 
-/* 通用面板：内页所有块级容器统一走这个类 */
+/* 通用面板：仅作语义容器与纵向流，不绘制背景与描边，
+   内容块各自浮在页面底色上 */
 .app-panel {
-	border: 1px solid var(--app-border);
+	display: flex;
+	flex-direction: column;
+	gap: var(--app-gap);
+	width: 100%;
+	min-width: 0;
+}
+
+/* 独立卡片：直接浮在页面底色上的内容块 */
+.app-card {
+	border: var(--app-card-stroke);
 	border-radius: var(--app-radius-card);
 	background: var(--app-glass-bg);
 	padding: var(--app-pad);
-	transition:
-		background 0.3s ease,
-		border-color 0.3s ease;
 }
 
 /* 面板内的页头：标题 + 说明 */
@@ -156,7 +207,7 @@
 	align-items: center;
 	gap: 0.75rem;
 	padding: 0.9rem 1rem;
-	border: 1px solid var(--app-border);
+	border: var(--app-card-stroke);
 	border-radius: var(--app-radius-card);
 	background: var(--app-glass-bg);
 	transition:
@@ -165,7 +216,7 @@
 }
 
 .app-entry:hover {
-	border-color: color-mix(in srgb, var(--primary) 45%, var(--app-border));
+	background: color-mix(in srgb, var(--primary) 8%, var(--app-glass-bg));
 }
 
 .app-entry__icon {
@@ -236,7 +287,7 @@
 	align-items: center;
 	gap: 0.6rem;
 	min-width: 0;
-	padding: 0.35rem 0.4rem 0.6rem;
+	padding: 0.45rem 0.4rem;
 	line-height: 0;
 }
 
@@ -248,7 +299,6 @@
 	width: auto;
 	max-width: 100%;
 	object-fit: contain;
-	transform: translateY(-1px);
 }
 
 /* 折叠开关：桌面端显示，收起后图标翻转 */
@@ -290,19 +340,18 @@
 	align-items: center;
 	gap: 0.7rem;
 	padding: 0.7rem 0.75rem;
-	border: 1px solid var(--line-color);
-	border-radius: 0.45rem;
+	border: var(--app-card-stroke);
+	border-radius: var(--app-radius-card);
 	background: color-mix(in oklch, var(--card-bg) 65%, transparent);
 	transition: all 0.18s ease;
 }
 
 .app-side__card:hover {
-	border-color: color-mix(in srgb, var(--primary) 40%, var(--line-color));
+	background: color-mix(in srgb, var(--primary) 8%, var(--card-bg));
 }
 
 .app-side__card--active {
-	border-color: color-mix(in srgb, var(--primary) 55%, transparent);
-	background: color-mix(in srgb, var(--primary) 12%, transparent);
+	background: color-mix(in srgb, var(--primary) 14%, var(--card-bg));
 }
 
 .app-side__card--active .app-side__card-title {
@@ -346,8 +395,8 @@
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 0.35rem;
 	padding: 0.35rem;
-	border: 1px solid var(--line-color);
-	border-radius: 0.45rem;
+	border: 2px solid var(--line-color);
+	border-radius: var(--app-radius-card);
 }
 
 .app-side__quick a {
@@ -357,7 +406,7 @@
 	gap: 0.3rem;
 	padding: 0.5rem 0.25rem;
 	border: 2px solid transparent;
-	border-radius: 0.35rem;
+	border-radius: var(--app-radius-card);
 	font-size: 0.72rem;
 	opacity: 0.75;
 	transition: all 0.18s ease;
@@ -383,8 +432,8 @@
 
 .app-side__promo {
 	padding: 0.7rem 0.8rem;
-	border: 1px solid var(--line-color);
-	border-radius: 0.45rem;
+	border: 2px solid var(--line-color);
+	border-radius: var(--app-radius-card);
 	font-size: 0.75rem;
 }
 
@@ -444,48 +493,6 @@
 	font-size: 0.68rem;
 	opacity: 0.55;
 	line-height: 1.3;
-}
-
-/* 明暗模式三档分段控件 */
-.app-side__mode {
-	display: flex;
-	align-items: center;
-	gap: 2px;
-	flex-shrink: 0;
-	margin-left: auto;
-	height: 1.75rem;
-	padding: 0 0.2rem;
-	border-radius: 999px;
-	border: 1px solid var(--line-color);
-	background: color-mix(in oklch, var(--card-bg) 60%, transparent);
-}
-
-.app-side__mode-btn {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 1.4rem;
-	height: 1.4rem;
-	border-radius: 999px;
-	border: 1px solid transparent;
-	color: var(--content-meta);
-	transition:
-		color 0.16s ease,
-		background 0.16s ease,
-		border-color 0.16s ease;
-}
-
-.app-side__mode-btn:hover {
-	color: var(--deep-text);
-	background: var(--btn-plain-bg-hover);
-}
-
-/* 选中态与悬停态同级，靠书写顺序决定优先级 */
-.app-side__mode-btn[aria-pressed="true"],
-.app-side__mode-btn[aria-pressed="true"]:hover {
-	color: var(--state-accent-fg);
-	background: var(--state-accent-bg);
-	border-color: var(--state-accent-border);
 }
 
 /* 侧栏底部的建站信息：运行时长、访客与版权备案 */
@@ -552,6 +559,7 @@
 	padding-right: 0.5rem;
 }
 
+/* 侧栏收起后正文随之左移 */
 :root[data-sidebar="collapsed"] .app-shell__main {
 	margin-left: var(--app-sidebar-rail);
 }
@@ -595,7 +603,6 @@
 :root[data-sidebar="collapsed"] .app-side__quick a span,
 :root[data-sidebar="collapsed"] .app-side__promo,
 :root[data-sidebar="collapsed"] .app-side__stats,
-:root[data-sidebar="collapsed"] .app-side__mode,
 :root[data-sidebar="collapsed"] .app-side__user > div {
 	display: none;
 }
@@ -661,7 +668,6 @@
 	:root[data-sidebar="collapsed"] .app-side__quick a span,
 	:root[data-sidebar="collapsed"] .app-side__promo,
 	:root[data-sidebar="collapsed"] .app-side__stats,
-	:root[data-sidebar="collapsed"] .app-side__mode,
 	:root[data-sidebar="collapsed"] .app-side__user > div {
 		display: revert;
 	}
@@ -733,4 +739,42 @@
 		opacity: 1;
 		pointer-events: auto;
 	}
+}
+
+/* ==========================================================================
+   卡片外观统一：实底 + 透明描边占位 + 4px 圆角 + 零阴影
+   ========================================================================== */
+
+/* 全站卡片去掉可见边框与阴影，改为实底分隔 */
+.enable-card-border .card-base,
+.enable-card-border .card-base-transparent,
+.enable-card-border .btn-card,
+.card-base,
+.card-base-transparent {
+	border: var(--app-card-stroke);
+	border-radius: var(--app-radius-card);
+	box-shadow: none;
+}
+
+/* 列表卡片、推荐位、评论区等大块容器统一圆角 */
+.post-card-wrapper.card-base,
+.page-entry.card-base,
+.project-card.card-base,
+.album-card.card-base,
+.btn-card {
+	border-radius: var(--app-radius-card);
+}
+
+/* 浮动按钮与卡片同形，仅去掉阴影 */
+.floating-btn.card-base {
+	box-shadow: none;
+}
+
+/* 许可证区块与搜索面板统一圆角，去掉残留的大圆角与描边 */
+[class*="bg-(--license-block-bg)"] {
+	border-radius: var(--app-radius-card);
+}
+
+.search-panel {
+	border-radius: var(--app-radius-card);
 }

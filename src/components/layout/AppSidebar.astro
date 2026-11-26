@@ -138,38 +138,6 @@ const quick = [
 	</div>
 
 	<div class="app-side__bottom">
-		<div class="app-side__controls">
-			<div class="app-side__mode" id="app-sidebar-mode" role="group" aria-label="明暗模式">
-				<button
-					class="app-side__mode-btn"
-					type="button"
-					data-mode="system"
-					aria-label="跟随系统"
-					aria-pressed="false"
-				>
-					<Icon name="material-symbols:brightness-auto-outline-rounded" class="text-base" />
-				</button>
-				<button
-					class="app-side__mode-btn"
-					type="button"
-					data-mode="light"
-					aria-label="亮色模式"
-					aria-pressed="false"
-				>
-					<Icon name="material-symbols:light-mode-outline-rounded" class="text-base" />
-				</button>
-				<button
-					class="app-side__mode-btn"
-					type="button"
-					data-mode="dark"
-					aria-label="暗色模式"
-					aria-pressed="false"
-				>
-					<Icon name="material-symbols:dark-mode-outline-rounded" class="text-base" />
-				</button>
-			</div>
-		</div>
-
 		<div class="app-side__user">
 			<img src={profileConfig.avatar} alt={profileConfig.name} />
 			<div>
@@ -210,15 +178,6 @@ const quick = [
 						</>
 					)
 				}
-				<span class="app-side__stats-sep" aria-hidden="true">·</span>
-				<a
-					class="app-side__meta-link"
-					target="_blank"
-					rel="noopener"
-					href={url(footerConfig.feedPath)}
-				>
-					订阅
-				</a>
 			</div>
 		</div>
 	</div>
@@ -234,8 +193,6 @@ const quick = [
 		var root = document.documentElement;
 		var mobile = window.matchMedia("(max-width: 1023px)");
 		var STORE_KEY = "sidebarCollapsed";
-		var DARK_THEME = "one-dark-pro";
-		var LIGHT_THEME = "one-light";
 
 		var shell = function () {
 			return document.querySelector(".app-shell");
@@ -303,59 +260,8 @@ const quick = [
 				setDrawer(false);
 				return;
 			}
-			var modeBtn = target.closest(".app-side__mode-btn");
-			if (modeBtn) {
-				applyMode(modeBtn.getAttribute("data-mode"));
-				return;
-			}
 			// 抽屉内点击导航链接后关闭抽屉
 			if (drawerOpen() && target.closest(".app-shell__sidebar a")) setDrawer(false);
-		});
-
-		// 明暗模式：写入根元素 class，与 setting-utils 的存储键保持一致
-		var applyMode = function (mode) {
-			if (!mode) return;
-			var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-			var systemDark = prefersDark.matches;
-			var dark = mode === "dark" || (mode === "system" && systemDark);
-			root.classList.toggle("dark", dark);
-			root.setAttribute("data-theme", dark ? DARK_THEME : LIGHT_THEME);
-			try {
-				localStorage.setItem("theme", mode);
-			} catch (error) {
-				// 存储不可用时仅保留当前会话状态
-			}
-			window.dispatchEvent(new CustomEvent("theme-change"));
-			syncModeButtons(mode);
-		};
-
-		var syncModeButtons = function (mode) {
-			var current = mode;
-			if (!current) {
-				try {
-					current = localStorage.getItem("theme") || "system";
-				} catch (error) {
-					current = "system";
-				}
-			}
-			var buttons = document.querySelectorAll(".app-side__mode-btn");
-			for (var i = 0; i < buttons.length; i++) {
-				buttons[i].setAttribute(
-					"aria-pressed",
-					buttons[i].getAttribute("data-mode") === current ? "true" : "false",
-				);
-			}
-		};
-
-		// 跟随系统时，系统配色变化后同步深浅
-		window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
-			var stored = "system";
-			try {
-				stored = localStorage.getItem("theme") || "system";
-			} catch (error) {
-				stored = "system";
-			}
-			if (stored === "system") applyMode("system");
 		});
 
 		// 跨断点切换时复位抽屉，折叠态仅桌面端生效
@@ -366,14 +272,12 @@ const quick = [
 		document.addEventListener("swup:page:view", function () {
 			setDrawer(false);
 			syncLabels();
-			syncModeButtons();
 		});
 		document.addEventListener("keydown", function (event) {
 			if (event.key === "Escape" && drawerOpen()) setDrawer(false);
 		});
 
 		setDrawer(false);
-		syncModeButtons();
 	})();
 </script>
 

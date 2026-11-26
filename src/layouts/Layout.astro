@@ -44,7 +44,6 @@ import { getOgLocale } from "@/utils/site-config-utils";
 import { getCanonicalUrl, url } from "@/utils/url-utils";
 
 import "@/styles/main.css";
-import "@/styles/immersive-reading.css";
 import "@/styles/variables.styl";
 import "@/styles/custom.css";
 import "@rehype-callouts-theme";
@@ -82,8 +81,6 @@ const isHomePageCheck = isHomePage(Astro.url.pathname);
 
 // defines global css variables
 // why doing this in Layout instead of GlobalStyles: https://github.com/withastro/astro/issues/6728#issuecomment-1502203757
-const configHue = siteConfig.themeColor.hue;
-
 // 获取导航栏透明模式配置（banner 模式专属）
 const navbarTransparentMode =
 	backgroundWallpaper.banner?.navbar?.transparentMode || "semi";
@@ -259,7 +256,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content={`hsl(${siteConfig.themeColor.hue} 12% 96%)`} />
+    <meta name="theme-color" content="#f5f5f5" />
     {
       favicons.map((favicon) => (
         <link
@@ -350,71 +347,28 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
       is:inline
       define:vars={{
         PAGE_WIDTH,
-        configHue,
-        defaultMode: siteConfig.themeColor.defaultMode ?? "light",
         defaultWallpaperMode: backgroundWallpaper.mode,
         isWallpaperSwitchable:
           displaySettingsConfig.wallpaperModeSwitchable,
         isFullscreenLayoutSwitchable:
           displaySettingsConfig.fullscreenLayoutSwitchable,
         darkTheme: expressiveCodeConfig.darkTheme,
-        lightTheme: expressiveCodeConfig.lightTheme,
         baseUrl: import.meta.env.BASE_URL,
         cardTransparentOpacity: backgroundWallpaper.overlay?.cardOpacity ?? 0.6,
         fullscreenLayout,
       }}
     >
-      // 主题初始化 - 与setting-utils.ts保持一致
-      const LIGHT_MODE = "light";
-      const DARK_MODE = "dark";
-      const SYSTEM_MODE = "system";
+      // 全站恒定暗色，不读取存储值或系统偏好
+      document.documentElement.classList.add("dark");
+      localStorage.removeItem("theme");
 
-      // 获取存储的主题，如果没有则使用默认值
-      const theme = localStorage.getItem("theme") || defaultMode;
+      // 代码高亮固定使用暗色主题
+      document.documentElement.setAttribute("data-theme", darkTheme);
 
-      // 获取系统主题
-      function getSystemTheme() {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? DARK_MODE
-          : LIGHT_MODE;
-      }
-
-      // 解析主题（如果是system模式，则获取系统主题）
-      function resolveTheme(themeValue) {
-        if (themeValue === SYSTEM_MODE) {
-          return getSystemTheme();
-        }
-        return themeValue;
-      }
-
-      const resolvedTheme = resolveTheme(theme);
-      const isDark = resolvedTheme === DARK_MODE;
-
-      // 应用主题
-      if (isDark) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-
-      // Set the theme for Expressive Code
-      document.documentElement.setAttribute(
-        "data-theme",
-        isDark ? darkTheme : lightTheme
-      );
-
-      // 站点配置色相变更后，本地缓存不再覆盖，否则改配置对老访客无效
-      const hueConfigKey = "hue-config";
-      const cachedHueConfig = localStorage.getItem(hueConfigKey);
-      if (cachedHueConfig !== String(configHue)) {
-        localStorage.setItem(hueConfigKey, String(configHue));
-        localStorage.removeItem("hue");
-      }
-      const hue = localStorage.getItem("hue") || configHue;
-      document.documentElement.style.setProperty("--hue", hue);
-      // 首帧先匹配深浅背景，BrowserChrome 随后同步实际计算后的主题底色。
       const browserThemeMeta = document.querySelector('meta[name="theme-color"]');
-      if (browserThemeMeta) browserThemeMeta.setAttribute("content", `hsl(${hue} 12% ${document.documentElement.classList.contains("dark") ? "10%" : "96%"})`);
+      if (browserThemeMeta) {
+        browserThemeMeta.setAttribute("content", "#111111");
+      }
 
       // 设置卡片透明度（全屏透明模式下使用），优先使用用户自定义值
       const storedCardOpacity = localStorage.getItem("overlayCardOpacity");
@@ -500,7 +454,6 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
     </script>
     <style
       define:vars={{
-        configHue,
         "page-width": `${siteConfig.pageWidth ?? PAGE_WIDTH}rem`,
         "navbar-panel-blur": `${navbarPanelBlur}px`,
         "banner-height-home": `${BANNER_HEIGHT_HOME}vh`,

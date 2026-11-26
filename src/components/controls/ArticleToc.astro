@@ -40,16 +40,12 @@
 
 <script is:inline>
 	(function () {
-		if (window.__articleTocBooted) return;
-		window.__articleTocBooted = true;
-
 		var MAX_LEVEL = 3;
-		var panel = document.getElementById("article-toc");
-		var list = document.getElementById("article-toc-list");
-		var highlight = document.getElementById("article-toc-highlight");
-		var progressFill = document.getElementById("article-toc-progress");
-		var toggleAllBtn = document.getElementById("article-toc-toggle-all");
-		if (!panel || !list) return;
+
+		/** 每次按当前 DOM 取节点：Swup 切页后旧节点已销毁 */
+		var el = function (id) {
+			return document.getElementById(id);
+		};
 
 		var entries = [];
 		var activeIndex = -1;
@@ -107,7 +103,7 @@
 			return roots;
 		};
 
-		var renderList = function (items, parent) {
+		var renderList = function (items) {
 			var ul = document.createElement("ul");
 			ul.className = "article-toc__list";
 			for (var i = 0; i < items.length; i++) {
@@ -156,15 +152,18 @@
 
 				ul.appendChild(li);
 			}
-			parent.appendChild(ul);
+			return ul;
 		};
 
 		var clearHighlight = function () {
+			var highlight = el("article-toc-highlight");
 			if (highlight) highlight.style.opacity = "0";
 		};
 
 		/** 高亮块位置取自当前条目的行元素 */
 		var moveHighlight = function (link) {
+			var highlight = el("article-toc-highlight");
+			var panel = el("article-toc");
 			if (!highlight || !panel) return;
 			var row = link.closest(".article-toc__row");
 			if (!row) return;
@@ -210,6 +209,7 @@
 		};
 
 		var updateProgress = function () {
+			var progressFill = el("article-toc-progress");
 			if (!progressFill) return;
 			var container = contentContainer();
 			if (!container) {
@@ -249,7 +249,9 @@
 		};
 
 		var bindToggleAll = function () {
-			if (!toggleAllBtn) return;
+			var toggleAllBtn = el("article-toc-toggle-all");
+			var list = el("article-toc-list");
+			if (!toggleAllBtn || !list) return;
 			toggleAllBtn.addEventListener("click", function () {
 				var expandAll = toggleAllBtn.getAttribute("aria-pressed") !== "true";
 				toggleAllBtn.setAttribute("aria-pressed", expandAll ? "true" : "false");
@@ -266,6 +268,8 @@
 		};
 
 		var bindLinks = function () {
+			var list = el("article-toc-list");
+			if (!list) return;
 			list.addEventListener("click", function (event) {
 				var link = event.target.closest ? event.target.closest(".article-toc__link") : null;
 				if (!link) return;
@@ -289,18 +293,34 @@
 			teardown();
 			entries = [];
 			activeIndex = -1;
+
+			var panel = el("article-toc");
+			var list = el("article-toc-list");
+			if (!panel || !list) return;
+
 			list.textContent = "";
 			clearHighlight();
 
 			var headings = collectHeadings();
-			var tree = buildTree(headings);
+			var tree = [];
+			try {
+				tree = buildTree(headings);
+			} catch (error) {
+				tree = [];
+			}
 			if (!tree.length) {
 				panel.hidden = true;
 				document.documentElement.removeAttribute("data-toc");
 				return;
 			}
 
-			renderList(tree, list);
+			try {
+				list.appendChild(renderList(tree));
+			} catch (error) {
+				panel.hidden = true;
+				document.documentElement.removeAttribute("data-toc");
+				return;
+			}
 			panel.hidden = false;
 			document.documentElement.setAttribute("data-toc", "on");
 
@@ -349,27 +369,52 @@
 		};
 
 		var closeAllCollapseState = function () {
+			var toggleAllBtn = el("article-toc-toggle-all");
 			if (!toggleAllBtn) return;
 			toggleAllBtn.setAttribute("aria-pressed", "false");
 			toggleAllBtn.setAttribute("aria-label", "展开全部");
 			toggleAllBtn.setAttribute("data-tooltip", "展开全部");
 		};
 
-		window.addEventListener("scroll", function () {
-			if (panel.hidden) return;
-			syncActive();
-		}, { passive: true });
+		// 监听器只随文档注册一次；重建时重新解析当前 DOM
+		if (!window.__articleTocBound) {
+			window.__articleTocBound = true;
 
-		window.addEventListener("resize", function () {
-			if (panel.hidden) return;
+			window.addEventListener("scroll", function () {
+				if (window.__articleTocScroll) window.__articleTocScroll();
+			}, { passive: true });
+
+			window.addEventListener("resize", function () {
+				if (window.__articleTocResize) window.__articleTocResize();
+			});
+
+			document.addEventListener("swup:page:view", function () {
+				if (window.__articleTocRefresh) window.__articleTocRefresh();
+			});
+			document.addEventListener("swup:content:replace", function () {
+				if (window.__articleTocRefresh) window.__articleTocRefresh();
+			});
+			document.addEventListener("password:decrypted", function () {
+				if (window.__articleTocRefresh) window.__articleTocRefresh();
+			});
+		}
+
+		window.__articleTocRefresh = pageView;
+		window.__articleTocScroll = function () {
+			var panel = el("article-toc");
+			if (!panel || panel.hidden) return;
+			syncActive();
+		};
+		window.__articleTocResize = function () {
+			var panel = el("article-toc");
+			if (!panel || panel.hidden) return;
 			if (activeIndex >= 0) moveHighlight(entries[activeIndex].link);
 			updateProgress();
-		});
-
-		document.addEventListener("swup:page:view", pageView);
-		document.addEventListener("swup:content:replace", pageView);
-		document.addEventListener("password:decrypted", pageView);
+		};
 
 		scheduleBuild();
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", scheduleBuild, { once: true });
+		}
 	})();
 </script>

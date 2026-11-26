@@ -41,8 +41,8 @@
     }
 
     /* 侧栏已启用但本页型/断点无侧栏列时，内容栏按比例收窄并居中。
-       width:100% 不可省（否则 auto 外边距取消 stretch）；body:not(.immersive-reading) 用于避开沉浸阅读的 flex 列 */
-    body:not(.immersive-reading) #main-grid > #content-column {
+       width:100% 不可省（否则 auto 外边距取消 stretch） */
+    #main-grid > #content-column {
       width: 100%;
       max-width: calc(100% * var(--content-ratio-md, 1));
       margin-inline: auto;
@@ -61,7 +61,7 @@
     #main-grid > #right-sidebar-dynamic {
       display: var(--right-display-xl, contents);
     }
-    body:not(.immersive-reading) #main-grid > #content-column {
+    #main-grid > #content-column {
       max-width: calc(100% * var(--content-ratio-xl, 1));
     }
   }

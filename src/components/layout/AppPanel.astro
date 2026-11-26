@@ -24,6 +24,17 @@ const { title, desc, class: className } = Astro.props;
 </section>
 
 <style>
+	/* 面板默认只做语义容器与纵向流；需要卡片的页面额外加 app-card 类 */
+	.app-panel {
+		display: flex;
+		flex-direction: column;
+		gap: var(--app-gap, 0.9rem);
+		width: 100%;
+		min-width: 0;
+	}
+</style>
+
+<style>
 	.app-panel__head {
 		margin-bottom: 0.9rem;
 	}

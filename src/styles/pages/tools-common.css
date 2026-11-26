@@ -1,20 +1,43 @@
 /* 工具页通用样式：按钮、输入框、分区等基础外观，全量取自站点主题变量 */
+
+/* 页头块：直接浮在页面底色上，不加背景与描边 */
+.vemiy-tool-head-block {
+  margin-bottom: 1rem;
+}
+.vemiy-tool-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.vemiy-tool-desc {
+  margin-top: 0.3rem;
+  font-size: 0.88rem;
+  opacity: 0.65;
+}
+
+/* 工具根节点：透明容器，只负责纵向流 */
 .vemiy-tool {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  padding: 0.5rem 0 1rem;
+  padding: 0;
   color: inherit;
 }
 .vemiy-tool * {
   box-sizing: border-box;
 }
+/* 工具操作条：同为独立卡片 */
 .vemiy-tool-head {
   display: flex;
   align-items: center;
   gap: 0.9rem;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  border: var(--app-card-stroke);
+  border-radius: var(--app-radius-card);
+  background: var(--app-glass-bg);
+  padding: var(--app-pad);
+  margin-bottom: 0.85rem;
 }
 .vemiy-tool-sub {
   font-size: 0.95rem;
@@ -94,12 +117,16 @@
 .vemiy-tool-mini-btn i {
   font-size: 0.85rem;
 }
+/* 分区即卡片：各自浮在页面底色上，外层不再包裹大容器 */
 .vemiy-tool-section {
-  border: 1px solid var(--line-color);
-  border-radius: var(--app-radius);
-  background: var(--card-bg);
-  padding: 1rem;
+  border: var(--app-card-stroke);
+  border-radius: var(--app-radius-card);
+  background: var(--app-glass-bg);
+  padding: var(--app-pad);
   margin-bottom: 0.85rem;
+}
+.vemiy-tool-section:last-child {
+  margin-bottom: 0;
 }
 .vemiy-tool-section-title {
   font-size: 0.95rem;
