@@ -717,6 +717,11 @@
 	.app-shell__content {
 		padding: 1rem;
 	}
+
+	/* 移动端文章正文与外层留白共用，取消额外内缩 */
+	#swup-container:has(#article-toc) #content-wrapper {
+		padding-inline: 0;
+	}
 }
 
 /* 遮罩：抽屉展开时盖住正文 */
