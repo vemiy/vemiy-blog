@@ -1,11 +1,8 @@
-/**
- * 列表页滚动位置记忆：离开列表页时记下位置，返回同一路径时恢复。
- * 分页路径各自独立记录，返回第 N 页时恢复到该页上次的位置。
- */
+/** 列表页滚动位置记忆。 */
 
 const STORE_PREFIX = "scrollY:";
 
-/** 列表页路径：博客分页。命中后启用位置记忆。 */
+/** 列表页路径判断。 */
 const isListPath = (path: string): boolean =>
 	path === "/posts" || path.startsWith("/posts/page/");
 
@@ -26,7 +23,7 @@ const writeY = (path: string, y: number): void => {
 	try {
 		sessionStorage.setItem(keyOf(path), String(Math.round(y)));
 	} catch {
-		// 存储不可用时放弃记忆，不影响导航
+		// 存储不可用时忽略。
 	}
 };
 
@@ -35,7 +32,7 @@ const currentPath = (): string => {
 	return p === "" ? "/" : p;
 };
 
-/** 恢复位置：先按记录值滚到位，再复核一次，防止内容异步撑高导致偏离 */
+/** 恢复滚动位置。 */
 const applyY = (y: number): void => {
 	const run = () => window.scrollTo({ top: y, behavior: "instant" });
 	run();
@@ -49,14 +46,14 @@ export function initScrollRestore(): void {
 	if (window.__scrollRestoreBound) return;
 	window.__scrollRestoreBound = true;
 
-	/** 离开前记录：Swup 换入前内容里旧页仍可读，此时 scrollY 才是真实位置 */
+	/** 记录当前滚动位置。 */
 	const remember = (): void => {
 		const path = currentPath();
 		if (!isListPath(path)) return;
 		writeY(path, window.scrollY);
 	};
 
-	/* 点击站内链接的瞬间先记一次：此刻页面尚未被 Swup 改动 */
+	/* 点击站内链接时记录。 */
 	document.addEventListener(
 		"click",
 		(event) => {
@@ -74,7 +71,7 @@ export function initScrollRestore(): void {
 	window.addEventListener("pagehide", remember);
 	window.addEventListener("beforeunload", remember);
 
-	/** 进入列表页后恢复 */
+	/** 进入列表页后恢复位置。 */
 	const restore = (): void => {
 		const path = currentPath();
 		if (!isListPath(path)) return;

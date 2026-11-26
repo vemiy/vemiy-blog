@@ -22,7 +22,7 @@ const config = {
 <script is:inline src={jsUrl} defer></script>
 {cssUrl && <link rel="stylesheet" href={cssUrl.startsWith("http") ? cssUrl : url(cssUrl)} />}
 <script is:inline define:vars={{ config }}>
-  // 去掉末尾斜杠，与旧站评论路径保持一致
+  // 规范化评论路径。
   function getCurrentPath() {
     const requestedPath = new URLSearchParams(window.location.search).get("path");
     if (requestedPath) return requestedPath;
@@ -32,7 +32,7 @@ const config = {
       : pathname;
   }
 
-  // 容器存在且未初始化时才挂载，防止 PJAX 反复进入重复渲染
+  // 幂等初始化。
   function initTwikoo() {
     const el = document.getElementById("tcomment");
     if (!el) return;

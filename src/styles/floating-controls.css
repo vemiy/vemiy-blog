@@ -1,4 +1,4 @@
-/* 右下角浮动控件：固定定位，纵向堆叠 */
+/* 右下角浮动控件。 */
 
 .floating-controls-container {
 	position: fixed;
@@ -16,7 +16,7 @@
 	pointer-events: auto;
 }
 
-/* 隐藏态：不占位、不可点，避免遮挡 */
+/* 隐藏态。 */
 .floating-controls-container .floating-btn.hide {
 	display: none;
 }
