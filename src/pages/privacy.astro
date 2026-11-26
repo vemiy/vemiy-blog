@@ -1,0 +1,25 @@
+---
+import { getEntry, render } from "astro:content";
+import Markdown from "@components/common/Markdown.astro";
+import AppPanel from "@components/layout/AppPanel.astro";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+const privacyPost = await getEntry("spec", "privacy");
+
+if (!privacyPost) {
+	throw new Error("Privacy page content not found");
+}
+
+const { Content } = await render(privacyPost);
+
+const title = privacyPost.data.title || "隐私政策";
+const description = privacyPost.data.description || "";
+---
+
+<MainGridLayout title={title} description={description}>
+    <AppPanel title={title} desc={description}>
+        <Markdown class="mt-2">
+            <Content />
+        </Markdown>
+    </AppPanel>
+</MainGridLayout>

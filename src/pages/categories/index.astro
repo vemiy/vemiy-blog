@@ -1,0 +1,50 @@
+---
+import { Icon } from "astro-icon/components";
+import AppPanel from "@/components/layout/AppPanel.astro";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getCategoryList } from "@/utils/content-utils";
+
+const categories = await getCategoryList();
+const totalPosts = categories.reduce((sum, cat) => sum + cat.count, 0);
+---
+
+<MainGridLayout title={i18n(I18nKey.categories)}>
+    <AppPanel
+        title={i18n(I18nKey.categories)}
+        desc={`${i18n(I18nKey.allCategories)} · ${totalPosts} ${i18n(I18nKey.postsCount)}`}
+    />
+
+    {
+        categories.length > 0 ? (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {categories.map((category, index) => (
+                    <a
+                        href={category.url}
+                        class="app-entry onload-animation"
+                        style={`animation-delay: calc(var(--content-delay) + ${index * 50}ms);`}
+                    >
+                        <span class="app-entry__icon">
+                            <Icon name="material-symbols:folder-open" class="text-2xl" />
+                        </span>
+                        <span class="app-entry__text">
+                            <span class="app-entry__title" title={category.name}>{category.name}</span>
+                            <span class="app-entry__meta">
+                                {category.count} {i18n(I18nKey.postsCount)}
+                            </span>
+                        </span>
+                        <Icon name="material-symbols:chevron-right-rounded" class="app-entry__arrow" />
+                    </a>
+                ))}
+            </div>
+        ) : (
+            <AppPanel>
+                <div class="app-empty">
+                    <Icon name="material-symbols:folder-off" class="text-4xl" />
+                    <p>{i18n(I18nKey.noData)}</p>
+                </div>
+            </AppPanel>
+        )
+    }
+</MainGridLayout>

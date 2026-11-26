@@ -1,0 +1,456 @@
+---
+import { Icon } from "astro-icon/components";
+import { profileConfig, siteConfig } from "@/config";
+import { footerConfig } from "@/config/footerConfig";
+import { isNavLinkActive, NAV_LINK_ATTR } from "@/utils/app-shell-nav-utils";
+import { url } from "@/utils/url-utils";
+
+const currentYear = new Date().getFullYear();
+
+/** 站点 logo 路径，随导航栏配置取值 */
+const siteLogo =
+	typeof siteConfig.navbar.logo === "object" &&
+	"value" in siteConfig.navbar.logo
+		? String(siteConfig.navbar.logo.value)
+		: "";
+
+const path = Astro.url.pathname;
+const active = (href: string) => isNavLinkActive(path, href);
+
+const primary = [
+	{
+		title: "归档",
+		desc: "按时间浏览全部文章",
+		href: "/archives/",
+		icon: "material-symbols:archive-outline-rounded",
+	},
+	{
+		title: "分类",
+		desc: "按主题浏览",
+		href: "/categories/",
+		icon: "material-symbols:folder-outline-rounded",
+	},
+	{
+		title: "标签",
+		desc: "按关键词检索",
+		href: "/tags/",
+		icon: "material-symbols:label-outline-rounded",
+	},
+];
+
+const quick = [
+	{ label: "首页", href: "/", icon: "material-symbols:home-outline-rounded" },
+	{
+		label: "博客",
+		href: "/posts/",
+		icon: "material-symbols:article-outline-rounded",
+	},
+	{ label: "工具", href: "/tools/", icon: "material-symbols:build-outline-rounded" },
+	{ label: "友链", href: "/links/", icon: "material-symbols:link-rounded" },
+	{
+		label: "关于",
+		href: "/about/",
+		icon: "material-symbols:person-outline-rounded",
+	},
+	{
+		label: "隐私",
+		href: "/privacy/",
+		icon: "material-symbols:shield-outline-rounded",
+	},
+];
+
+---
+
+<aside class="app-shell__sidebar" id="app-sidebar">
+	<div class="app-side__brand-row">
+		<a class="app-side__brand" href="/">
+			<img src={siteLogo} alt={siteConfig.title} />
+		</a>
+		<button
+			class="app-side__collapse"
+			type="button"
+			id="app-sidebar-collapse"
+			aria-label="收起侧栏"
+			aria-expanded="true"
+			aria-controls="app-sidebar"
+		>
+			<Icon
+				name="material-symbols:left-panel-close-outline-rounded"
+				class="app-side__icon app-side__icon--collapse text-lg"
+			/>
+			<Icon
+				name="material-symbols:left-panel-open-outline-rounded"
+				class="app-side__icon app-side__icon--expand text-lg"
+			/>
+		</button>
+		<button
+			class="app-side__drawer-close"
+			type="button"
+			id="app-sidebar-close"
+			aria-label="关闭菜单"
+			aria-controls="app-sidebar"
+		>
+			<Icon name="material-symbols:close-rounded" class="text-lg" />
+		</button>
+	</div>
+
+	<div class="app-side__group">
+		{
+			primary.map((item) => (
+				<a
+					class:list={["app-side__card", { "app-side__card--active": active(item.href) }]}
+					href={item.href}
+					title={item.title}
+					{...{ [NAV_LINK_ATTR]: item.href }}
+				>
+					<span class="app-side__card-icon">
+						<Icon name={item.icon} class="text-lg" />
+					</span>
+					<span class="app-side__card-text">
+						<span class="app-side__card-title">{item.title}</span>
+						<span class="app-side__card-desc">{item.desc}</span>
+					</span>
+				</a>
+			))
+		}
+	</div>
+
+	<div class="app-side__quick">
+		{
+			quick.map((item) => (
+				<a
+					class:list={["app-side__quick-link", { "app-side__quick-link--active": active(item.href) }]}
+					href={item.href}
+					title={item.label}
+					{...{ [NAV_LINK_ATTR]: item.href }}
+				>
+					<Icon name={item.icon} class="text-lg" />
+					<span>{item.label}</span>
+				</a>
+			))
+		}
+	</div>
+
+	<div class="app-side__promo">
+		<div class="app-side__promo-title">订阅更新</div>
+		<div class="app-side__promo-desc">通过 Atom 订阅第一时间获取新文章。</div>
+		<a href="/atom.xml" target="_blank" rel="noopener">订阅 Atom →</a>
+	</div>
+
+	<div class="app-side__bottom">
+		<div class="app-side__controls">
+			<div class="app-side__mode" id="app-sidebar-mode" role="group" aria-label="明暗模式">
+				<button
+					class="app-side__mode-btn"
+					type="button"
+					data-mode="system"
+					aria-label="跟随系统"
+					aria-pressed="false"
+				>
+					<Icon name="material-symbols:brightness-auto-outline-rounded" class="text-base" />
+				</button>
+				<button
+					class="app-side__mode-btn"
+					type="button"
+					data-mode="light"
+					aria-label="亮色模式"
+					aria-pressed="false"
+				>
+					<Icon name="material-symbols:light-mode-outline-rounded" class="text-base" />
+				</button>
+				<button
+					class="app-side__mode-btn"
+					type="button"
+					data-mode="dark"
+					aria-label="暗色模式"
+					aria-pressed="false"
+				>
+					<Icon name="material-symbols:dark-mode-outline-rounded" class="text-base" />
+				</button>
+			</div>
+		</div>
+
+		<div class="app-side__user">
+			<img src={profileConfig.avatar} alt={profileConfig.name} />
+			<div>
+				<div class="app-side__user-name">{profileConfig.name}</div>
+				<div class="app-side__user-meta">本站作者</div>
+			</div>
+		</div>
+
+		<div class="app-side__stats">
+			{
+				footerConfig.runtimeEnable && (
+					<div id="site-runtime" data-start={footerConfig.siteStart}>
+						<span class="app-side__stats-label">已运行</span>
+						<span class="app-side__stats-time">
+							<span class="stand" id="rt-d">0</span>天<span class="stand" id="rt-h1">0</span><span class="stand" id="rt-h2">0</span>时<span class="stand" id="rt-m1">0</span><span class="stand" id="rt-m2">0</span>分<span class="stand" id="rt-s1">0</span><span class="stand" id="rt-s2">0</span>秒
+						</span>
+						<div class="app-side__stats-row">
+							<span class="app-side__stats-item">访客 <b id="vercount_value_site_uv">0</b></span>
+							<span class="app-side__stats-item">访问 <b id="vercount_value_site_pv">0</b></span>
+						</div>
+					</div>
+				)
+			}
+			<div class="app-side__meta">
+				<span>&copy; {currentYear} {footerConfig.owner}</span>
+				{
+					footerConfig.icpText && (
+						<>
+							<span class="app-side__stats-sep" aria-hidden="true">·</span>
+							<a
+								class="app-side__meta-link"
+								target="_blank"
+								rel="noopener"
+								href={footerConfig.icpUrl}
+							>
+								{footerConfig.icpText}
+							</a>
+						</>
+					)
+				}
+				<span class="app-side__stats-sep" aria-hidden="true">·</span>
+				<a
+					class="app-side__meta-link"
+					target="_blank"
+					rel="noopener"
+					href={url(footerConfig.feedPath)}
+				>
+					订阅
+				</a>
+			</div>
+		</div>
+	</div>
+</aside>
+
+<div class="app-shell__scrim" id="app-sidebar-scrim" aria-hidden="true"></div>
+
+<script is:inline>
+	(function () {
+		if (window.__appSidebarBound) return;
+		window.__appSidebarBound = true;
+
+		var root = document.documentElement;
+		var mobile = window.matchMedia("(max-width: 1023px)");
+		var STORE_KEY = "sidebarCollapsed";
+		var DARK_THEME = "one-dark-pro";
+		var LIGHT_THEME = "one-light";
+
+		var shell = function () {
+			return document.querySelector(".app-shell");
+		};
+		var drawerOpen = function () {
+			var node = shell();
+			return !!node && node.getAttribute("data-mobile-nav") === "open";
+		};
+		var collapsed = function () {
+			return root.getAttribute("data-sidebar") === "collapsed";
+		};
+
+		var syncLabels = function () {
+			var toggle = document.getElementById("app-sidebar-collapse");
+			var menu = document.getElementById("app-shell-menu");
+			if (toggle) {
+				toggle.setAttribute(
+					"aria-label",
+					mobile.matches ? "收起侧栏" : collapsed() ? "展开侧栏" : "收起侧栏",
+				);
+				toggle.setAttribute(
+					"aria-expanded",
+					(mobile.matches ? drawerOpen() : !collapsed()) ? "true" : "false",
+				);
+			}
+			if (menu) menu.setAttribute("aria-expanded", drawerOpen() ? "true" : "false");
+		};
+
+		var setDrawer = function (open) {
+			var node = shell();
+			if (!node) return;
+			if (open) node.setAttribute("data-mobile-nav", "open");
+			else node.removeAttribute("data-mobile-nav");
+			document.body.style.overflow = open ? "hidden" : "";
+			syncLabels();
+		};
+
+		var setCollapsed = function (value) {
+			if (value) root.setAttribute("data-sidebar", "collapsed");
+			else root.removeAttribute("data-sidebar");
+			try {
+				localStorage.setItem(STORE_KEY, value ? "true" : "false");
+			} catch (error) {
+				// 存储不可用时仅保留当前会话状态
+			}
+			syncLabels();
+		};
+
+		// 事件委托：菜单按钮位于侧栏之后的顶栏中，直接绑定会取不到节点
+		document.addEventListener("click", function (event) {
+			var target = event.target;
+			if (!target || !target.closest) return;
+			if (target.closest("#app-sidebar-collapse")) {
+				event.preventDefault();
+				if (mobile.matches) setDrawer(!drawerOpen());
+				else setCollapsed(!collapsed());
+				return;
+			}
+			if (target.closest("#app-sidebar-close") || target.closest("#app-shell-menu")) {
+				event.preventDefault();
+				setDrawer(!drawerOpen());
+				return;
+			}
+			if (target.closest("#app-sidebar-scrim")) {
+				setDrawer(false);
+				return;
+			}
+			var modeBtn = target.closest(".app-side__mode-btn");
+			if (modeBtn) {
+				applyMode(modeBtn.getAttribute("data-mode"));
+				return;
+			}
+			// 抽屉内点击导航链接后关闭抽屉
+			if (drawerOpen() && target.closest(".app-shell__sidebar a")) setDrawer(false);
+		});
+
+		// 明暗模式：写入根元素 class，与 setting-utils 的存储键保持一致
+		var applyMode = function (mode) {
+			if (!mode) return;
+			var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+			var systemDark = prefersDark.matches;
+			var dark = mode === "dark" || (mode === "system" && systemDark);
+			root.classList.toggle("dark", dark);
+			root.setAttribute("data-theme", dark ? DARK_THEME : LIGHT_THEME);
+			try {
+				localStorage.setItem("theme", mode);
+			} catch (error) {
+				// 存储不可用时仅保留当前会话状态
+			}
+			window.dispatchEvent(new CustomEvent("theme-change"));
+			syncModeButtons(mode);
+		};
+
+		var syncModeButtons = function (mode) {
+			var current = mode;
+			if (!current) {
+				try {
+					current = localStorage.getItem("theme") || "system";
+				} catch (error) {
+					current = "system";
+				}
+			}
+			var buttons = document.querySelectorAll(".app-side__mode-btn");
+			for (var i = 0; i < buttons.length; i++) {
+				buttons[i].setAttribute(
+					"aria-pressed",
+					buttons[i].getAttribute("data-mode") === current ? "true" : "false",
+				);
+			}
+		};
+
+		// 跟随系统时，系统配色变化后同步深浅
+		window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+			var stored = "system";
+			try {
+				stored = localStorage.getItem("theme") || "system";
+			} catch (error) {
+				stored = "system";
+			}
+			if (stored === "system") applyMode("system");
+		});
+
+		// 跨断点切换时复位抽屉，折叠态仅桌面端生效
+		mobile.addEventListener("change", function () {
+			setDrawer(false);
+			syncLabels();
+		});
+		document.addEventListener("swup:page:view", function () {
+			setDrawer(false);
+			syncLabels();
+			syncModeButtons();
+		});
+		document.addEventListener("keydown", function (event) {
+			if (event.key === "Escape" && drawerOpen()) setDrawer(false);
+		});
+
+		setDrawer(false);
+		syncModeButtons();
+	})();
+</script>
+
+<link rel="stylesheet" href="/css/odometer-theme-minimal.css" />
+<script is:inline src="/js/odometer.min.js"></script>
+<script is:inline>
+	(function () {
+		function tick() {
+			var host = document.getElementById("site-runtime");
+			if (!host) return;
+			var start = new Date(host.getAttribute("data-start") || "").getTime();
+			if (Number.isNaN(start)) return;
+			var diff = Math.floor((Date.now() - start) / 1000);
+			if (diff < 0) diff = 0;
+			var seconds = diff % 60;
+			diff = Math.floor(diff / 60);
+			var minutes = diff % 60;
+			diff = Math.floor(diff / 60);
+			var hours = diff % 24;
+			var days = Math.floor(diff / 24);
+			var pad = function (value) {
+				return (value < 10 ? "0" : "") + value;
+			};
+			var set = function (id, value) {
+				var node = document.getElementById(id);
+				if (!node || node.__rtV === value) return;
+				node.__rtV = value;
+				if (!node.__rtOdo && window.Odometer) {
+					try {
+						node.__rtOdo = new window.Odometer({
+							el: node,
+							format: "d",
+							duration: 200,
+						});
+					} catch (error) {
+						node.__rtOdo = null;
+					}
+				}
+				node.innerHTML = value;
+			};
+			set("rt-d", String(days));
+			set("rt-h1", pad(hours).charAt(0));
+			set("rt-h2", pad(hours).charAt(1));
+			set("rt-m1", pad(minutes).charAt(0));
+			set("rt-m2", pad(minutes).charAt(1));
+			set("rt-s1", pad(seconds).charAt(0));
+			set("rt-s2", pad(seconds).charAt(1));
+		}
+		tick();
+		if (window.__siteRuntimeTimer) clearInterval(window.__siteRuntimeTimer);
+		window.__siteRuntimeTimer = setInterval(tick, 1000);
+		document.addEventListener("pjax:complete", tick);
+		document.addEventListener("swup:page:view", tick);
+	})();
+</script>
+
+<!-- 访客数/访问量统计：Vercount，与全站计数器共用同一数据源 -->
+<script is:inline>
+	(function () {
+		function load() {
+			var old = document.getElementById("vercount-script");
+			if (old && old.parentNode) old.parentNode.removeChild(old);
+			var script = document.createElement("script");
+			script.id = "vercount-script";
+			script.async = true;
+			script.src = "https://events.vercount.one/js";
+			document.body.appendChild(script);
+		}
+		if (!window.__vercountBooted) {
+			window.__vercountBooted = true;
+			load();
+		}
+		var lastPath = window.location.pathname;
+		document.addEventListener("swup:page:view", function () {
+			if (window.location.pathname === lastPath) return;
+			lastPath = window.location.pathname;
+			load();
+		});
+	})();
+</script>

@@ -1,0 +1,84 @@
+---
+import { Icon } from "astro-icon/components";
+import { getSortedPosts } from "@/utils/content-utils";
+import { getPostUrlBySlug } from "@/utils/url-utils";
+
+const posts = await getSortedPosts();
+const latest = posts.slice(0, 4);
+
+const tiles = [
+	{ label: "NAS", sub: "自托管与存储", cls: "a" },
+	{ label: "建站", sub: "Cloudflare · Astro", cls: "b" },
+	{ label: "软件", sub: "系统与工具", cls: "c" },
+	{ label: "折腾", sub: "踩坑与复盘", cls: "d" },
+];
+---
+
+<section class="home-app">
+	<div class="home-app__hero">
+		<div class="home-app__intro">
+			<h1 class="home-app__title">
+				自托管、建站，<br />
+				<span>顺手记下来。</span>
+			</h1>
+			<p class="home-app__desc">
+				NAS、Cloudflare、静态博客与各种折腾。踩过的坑、验证过的方案，都写在这里。
+			</p>
+			<div class="home-app__actions">
+				<a class="home-app__btn home-app__btn--primary" href="/archives/">
+					<Icon name="material-symbols:article-outline-rounded" />
+					浏览文章
+				</a>
+				<a class="home-app__btn" href="/about/">
+					<Icon name="material-symbols:person-outline-rounded" />
+					关于我
+				</a>
+			</div>
+			<div class="home-app__chips">
+				<a href="/categories/nas/">NAS</a>
+				<a href="/categories/建站/">建站</a>
+				<a href="/categories/软件/">软件</a>
+				<a href="/tags/">全部标签</a>
+			</div>
+		</div>
+
+		<div class="home-app__mosaic" aria-hidden="true">
+			{
+				tiles.map((tile) => (
+					<div class:list={["home-app__tile", `home-app__tile--${tile.cls}`]}>
+						<span class="home-app__tile-label">{tile.label}</span>
+						<span class="home-app__tile-sub">{tile.sub}</span>
+					</div>
+				))
+			}
+		</div>
+	</div>
+
+	<section class="home-app__section">
+		<div class="home-app__section-head">
+			<h2>最新文章</h2>
+			<a href="/posts/">查看全部 <Icon name="material-symbols:arrow-right-alt-rounded" /></a>
+		</div>
+		<div class="home-app__cards">
+			{
+				latest.map((post) => (
+					<a class="home-app__card" href={getPostUrlBySlug(post.id)}>
+						<div class="home-app__card-top">
+							<span class="home-app__card-title">{post.data.title}</span>
+							<span class="home-app__card-arrow">
+								<Icon name="material-symbols:arrow-outward-rounded" />
+							</span>
+						</div>
+						<div class="home-app__card-meta">
+							{post.data.category && (
+								<span class="home-app__card-cat">{post.data.category}</span>
+							)}
+							<span>{post.data.published.toISOString().slice(0, 10)}</span>
+						</div>
+						<p class="home-app__card-desc">{post.data.description}</p>
+					</a>
+				))
+			}
+		</div>
+	</section>
+</section>

@@ -1,0 +1,66 @@
+---
+import { Icon } from "astro-icon/components";
+
+const links = [
+	{ label: "首页", href: "/", icon: "material-symbols:home-outline-rounded" },
+	{ label: "归档", href: "/archives/", icon: "material-symbols:inventory-2-outline-rounded" },
+	{ label: "分类", href: "/categories/", icon: "material-symbols:folder-outline-rounded" },
+	{ label: "标签", href: "/tags/", icon: "material-symbols:label-outline-rounded" },
+	{ label: "友链", href: "/links/", icon: "material-symbols:link-rounded" },
+	{ label: "关于", href: "/about/", icon: "material-symbols:person-outline-rounded" },
+];
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+	href === "/" ? path === "/" : path.startsWith(href.replace(/\/$/, ""));
+---
+
+<nav class="nav-rail card-base">
+	{
+		links.map((link) => (
+			<a
+				class:list={["nav-rail__item", { "nav-rail__item--active": isActive(link.href) }]}
+				href={link.href}
+			>
+				<Icon name={link.icon} class="nav-rail__icon" />
+				<span>{link.label}</span>
+			</a>
+		))
+	}
+</nav>
+
+<style>
+	.nav-rail {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		padding: 0.6rem;
+		border-radius: 1rem;
+	}
+
+	.nav-rail__item {
+		display: flex;
+		align-items: center;
+		gap: 0.7rem;
+		padding: 0.6rem 0.75rem;
+		border-radius: 0.65rem;
+		font-size: 0.92rem;
+		font-weight: 500;
+		transition: all 0.18s ease;
+	}
+
+	.nav-rail__item:hover {
+		background: var(--btn-plain-bg-hover);
+	}
+
+	.nav-rail__item--active {
+		color: var(--primary);
+		background: color-mix(in srgb, var(--primary) 14%, transparent);
+	}
+
+	.nav-rail__icon {
+		width: 1.15rem;
+		height: 1.15rem;
+		opacity: 0.85;
+	}
+</style>

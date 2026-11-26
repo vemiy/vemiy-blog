@@ -1,0 +1,124 @@
+---
+import { Icon } from "astro-icon/components";
+import AppSidebar from "@components/layout/AppSidebar.astro";
+import NavMenuPanel from "@components/layout/NavMenuPanel.astro";
+import type { MarkdownHeading } from "astro";
+import ArticleToc from "@/components/controls/ArticleToc.astro";
+import FloatingControls from "@/components/controls/FloatingControls.astro";
+import FpsCounter from "@/components/controls/FpsCounter.astro";
+import Search from "@/components/controls/Search.svelte";
+import {
+	resolveTopbarLabel,
+	TOPBAR_TITLE_ID,
+} from "@/utils/app-shell-nav-utils";
+import { resolveNavMenuLinks } from "@/utils/nav-menu-utils";
+import Layout from "./Layout.astro";
+
+import "@/styles/expressive-code.css";
+import "@/styles/app-shell.css";
+import "@/styles/article-toc.css";
+
+interface Props {
+	title?: string;
+	description?: string;
+	lang?: string;
+	setOGTypeArticle?: boolean;
+	postSlug?: string;
+	postCoverImage?: string;
+	ogImageWidth?: number;
+	ogImageHeight?: number;
+	ogImageAlt?: string;
+	postCategory?: string;
+	headings?: MarkdownHeading[];
+	encrypted?: boolean;
+	bannerPostMeta?: {
+		title: string;
+		description?: string;
+		published: Date;
+		updated?: Date;
+		words?: number;
+		minutes?: number;
+	};
+	heading?: string;
+	topbarTitle?: string;
+	/** 是否为文章详情页：仅此页收窄正文以容纳右侧目录 */
+	articleDetail?: boolean;
+}
+
+const {
+	title,
+	description,
+	lang,
+	setOGTypeArticle,
+	postSlug,
+	postCoverImage,
+	ogImageWidth,
+	ogImageHeight,
+	ogImageAlt,
+	postCategory,
+	headings = [],
+	encrypted = false,
+	heading,
+	topbarTitle,
+	articleDetail = false,
+} = Astro.props;
+
+const topbarLabel = topbarTitle ?? resolveTopbarLabel(Astro.url.pathname);
+---
+
+<Layout title={title} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle} postSlug={postSlug} postCoverImage={postCoverImage} ogImageWidth={ogImageWidth} ogImageHeight={ogImageHeight} ogImageAlt={ogImageAlt} hasWallpaper={false}>
+
+<slot slot="head" name="head" />
+
+<div class="app-shell">
+  <AppSidebar />
+  <div class="app-shell__main">
+    <div class="app-shell__topbar">
+      <button
+        class="app-shell__topbar-btn app-shell__topbar-menu"
+        type="button"
+        id="app-shell-menu"
+        aria-label="打开菜单"
+        aria-expanded="false"
+        aria-controls="app-sidebar"
+      >
+        <Icon name="material-symbols:menu-rounded" class="text-lg" />
+      </button>
+      <span class="app-shell__topbar-title" id={TOPBAR_TITLE_ID}>{topbarLabel}</span>
+      <div class="app-shell__topbar-actions">
+        <Search client:load />
+      </div>
+    </div>
+
+    <div class:list={["app-shell__content", { "app-shell__content--article": articleDetail }]}>
+      <main
+        id="swup-container"
+        class="transition-main app-shell__main-col"
+        data-current-post-category={postCategory || ""}
+      >
+        <h1 class="sr-only">{heading || title}</h1>
+        <div id="content-wrapper" class="onload-animation transition-leaving app-shell__wrapper">
+          <slot />
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<ArticleToc />
+
+<FloatingControls headings={headings} encrypted={encrypted} />
+
+<FpsCounter />
+
+<NavMenuPanel links={resolveNavMenuLinks()} />
+
+<!--
+    触屏设备上让代码块的复制按钮默认隐藏，点一下代码块才显形。
+    expressive-code 没给 <pre> 加 tabindex，点击代码区不会产生焦点，
+    所以纯 CSS 的 :focus-within 拿不到这个状态，只能在这里补一个类。
+    显隐规则见 src/styles/expressive-code.css 的 @media (hover: none) 段。
+-->
+
+
+</Layout>

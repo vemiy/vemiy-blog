@@ -1,0 +1,154 @@
+---
+import AppPanel from "@/components/layout/AppPanel.astro";
+import { tools } from "@/data/tools";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import "@/styles/pages/tools-common.css";
+
+const title = "工具";
+const description = "在线小工具集合：随机字符串、图片取色、调音器、节拍器与 IP 纯净度检测。";
+---
+
+<MainGridLayout title={title} description={description}>
+  <AppPanel title={title} desc="全部在浏览器本地运行，不上传数据">
+    <div class="vemiy-tools-page">
+      <input
+        id="vemiyToolsSearch"
+        class="vemiy-tools-search"
+        type="text"
+        placeholder="搜索工具..."
+      />
+      <div id="vemiyToolsList" class="vemiy-tools-list">
+        {
+          tools.map((tool) => (
+            <a class="vemiy-tools-item" href={tool.href}>
+              <div class="vemiy-tools-icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  set:html={tool.icon}
+                />
+              </div>
+              <div class="vemiy-tools-text">
+                <div class="vemiy-tools-name">{tool.name}</div>
+                <div class="vemiy-tools-desc">{tool.desc}</div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+      <div id="vemiyToolsEmpty" class="vemiy-tools-empty">没有匹配的工具。</div>
+    </div>
+  </AppPanel>
+  <script is:inline src="/js/tools/tools-list.js"></script>
+</MainGridLayout>
+
+<style is:global>
+  /* 工具列表页样式 */
+  .vemiy-tools-page {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0.5rem 0 1rem;
+  }
+  .vemiy-tools-page * {
+    box-sizing: border-box;
+  }
+  .vemiy-tools-search {
+    width: 100%;
+    border: 1px solid var(--line-color);
+    border-radius: 999px;
+    background: var(--btn-plain-bg-active);
+    color: inherit;
+    outline: none;
+    transition: 0.2s;
+    padding: 0.82rem 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .vemiy-tools-search:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(73, 177, 245, 0.12);
+  }
+  .vemiy-tools-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+  .vemiy-tools-item {
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+    gap: 0.9rem;
+    text-decoration: none !important;
+    color: inherit !important;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line-color);
+    border-radius: var(--app-radius);
+    background: var(--app-glass-bg);
+    transition: border-color 0.2s ease;
+  }
+  .vemiy-tools-item:hover {
+    color: inherit !important;
+    text-decoration: none !important;
+    border-color: color-mix(in srgb, var(--primary) 45%, var(--line-color));
+  }
+  .vemiy-tools-icon {
+    width: 22px;
+    flex-shrink: 0;
+    opacity: 0.92;
+    margin-top: 0.02rem;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vemiy-tools-icon svg {
+    width: 1.1em;
+    height: 1.1em;
+    fill: currentColor;
+    display: block;
+  }
+  .vemiy-tools-text {
+    min-width: 0;
+    flex: 1;
+  }
+  .vemiy-tools-name {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 0.18rem;
+  }
+  .vemiy-tools-desc {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    opacity: 0.68;
+  }
+  .vemiy-tools-empty {
+    display: none;
+    padding: 1rem 0.15rem;
+    font-size: 0.9rem;
+    opacity: 0.65;
+  }
+  @media (max-width: 640px) {
+    .vemiy-tools-list {
+      grid-template-columns: 1fr;
+    }
+    .vemiy-tools-search {
+      font-size: 0.92rem;
+      padding: 0.75rem 0.9rem;
+    }
+    .vemiy-tools-name {
+      font-size: 0.96rem;
+    }
+    .vemiy-tools-desc {
+      font-size: 0.84rem;
+    }
+    .vemiy-tools-item {
+      gap: 0.75rem;
+    }
+    .vemiy-tools-icon {
+      width: 20px;
+    }
+  }
+</style>

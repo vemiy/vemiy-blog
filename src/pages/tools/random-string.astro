@@ -1,0 +1,149 @@
+---
+import AppPanel from "@/components/layout/AppPanel.astro";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import "@/styles/pages/tools-common.css";
+
+const title = "随机字符串生成器";
+const description = "生成安全 token、临时密码和一次性凭证。";
+---
+
+<MainGridLayout title={title} description={description}>
+  <AppPanel title={title}>
+    <div class="vemiy-tool vemiy-random-string" id="vemiyRandomString">
+      <div class="vemiy-tool-sub vemiy-random-string-sub">安全 token / 临时密码 / 一次性凭证</div>
+      <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-basic">
+        <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptUpper" checked> 大写 A-Z</label>
+        <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptLower" checked> 小写 a-z</label>
+        <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptNum" checked> 数字 0-9</label>
+      </div>
+      <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-custom">
+        <div class="vemiy-random-string-custom-item">
+          <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptCustomSym" checked> 包含符号</label>
+          <input type="text" class="vemiy-tool-input" id="vemiyCustomSymbols" value="!@#$%^&amp;*()-_=+">
+        </div>
+        <div class="vemiy-random-string-custom-item">
+          <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptExclude"> 排除字符</label>
+          <input type="text" class="vemiy-tool-input" id="vemiyExcludeChars" value="iIl1o0O">
+        </div>
+      </div>
+      <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-params">
+        <div class="vemiy-random-string-param">
+          <label for="vemiyStrLen">长度</label>
+          <input type="number" class="vemiy-tool-input" id="vemiyStrLen" value="12" min="1" max="128">
+        </div>
+        <div class="vemiy-random-string-param">
+          <label for="vemiyBatchCount">数量</label>
+          <input type="number" class="vemiy-tool-input" id="vemiyBatchCount" value="10" min="1" max="200">
+        </div>
+        <div class="vemiy-random-string-actions">
+          <button class="vemiy-tool-btn vemiy-tool-btn-secondary" id="vemiyResetBtn">重置设定</button>
+          <button class="vemiy-tool-btn vemiy-tool-btn-primary" id="vemiyGenBtn">生成</button>
+        </div>
+      </div>
+      <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-output-wrap">
+        <div class="vemiy-random-string-output-head">
+          <div class="vemiy-random-string-output-title">生成结果（每行一个）</div>
+          <div class="vemiy-tool-actions vemiy-random-string-output-actions">
+            <button class="vemiy-tool-mini-btn" id="vemiyDownloadBtn">下载结果</button>
+            <button class="vemiy-tool-mini-btn" id="vemiyCopyAllBtn">复制全部</button>
+          </div>
+        </div>
+        <textarea class="vemiy-tool-input vemiy-random-string-output" id="vemiyBatchOutput" rows="12" readonly wrap="off" placeholder="点击「生成」按钮，结果将显示在此处..."></textarea>
+      </div>
+      <div class="vemiy-tool-foot">所有处理均在本地完成 - 数据不上传服务器</div>
+    </div>
+  </AppPanel>
+  <script is:inline src="/js/tools/random-string.js"></script>
+</MainGridLayout>
+
+<style is:global>
+    /* 随机字符串工具专属样式 */
+    .vemiy-random-string-sub {
+      margin-bottom: 1.5rem;
+    }
+    .vemiy-random-string-basic,
+    .vemiy-random-string-custom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.2rem;
+    }
+    .vemiy-random-string-custom-item {
+      flex: 1;
+      min-width: 240px;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .vemiy-random-string-custom-item .vemiy-tool-check {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .vemiy-random-string-params {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+    .vemiy-random-string-param {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex: 0 1 auto;
+    }
+    .vemiy-random-string-param label {
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .vemiy-random-string-param .vemiy-tool-input {
+      width: 110px;
+    }
+    .vemiy-random-string-actions {
+      display: flex;
+      flex: 1 1 200px;
+      gap: 0.8rem;
+    }
+    .vemiy-random-string-actions .vemiy-tool-btn {
+      flex: 1;
+    }
+    .vemiy-random-string-actions .vemiy-tool-btn-primary {
+      flex: 2;
+    }
+    .vemiy-random-string-output-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .vemiy-random-string-output-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    .vemiy-random-string-output {
+      min-height: 320px;
+      resize: vertical;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    @media (max-width: 900px) {
+      .vemiy-random-string-actions,
+      .vemiy-random-string-output-head,
+      .vemiy-random-string-output-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .vemiy-random-string-actions {
+        flex-basis: auto;
+      }
+      .vemiy-random-string-param {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .vemiy-random-string-param .vemiy-tool-input {
+        width: 100%;
+      }
+    }
+</style>

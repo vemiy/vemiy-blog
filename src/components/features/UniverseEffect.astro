@@ -1,0 +1,155 @@
+---
+/**
+ * 星空粒子背景：由视口尺寸生成星点，向上漂移并淡入淡出。
+ * 与站点主题一致仅保留暗色表现，画布固定在内容之下、不拦截指针事件。
+ */
+---
+
+<!-- 星空粒子背景画布 -->
+<canvas id="effects-universe" aria-hidden="true"></canvas>
+
+<script is:inline>
+	(function () {
+		if (window.__universeEffectInit) return;
+		window.__universeEffectInit = true;
+
+		var STAR_DENSITY = 0.216;
+		var SPEED_COEFF = 0.025;
+		var GIANT_COLOR = "200,206,238";
+		var STAR_COLOR = "236,240,248";
+		var COMET_COLOR = "240,243,248";
+
+		var canvas = document.getElementById("effects-universe");
+		if (!canvas) return;
+		var context = canvas.getContext("2d");
+		var width = 0;
+		var height = 0;
+		var stars = [];
+		var firstRound = true;
+
+		function probability(percent) {
+			return Math.floor(Math.random() * 1000) + 1 < percent * 10;
+		}
+
+		function randInterval(min, max) {
+			return Math.random() * (max - min) + min;
+		}
+
+		function Star() {
+			this.reset = function () {
+				this.giant = probability(3);
+				this.comet = this.giant || firstRound ? false : probability(0);
+				this.x = randInterval(0, width - 10);
+				this.y = randInterval(0, height);
+				this.radius = randInterval(1.1, 2.6);
+				this.dx =
+					randInterval(SPEED_COEFF, 6 * SPEED_COEFF) +
+					(this.comet + 1 - 1) * SPEED_COEFF * randInterval(50, 120) +
+					SPEED_COEFF * 2;
+				this.dy =
+					-randInterval(SPEED_COEFF, 6 * SPEED_COEFF) -
+					(this.comet + 1 - 1) * SPEED_COEFF * randInterval(50, 120);
+				this.fadingOut = null;
+				this.fadingIn = true;
+				this.opacity = 0;
+				this.opacityTresh = randInterval(
+					0.2,
+					1 - (this.comet + 1 - 1) * 0.4,
+				);
+				this.delta = randInterval(0.0005, 0.002) + (this.comet + 1 - 1) * 0.001;
+			};
+
+			this.fadeIn = function () {
+				if (!this.fadingIn) return;
+				this.fadingIn = !(this.opacity > this.opacityTresh);
+				this.opacity += this.delta;
+			};
+
+			this.fadeOut = function () {
+				if (!this.fadingOut) return;
+				this.fadingOut = !(this.opacity < 0);
+				this.opacity -= this.delta / 2;
+				if (this.x > width || this.y < 0) {
+					this.fadingOut = false;
+					this.reset();
+				}
+			};
+
+			this.move = function () {
+				this.x += this.dx;
+				this.y += this.dy;
+				if (this.fadingOut === false) this.reset();
+				if (this.x > width - width / 4 || this.y < 0) this.fadingOut = true;
+			};
+
+			this.draw = function () {
+				context.beginPath();
+				if (this.giant) {
+					context.fillStyle = "rgba(" + GIANT_COLOR + "," + this.opacity + ")";
+					context.arc(this.x, this.y, 2, 0, 2 * Math.PI, false);
+				} else if (this.comet) {
+					context.fillStyle = "rgba(" + COMET_COLOR + "," + this.opacity + ")";
+					context.arc(this.x, this.y, 1.5, 0, 2 * Math.PI, false);
+					for (var i = 0; i < 30; i++) {
+						context.fillStyle =
+							"rgba(" +
+							COMET_COLOR +
+							"," +
+							(this.opacity - (this.opacity / 20) * i) +
+							")";
+						context.rect(this.x - (this.dx / 4) * i, this.y - (this.dy / 4) * i - 2, 2, 2);
+						context.fill();
+					}
+				} else {
+					context.fillStyle = "rgba(" + STAR_COLOR + "," + this.opacity + ")";
+					context.rect(this.x, this.y, this.radius, this.radius);
+				}
+				context.closePath();
+				context.fill();
+			};
+		}
+
+		function resize() {
+			width = window.innerWidth;
+			height = window.innerHeight;
+			canvas.width = width;
+			canvas.height = height;
+			stars = [];
+			var count = Math.floor(width * STAR_DENSITY);
+			for (var i = 0; i < count; i++) {
+				stars[i] = new Star();
+				stars[i].reset();
+			}
+		}
+
+		function frame() {
+			context.clearRect(0, 0, width, height);
+			for (var i = 0; i < stars.length; i++) {
+				stars[i].move();
+				stars[i].fadeIn();
+				stars[i].fadeOut();
+				stars[i].draw();
+			}
+			window.requestAnimationFrame(frame);
+		}
+
+		resize();
+		window.addEventListener("resize", resize, false);
+		setTimeout(function () {
+			firstRound = false;
+		}, 50);
+		window.requestAnimationFrame(frame);
+	})();
+</script>
+
+<style>
+	/* 星点画布位于根背景之上、外壳内容之下，不覆盖正文与图片 */
+	#effects-universe {
+		position: fixed;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		z-index: 0;
+	}
+</style>

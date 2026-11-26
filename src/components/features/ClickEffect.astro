@@ -1,0 +1,77 @@
+---
+/**
+ * 鼠标点击特效：左键按下时在光标处播放一次雪碧图动画。
+ * 点击判定用事件委托，PJAX 切页后无需重新绑定。
+ */
+---
+
+<script is:inline>
+	(function () {
+		if (window.__clickEffectInit) return;
+		window.__clickEffectInit = true;
+
+		document.addEventListener("mousedown", function (event) {
+			if (event.button !== 0) return;
+			var effect = document.createElement("div");
+			effect.className = "click-effect";
+			document.body.appendChild(effect);
+			var rect = effect.getBoundingClientRect();
+			effect.style.left = event.clientX - rect.width * 0.5 + "px";
+			effect.style.top = event.clientY - rect.height * 0.54 + "px";
+			setTimeout(function () {
+				effect.remove();
+			}, 340);
+		});
+	})();
+</script>
+
+<style>
+	.click-effect {
+		position: fixed;
+		z-index: 9999;
+		width: 70px;
+		height: 70px;
+		pointer-events: none;
+		user-select: none;
+		background-image: url("/assets/images/click-effect.webp");
+		background-position: -300% -200%;
+		background-size: 400%;
+		animation: click-effect 0.5s steps(1, end);
+	}
+
+	@keyframes click-effect {
+		0% {
+			background-position: 0 0;
+		}
+		8% {
+			background-position: -100% 0;
+		}
+		16% {
+			background-position: -200% 0;
+		}
+		24% {
+			background-position: -300% 0;
+		}
+		32% {
+			background-position: 0 -100%;
+		}
+		40% {
+			background-position: -100% -100%;
+		}
+		48% {
+			background-position: -200% -100%;
+		}
+		56% {
+			background-position: -300% -100%;
+		}
+		64% {
+			background-position: 0 -200%;
+		}
+		72% {
+			background-position: -100% -200%;
+		}
+		100% {
+			background-position: -300% -200%;
+		}
+	}
+</style>

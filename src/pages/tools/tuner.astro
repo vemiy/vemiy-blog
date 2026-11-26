@@ -1,0 +1,181 @@
+---
+import AppPanel from "@/components/layout/AppPanel.astro";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import "@/styles/pages/tools-common.css";
+
+const title = "在线调音器";
+const description = "麦克风识别音高，附带标准音。";
+---
+
+<MainGridLayout title={title} description={description}>
+  <AppPanel title={title}>
+    <div class="vemiy-tool vemiy-tuner" id="vemiyTuner">
+      <div class="vemiy-tool-head vemiy-tuner-head">
+        <button class="vemiy-tool-btn vemiy-tuner-start" id="vemiyTunerStart">开启麦克风</button>
+        <div class="vemiy-tool-sub vemiy-tuner-sub" id="vemiyTunerStatus">点击开启麦克风开始识别音高</div>
+      </div>
+
+      <div class="vemiy-tuner-dial" id="vemiyTunerDial">
+        <div class="vemiy-tuner-note" id="vemiyTunerNote">--</div>
+        <div class="vemiy-tuner-octave" id="vemiyTunerOctave"></div>
+        <div class="vemiy-tuner-cents" id="vemiyTunerCents">--</div>
+        <div class="vemiy-tuner-track">
+          <div class="vemiy-tuner-center"></div>
+          <div class="vemiy-tuner-needle" id="vemiyTunerNeedle"></div>
+        </div>
+        <div class="vemiy-tuner-scale">
+          <span>-50</span><span>-25</span><span>0</span><span>+25</span><span>+50</span>
+        </div>
+        <div class="vemiy-tuner-freq" id="vemiyTunerFreq">-- Hz</div>
+      </div>
+
+      <div class="vemiy-tool-section">
+        <h3 class="vemiy-tool-section-title">参考音</h3>
+        <div class="vemiy-tuner-refs" id="vemiyTunerRefs"></div>
+        <div class="vemiy-tool-row vemiy-tuner-refrow">
+          <label class="vemiy-tool-range vemiy-tuner-a4">
+            A4 基准
+            <span id="vemiyTunerA4Val">440</span> Hz
+            <input type="range" id="vemiyTunerA4" min="415" max="466" step="1" value="440">
+          </label>
+        </div>
+      </div>
+
+      <div class="vemiy-tool-foot vemiy-tuner-foot">所有处理均在本地完成 - 音频不上传服务器</div>
+    </div>
+  </AppPanel>
+  <script is:inline src="/js/tools/tuner.js"></script>
+</MainGridLayout>
+
+<style is:global>
+    /* 调音器专属样式 */
+    .vemiy-tuner-start {
+      flex-shrink: 0;
+      border-color: var(--primary);
+      background: transparent;
+      color: var(--state-accent-fg);
+    }
+    .vemiy-tuner-start:hover {
+      background: var(--state-accent-bg-hover);
+    }
+    .vemiy-tuner-start.active {
+      background: var(--btn-regular-bg);
+      color: inherit;
+    }
+    .vemiy-tuner-dial {
+      position: relative;
+      border: 1px solid var(--line-color);
+      border-radius: var(--app-radius);
+      background: var(--app-glass-bg);
+      padding: 2rem 1.4rem 1.4rem;
+      text-align: center;
+      margin-bottom: 0.85rem;
+    }
+    .vemiy-tuner-note {
+      font-size: 4.6rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .vemiy-tuner-note.in-tune {
+      color: #49d17a;
+    }
+    .vemiy-tuner-octave {
+      font-size: 1.1rem;
+      opacity: 0.6;
+      margin-top: 0.2rem;
+      min-height: 1.5rem;
+    }
+    .vemiy-tuner-cents {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      min-height: 1.6rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .vemiy-tuner-track {
+      position: relative;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--btn-regular-bg);
+      margin: 1.4rem auto 0.6rem;
+      max-width: 460px;
+    }
+    .vemiy-tuner-center {
+      position: absolute;
+      left: 50%;
+      top: -7px;
+      width: 2px;
+      height: 18px;
+      background: var(--content-meta);
+      transform: translateX(-50%);
+    }
+    .vemiy-tuner-needle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      transform: translate(-50%, -50%);
+      transition: left 0.1s linear, background 0.2s;
+    }
+    .vemiy-tuner-needle.in-tune {
+      background: #49d17a;
+    }
+    .vemiy-tuner-scale {
+      display: flex;
+      justify-content: space-between;
+      max-width: 460px;
+      margin: 0 auto;
+      font-size: 0.76rem;
+      opacity: 0.5;
+    }
+    .vemiy-tuner-freq {
+      margin-top: 1rem;
+      font-size: 0.86rem;
+      opacity: 0.65;
+      font-variant-numeric: tabular-nums;
+    }
+    .vemiy-tuner-refs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .vemiy-tuner-ref {
+      border: none;
+      border-radius: 999px;
+      background: var(--btn-regular-bg);
+      color: inherit;
+      cursor: pointer;
+      padding: 0.55rem 1.05rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .vemiy-tuner-ref:hover {
+      background: var(--btn-regular-bg-hover);
+    }
+    .vemiy-tuner-ref.playing {
+      background: var(--state-accent-bg-hover);
+      color: var(--state-accent-fg);
+    }
+    .vemiy-tuner-refrow {
+      margin-top: 0.9rem;
+    }
+    .vemiy-tuner-a4 {
+      margin: 0;
+      flex: 1;
+      min-width: 220px;
+    }
+    @media (max-width: 640px) {
+      .vemiy-tuner-note {
+        font-size: 3.4rem;
+      }
+      .vemiy-tuner-dial {
+        padding: 1.5rem 1rem 1.1rem;
+      }
+    }
+</style>

@@ -1,0 +1,27 @@
+/* 友链页专属：分组区块、卡片网格与申请说明排版 */
+
+/* 自定义元素默认是 inline，需要撑成块级容器 */
+friend-list {
+	display: block;
+}
+
+.friends-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 0.75rem;
+}
+
+/* 申请留言模板保留缩进，去掉默认外边距 */
+.friends-template {
+	margin: 0;
+}
+
+/* 申请须知列表项行高放宽，便于阅读 */
+.friends-notes li {
+	line-height: 1.6;
+}
+
+/* 本站信息字段的基础样式归零，交由工具类控制 */
+.friends-info p {
+	margin: 0;
+}

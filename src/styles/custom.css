@@ -1,0 +1,83 @@
+/* 站点自定义覆盖样式 */
+
+/* 暗色背景改为中性黑，弱化主题色相渗透；色相跟随站点主题 */
+:root.dark {
+	--page-bg: oklch(0.17 0.004 var(--hue));
+	--card-bg: oklch(0.215 0.005 var(--hue));
+	--codeblock-bg: oklch(0.15 0.004 var(--hue));
+	--codeblock-topbar-bg: oklch(0.12 0.004 var(--hue));
+}
+
+/* 无封面文章隐藏右侧箭头条，保持卡片简洁 */
+.post-card-enter-btn {
+	display: none !important;
+}
+
+/* 文章卡片悬停时强调色边框 */
+.post-card-wrapper.card-base {
+	transition:
+		border-color 0.2s ease,
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.post-card-wrapper.card-base:hover {
+	border-color: color-mix(in srgb, var(--primary) 35%, var(--line-color));
+}
+
+/* 首页首屏与列表之间留出呼吸空间 */
+.home-hero {
+	margin-bottom: 1.5rem;
+}
+
+/* 页脚建站时长与访客统计：数字与文字同色，弱化显示 */
+#site-runtime {
+	margin: 6px 0 2px;
+	font-size: 0.95em;
+}
+
+/* 运行时长与访客数字：等宽数字，两侧留出与中文的间距 */
+#site-runtime .stand,
+#site-runtime #vercount_value_site_uv,
+#site-runtime #vercount_value_site_pv {
+	color: inherit;
+	font-weight: 600;
+	margin: 0 2px;
+	font-variant-numeric: tabular-nums;
+}
+
+/* 逐位数字基线对齐，相邻位之间不留额外间隙 */
+#site-runtime .stand,
+#site-runtime .odometer,
+#site-runtime .odometer-digit,
+#site-runtime .odometer-digit-spacer {
+	vertical-align: baseline;
+}
+
+/* 逐位高度取整数像素，位移量随之整除，避免亚像素重排 */
+#site-runtime .odometer-digit,
+#site-runtime .odometer-digit-spacer {
+	height: 20px;
+	line-height: 20px;
+}
+
+/* 取消图层提升：动画结束时图层移除会重排到新的亚像素位置，产生 1px 跳动 */
+#site-runtime .odometer-value {
+	-webkit-transform: none;
+	transform: none;
+}
+
+#site-runtime .odometer-ribbon-inner {
+	-webkit-backface-visibility: visible;
+	backface-visibility: visible;
+}
+
+#site-runtime .stand + .stand {
+	margin: 0;
+}
+
+/* 数字上滑动画时长：默认 2s 长于每秒一次的更新间隔，会持续被截断而卡顿 */
+#site-runtime .odometer-ribbon-inner {
+	transition-duration: 0.45s;
+}
+

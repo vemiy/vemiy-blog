@@ -1,0 +1,357 @@
+---
+import AppPanel from "@/components/layout/AppPanel.astro";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import "@/styles/pages/tools-common.css";
+
+const title = "IP 纯净度检测";
+const description = "出口 IP 归属、机房判定与黑名单命中。";
+---
+
+<MainGridLayout title={title} description={description}>
+  <AppPanel title={title}>
+    <div class="vemiy-tool vemiy-ipcheck" id="vemiyIpCheck">
+      <div class="vemiy-tool-head vemiy-ipcheck-head">
+        <button class="vemiy-tool-btn vemiy-ipcheck-start" id="vemiyIpStart" type="button">开始检测</button>
+        <div class="vemiy-tool-sub vemiy-ipcheck-status" id="vemiyIpStatus">点击开始检测当前出口 IP</div>
+      </div>
+      <div class="vemiy-ipcheck-scorecard">
+        <div class="vemiy-ipcheck-score-main">
+          <div class="vemiy-ipcheck-score-num" id="vemiyIpScoreNum">--</div>
+          <div class="vemiy-ipcheck-score-meta">
+            <div class="vemiy-ipcheck-score-band" id="vemiyIpScoreBand">未检测</div>
+            <div class="vemiy-ipcheck-score-desc" id="vemiyIpScoreDesc">开始检测后显示纯净度</div>
+          </div>
+        </div>
+        <div class="vemiy-ipcheck-track">
+          <div class="vemiy-ipcheck-track-mark" id="vemiyIpTrackMark"></div>
+        </div>
+        <div class="vemiy-ipcheck-scale">
+          <span style="left:0">0</span><span style="left:15%">15</span><span style="left:25%">25</span><span style="left:40%">40</span><span style="left:50%">50</span><span style="left:70%">70</span><span style="left:100%">100</span>
+        </div>
+      </div>
+      <div class="vemiy-tool-section">
+        <h3 class="vemiy-tool-section-title">IP 信息</h3>
+        <div class="vemiy-ipcheck-grid" id="vemiyIpInfo"></div>
+      </div>
+      <div class="vemiy-tool-section">
+        <h3 class="vemiy-tool-section-title">风险信号</h3>
+        <div class="vemiy-ipcheck-grid" id="vemiyIpRisk"></div>
+      </div>
+      <div class="vemiy-tool-section">
+        <h3 class="vemiy-tool-section-title">归属地多源对比</h3>
+        <div class="vemiy-ipcheck-lists" id="vemiyIpGeo"></div>
+      </div>
+      <div class="vemiy-tool-section">
+        <h3 class="vemiy-tool-section-title">黑名单查询</h3>
+        <div class="vemiy-ipcheck-lists" id="vemiyIpLists"></div>
+      </div>
+      <div class="vemiy-tool-section">
+        <h3 class="vemiy-tool-section-title">浏览器指纹</h3>
+        <div class="vemiy-ipcheck-grid" id="vemiyIpFp"></div>
+      </div>
+      <div class="vemiy-tool-section">
+        <h3 class="vemiy-tool-section-title">环境一致性</h3>
+        <div class="vemiy-ipcheck-grid" id="vemiyIpEnv"></div>
+      </div>
+
+      <div class="vemiy-tool-foot">数据来自 ipwho.is、ipinfo.io、Cloudflare 与 Cloudflare DNS，请求会携带你的出口 IP</div>
+    </div>
+  </AppPanel>
+  <script is:inline src="/js/tools/ip-pure.js"></script>
+</MainGridLayout>
+
+<style is:global>
+  /* IP 纯净度检测专属样式 */
+  .vemiy-ipcheck-head {
+    align-items: flex-start;
+  }
+  .vemiy-ipcheck-start {
+    flex-shrink: 0;
+    border-color: var(--primary);
+    background: transparent;
+    color: var(--state-accent-fg);
+  }
+  .vemiy-ipcheck-start:hover {
+    background: var(--state-accent-bg-hover);
+  }
+  .vemiy-ipcheck-start:disabled {
+    opacity: 0.55;
+    cursor: default;
+    filter: none;
+  }
+  .vemiy-ipcheck-status {
+    flex: 1;
+    min-width: 0;
+    padding-top: 0.6rem;
+    word-break: break-word;
+  }
+  .vemiy-ipcheck-scorecard {
+    border: 1px solid var(--line-color);
+    border-radius: var(--app-radius);
+    background: var(--app-glass-bg);
+    padding: 1.1rem 1.2rem 1rem;
+    margin-bottom: 0.85rem;
+  }
+  .vemiy-ipcheck-score-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .vemiy-ipcheck-score-num {
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    color: var(--content-meta);
+    transition: color 0.25s;
+  }
+  .vemiy-ipcheck-score-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+  .vemiy-ipcheck-score-band {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 0.16rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: var(--btn-regular-bg);
+    color: var(--deep-text);
+  }
+  .vemiy-ipcheck-score-band.is-best {
+    background: rgba(34, 197, 94, 0.18);
+    color: #4ade80;
+  }
+  .vemiy-ipcheck-score-band.is-good {
+    background: rgba(132, 204, 22, 0.18);
+    color: #a3e635;
+  }
+  .vemiy-ipcheck-score-band.is-ok {
+    background: rgba(234, 179, 8, 0.18);
+    color: #facc15;
+  }
+  .vemiy-ipcheck-score-band.is-warn {
+    background: rgba(249, 115, 22, 0.2);
+    color: #fb923c;
+  }
+  .vemiy-ipcheck-score-band.is-bad {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+  }
+  .vemiy-ipcheck-score-band.is-worst {
+    background: rgba(220, 38, 38, 0.26);
+    color: #ef4444;
+  }
+  .vemiy-ipcheck-score-desc {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    opacity: 0.68;
+  }
+  .vemiy-ipcheck-track {
+    position: relative;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #166534 0%, #22c55e 15%, #84cc16 25%, #eab308 40%, #f97316 50%, #dc2626 70%, #991b1b 100%);
+  }
+  .vemiy-ipcheck-track-mark {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    margin-top: -7px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #1a1a1c;
+    box-shadow: 0 0 0 1px var(--line-color);
+    opacity: 0;
+    transition: left 0.35s ease, opacity 0.25s;
+  }
+  .vemiy-ipcheck-scale {
+    position: relative;
+    height: 1rem;
+    margin-top: 0.35rem;
+    font-size: 0.7rem;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    opacity: 0.45;
+  }
+  .vemiy-ipcheck-scale span {
+    position: absolute;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .vemiy-ipcheck-scale span:first-child {
+    transform: none;
+  }
+  .vemiy-ipcheck-scale span:last-child {
+    transform: translateX(-100%);
+  }
+  .vemiy-ipcheck-grid {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .vemiy-ipcheck-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--btn-plain-bg-active);
+    min-width: 0;
+  }
+  .vemiy-ipcheck-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .vemiy-ipcheck-key {
+    flex: 0 0 6.4rem;
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+  .vemiy-ipcheck-val {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+  }
+  .vemiy-ipcheck-val em {
+    font-style: normal;
+    opacity: 0.5;
+    font-size: 0.8rem;
+  }
+  .vemiy-ipcheck-tag {
+    display: inline-block;
+    padding: 0.08rem 0.45rem;
+    border-radius: 0.35rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .vemiy-ipcheck-tag.is-good {
+    background: rgba(76, 175, 80, 0.16);
+    color: #7ddc82;
+  }
+  .vemiy-ipcheck-tag.is-warn {
+    background: rgba(255, 152, 0, 0.16);
+    color: #ffb74d;
+  }
+  .vemiy-ipcheck-tag.is-bad {
+    background: rgba(244, 67, 54, 0.16);
+    color: #ff8a80;
+  }
+  .vemiy-ipcheck-tag.is-idle {
+    background: var(--line-color);
+    color: var(--content-meta);
+  }
+  .vemiy-ipcheck-exit-group {
+    grid-column: 1 / -1;
+  }
+  .vemiy-ipcheck-exit-group + .vemiy-ipcheck-exit-group {
+    margin-top: 0.5rem;
+  }
+  .vemiy-ipcheck-exit-label {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.6;
+    letter-spacing: 0.04em;
+  }
+  .vemiy-ipcheck-exit-row {
+    padding: 0.2rem 0;
+    align-items: flex-start;
+  }
+  .vemiy-ipcheck-exit-row .vemiy-ipcheck-ip {
+    flex: 1;
+    min-width: 0;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.8rem;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    text-align: left;
+  }
+  .vemiy-ipcheck-exit-row .vemiy-ipcheck-list-name {
+    flex: 0 0 6.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .vemiy-ipcheck-subtitle {
+    margin: 0.9rem 0 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.75;
+  }
+  .vemiy-ipcheck-exits {
+    grid-column: 1 / -1;
+  }
+  .vemiy-ipcheck-lists {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .vemiy-ipcheck-lists.is-compact {
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: 0.35rem 0.6rem;
+  }
+  .vemiy-ipcheck-list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+    font-size: 0.85rem;
+    padding: 0.32rem 0;
+  }
+  .vemiy-ipcheck-lists.is-compact .vemiy-ipcheck-list-row {
+    gap: 0.4rem;
+    padding: 0;
+    font-size: 0.8rem;
+    min-width: 0;
+  }
+  .vemiy-ipcheck-lists.is-compact .vemiy-ipcheck-list-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .vemiy-ipcheck-lists.is-compact .vemiy-ipcheck-tag {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    padding: 0.04rem 0.32rem;
+  }
+  .vemiy-ipcheck-list-value {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    text-align: right;
+    word-break: break-word;
+  }
+    .vemiy-ipcheck-note {
+    margin-top: 0.6rem;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    opacity: 0.55;
+  }
+  .vemiy-ipcheck-list-name {
+    min-width: 0;
+    word-break: break-word;
+    opacity: 0.82;
+  }
+  @media (max-width: 640px) {
+    .vemiy-ipcheck-status {
+      padding-top: 0;
+      flex-basis: 100%;
+    }
+    .vemiy-ipcheck-score-num {
+      font-size: 2.1rem;
+    }
+    .vemiy-ipcheck-key {
+      flex: 0 0 5.2rem;
+      font-size: 0.82rem;
+    }
+    .vemiy-ipcheck-row {
+      font-size: 0.82rem;
+    }
+  }
+</style>

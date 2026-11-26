@@ -1,0 +1,30 @@
+---
+/**
+ * 应用外壳内的通用内容面板：标题 + 描述 + 内容插槽
+ */
+interface Props {
+	title?: string;
+	desc?: string;
+	class?: string;
+}
+
+const { title, desc, class: className } = Astro.props;
+---
+
+<section class:list={["app-panel", className]}>
+	{
+		(title || desc) && (
+			<header class="app-panel__head">
+				{title && <h2 class="app-panel__title">{title}</h2>}
+				{desc && <p class="app-panel__desc">{desc}</p>}
+			</header>
+		)
+	}
+	<slot />
+</section>
+
+<style>
+	.app-panel__head {
+		margin-bottom: 0.9rem;
+	}
+</style>

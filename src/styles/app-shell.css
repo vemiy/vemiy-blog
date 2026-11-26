@@ -1,0 +1,736 @@
+/* 应用外壳布局 */
+
+/* 设计令牌：内页统一以这套变量取值，避免各处硬编码 */
+.app-shell {
+	--app-radius: 0.25rem;
+	--app-gap: 0.9rem;
+	--app-pad: 1.25rem;
+	--app-sidebar-width: 17.5rem;
+	--app-sidebar-rail: 4.25rem;
+
+	/* 卡片：实底 + 硬描边，不使用毛玻璃与阴影 */
+	--app-radius-card: 0.25rem;
+	--app-glass-bg: var(--card-bg);
+	--app-border: var(--line-color);
+	--app-surface: var(--app-glass-bg);
+
+	display: flex;
+	min-height: 100dvh;
+	width: 100%;
+	position: relative;
+	z-index: 1;
+	background: transparent;
+}
+
+/* 左侧固定导航栏：脱离文档流，滚动时位置恒定 */
+.app-shell__sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 40;
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	gap: 0.9rem;
+	width: var(--app-sidebar-width);
+	height: 100dvh;
+	padding: 0.85rem;
+	background: color-mix(in oklch, var(--page-bg) 82%, #000);
+	border-right: 1px solid var(--app-border);
+	overflow-x: hidden;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	transition:
+		width 0.22s ease,
+		padding 0.22s ease,
+		transform 0.22s ease;
+}
+
+/* 主区域：左侧留出侧栏宽度 */
+.app-shell__main {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-width: 0;
+	margin-left: var(--app-sidebar-width);
+	background: transparent;
+	transition: margin-left 0.22s ease;
+}
+
+/* 顶部条 */
+.app-shell__topbar {
+	position: sticky;
+	top: 0;
+	z-index: 20;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	height: 3.5rem;
+	padding: 0 1.5rem;
+	background: var(--page-bg);
+	border-bottom: 1px solid var(--app-border);
+}
+
+.app-shell__topbar-title {
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+
+/* 顶栏操作区 */
+.app-shell__topbar-actions {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	margin-left: auto;
+}
+
+.app-shell__topbar-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 0.35rem;
+	color: var(--primary);
+	background: color-mix(in srgb, var(--primary) 12%, transparent);
+	transition: background 0.18s ease;
+}
+
+.app-shell__topbar-btn:hover {
+	background: color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+/* 内容区 */
+.app-shell__content {
+	flex: 1;
+	width: 100%;
+	max-width: 82rem;
+	margin: 0 auto;
+	padding: 1.5rem;
+}
+
+.app-shell__main-col {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-width: 0;
+}
+
+/* 页面内容纵向流：所有内页共用同一间距 */
+.app-shell__wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: var(--app-gap);
+	width: 100%;
+	min-width: 0;
+}
+
+/* 通用面板：内页所有块级容器统一走这个类 */
+.app-panel {
+	border: 1px solid var(--app-border);
+	border-radius: var(--app-radius-card);
+	background: var(--app-glass-bg);
+	padding: var(--app-pad);
+	transition:
+		background 0.3s ease,
+		border-color 0.3s ease;
+}
+
+/* 面板内的页头：标题 + 说明 */
+.app-panel__title {
+	font-size: 1.1rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: var(--deep-text);
+}
+
+.app-panel__desc {
+	margin-top: 0.35rem;
+	font-size: 0.82rem;
+	color: var(--content-meta);
+}
+
+/* 通用入口卡片：分类 / 标签 / 系列等列表页共用 */
+.app-entry {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.9rem 1rem;
+	border: 1px solid var(--app-border);
+	border-radius: var(--app-radius-card);
+	background: var(--app-glass-bg);
+	transition:
+		background 0.3s ease,
+		border-color 0.3s ease;
+}
+
+.app-entry:hover {
+	border-color: color-mix(in srgb, var(--primary) 45%, var(--app-border));
+}
+
+.app-entry__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	flex-shrink: 0;
+	border-radius: 0.45rem;
+	color: var(--primary);
+	background: color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+.app-entry__text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	flex: 1;
+}
+
+.app-entry__title {
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: var(--deep-text);
+	transition: color 0.18s ease;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.app-entry:hover .app-entry__title {
+	color: var(--primary);
+}
+
+.app-entry__meta {
+	margin-top: 0.15rem;
+	font-size: 0.78rem;
+	color: var(--content-meta);
+}
+
+.app-entry__arrow {
+	flex-shrink: 0;
+	font-size: 1.25rem;
+	color: color-mix(in srgb, var(--primary) 60%, transparent);
+}
+
+/* 空状态 */
+.app-empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 2.5rem 1rem;
+	text-align: center;
+	color: var(--content-meta);
+}
+
+/* 侧栏区块 */
+.app-side__brand-row {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.app-side__brand {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	min-width: 0;
+	padding: 0.35rem 0.4rem 0.6rem;
+	line-height: 0;
+}
+
+/* 品牌 logo 保持原始比例，仅以高度约束；
+   logo 含下沉字母，向上微调补偿视觉重心 */
+.app-side__brand img {
+	display: block;
+	height: 26px;
+	width: auto;
+	max-width: 100%;
+	object-fit: contain;
+	transform: translateY(-1px);
+}
+
+/* 折叠开关：桌面端显示，收起后图标翻转 */
+.app-side__collapse,
+.app-side__drawer-close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	margin-left: auto;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.35rem;
+	color: var(--content-meta);
+	transition:
+		color 0.18s ease,
+		background 0.18s ease;
+}
+
+.app-side__collapse:hover,
+.app-side__drawer-close:hover {
+	color: var(--primary);
+	background: var(--btn-plain-bg-hover);
+}
+
+.app-side__icon--expand,
+.app-side__drawer-close {
+	display: none;
+}
+
+.app-side__group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.app-side__card {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+	padding: 0.7rem 0.75rem;
+	border: 1px solid var(--line-color);
+	border-radius: 0.45rem;
+	background: color-mix(in oklch, var(--card-bg) 65%, transparent);
+	transition: all 0.18s ease;
+}
+
+.app-side__card:hover {
+	border-color: color-mix(in srgb, var(--primary) 40%, var(--line-color));
+}
+
+.app-side__card--active {
+	border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+	background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.app-side__card--active .app-side__card-title {
+	color: var(--primary);
+}
+
+.app-side__card-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.35rem;
+	color: var(--primary);
+	background: color-mix(in srgb, var(--primary) 14%, transparent);
+	flex-shrink: 0;
+}
+
+.app-side__card-text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.app-side__card-title {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: inherit;
+}
+
+.app-side__card-desc {
+	font-size: 0.72rem;
+	opacity: 0.6;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.app-side__quick {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.35rem;
+	padding: 0.35rem;
+	border: 1px solid var(--line-color);
+	border-radius: 0.45rem;
+}
+
+.app-side__quick a {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.3rem;
+	padding: 0.5rem 0.25rem;
+	border: 2px solid transparent;
+	border-radius: 0.35rem;
+	font-size: 0.72rem;
+	opacity: 0.75;
+	transition: all 0.18s ease;
+}
+
+/* 快捷区当前页：底纹 + 主色描边（对齐 2x.nz） */
+.app-side__quick a.app-side__quick-link--active {
+	opacity: 1;
+	color: inherit;
+	border-color: var(--primary);
+	background: color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+.app-side__quick a:hover {
+	opacity: 1;
+	background: var(--btn-plain-bg-hover);
+}
+
+.app-side__quick a.app-side__quick-link--active:hover {
+	border-color: var(--primary);
+	background: color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+.app-side__promo {
+	padding: 0.7rem 0.8rem;
+	border: 1px solid var(--line-color);
+	border-radius: 0.45rem;
+	font-size: 0.75rem;
+}
+
+.app-side__promo-title {
+	font-weight: 600;
+	margin-bottom: 0.15rem;
+}
+
+.app-side__promo-desc {
+	opacity: 0.6;
+	margin-bottom: 0.5rem;
+}
+
+.app-side__promo a {
+	color: var(--primary);
+	font-weight: 600;
+}
+
+.app-side__bottom {
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 0.55rem;
+	padding-top: 0.6rem;
+	border-top: 1px solid var(--line-divider);
+}
+
+/* 主题色与明暗开关同排：左侧气泡按钮，右侧三档分段控件 */
+.app-side__controls {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0 0.4rem;
+}
+
+.app-side__user {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.2rem 0.4rem;
+}
+
+.app-side__user img {
+	width: 1.75rem;
+	height: 1.75rem;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.app-side__user-name {
+	font-size: 0.82rem;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.app-side__user-meta {
+	font-size: 0.68rem;
+	opacity: 0.55;
+	line-height: 1.3;
+}
+
+/* 明暗模式三档分段控件 */
+.app-side__mode {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	flex-shrink: 0;
+	margin-left: auto;
+	height: 1.75rem;
+	padding: 0 0.2rem;
+	border-radius: 999px;
+	border: 1px solid var(--line-color);
+	background: color-mix(in oklch, var(--card-bg) 60%, transparent);
+}
+
+.app-side__mode-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.4rem;
+	height: 1.4rem;
+	border-radius: 999px;
+	border: 1px solid transparent;
+	color: var(--content-meta);
+	transition:
+		color 0.16s ease,
+		background 0.16s ease,
+		border-color 0.16s ease;
+}
+
+.app-side__mode-btn:hover {
+	color: var(--deep-text);
+	background: var(--btn-plain-bg-hover);
+}
+
+/* 选中态与悬停态同级，靠书写顺序决定优先级 */
+.app-side__mode-btn[aria-pressed="true"],
+.app-side__mode-btn[aria-pressed="true"]:hover {
+	color: var(--state-accent-fg);
+	background: var(--state-accent-bg);
+	border-color: var(--state-accent-border);
+}
+
+/* 侧栏底部的建站信息：运行时长、访客与版权备案 */
+.app-side__stats {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+	padding: 0.45rem 0.4rem 0.2rem;
+	border-top: 1px solid var(--line-divider);
+	font-size: 0.68rem;
+	line-height: 1.5;
+	color: var(--content-meta);
+}
+
+.app-side__stats-label {
+	opacity: 0.75;
+}
+
+.app-side__stats-time {
+	display: inline-flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	margin-left: 0.15rem;
+}
+
+.app-side__stats-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 0.1rem;
+}
+
+.app-side__stats-item b {
+	font-weight: 600;
+	color: inherit;
+}
+
+.app-side__stats-sep {
+	opacity: 0.45;
+}
+
+.app-side__meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem;
+	opacity: 0.8;
+}
+
+.app-side__meta-link {
+	color: inherit;
+	transition: color 0.16s ease;
+}
+
+.app-side__meta-link:hover,
+.app-side__meta-link:focus-visible {
+	color: var(--primary);
+}
+
+/* 收起的侧栏：仅保留图标轨道 */
+:root[data-sidebar="collapsed"] .app-shell__sidebar {
+	width: var(--app-sidebar-rail);
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+
+:root[data-sidebar="collapsed"] .app-shell__main {
+	margin-left: var(--app-sidebar-rail);
+}
+
+:root[data-sidebar="collapsed"] .app-side__brand-row {
+	flex-direction: column;
+}
+
+:root[data-sidebar="collapsed"] .app-side__brand {
+	justify-content: center;
+	padding: 0.35rem 0 0.4rem;
+}
+
+/* 收起后 logo 缩放为图标尺寸，保持居中不裁切 */
+:root[data-sidebar="collapsed"] .app-side__brand img {
+	height: 20px;
+	max-width: 100%;
+	object-fit: contain;
+}
+
+:root[data-sidebar="collapsed"] .app-side__collapse {
+	margin: 0 auto;
+}
+
+:root[data-sidebar="collapsed"] .app-side__icon--collapse {
+	display: none;
+}
+
+:root[data-sidebar="collapsed"] .app-side__icon--expand {
+	display: inline-flex;
+}
+
+:root[data-sidebar="collapsed"] .app-side__card,
+:root[data-sidebar="collapsed"] .app-side__quick a {
+	justify-content: center;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+:root[data-sidebar="collapsed"] .app-side__card-text,
+:root[data-sidebar="collapsed"] .app-side__quick a span,
+:root[data-sidebar="collapsed"] .app-side__promo,
+:root[data-sidebar="collapsed"] .app-side__stats,
+:root[data-sidebar="collapsed"] .app-side__mode,
+:root[data-sidebar="collapsed"] .app-side__user > div {
+	display: none;
+}
+
+:root[data-sidebar="collapsed"] .app-side__quick {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+:root[data-sidebar="collapsed"] .app-side__user {
+	justify-content: center;
+}
+
+/* 顶栏菜单按钮默认隐藏，移动端才出现 */
+.app-shell__topbar-menu {
+	display: none;
+}
+
+/* 移动端：侧栏改为抽屉 */
+@media (max-width: 1023px) {
+	.app-shell {
+		flex-direction: column;
+	}
+
+	.app-shell__sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 60;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.9rem;
+		width: min(17.5rem, 82vw);
+		height: 100dvh;
+		padding: 0.85rem;
+		overflow-x: hidden;
+		overflow-y: auto;
+		border-right: 1px solid var(--app-border);
+		transform: translateX(-100%);
+	}
+
+	/* 抽屉模式下正文不再为侧栏留位 */
+	.app-shell__main,
+	:root[data-sidebar="collapsed"] .app-shell__main {
+		margin-left: 0;
+	}
+
+	.app-shell[data-mobile-nav="open"] .app-shell__sidebar {
+		transform: translateX(0);
+	}
+
+	/* 抽屉内不应用桌面折叠样式 */
+	:root[data-sidebar="collapsed"] .app-shell__sidebar {
+		width: min(17.5rem, 82vw);
+		padding-left: 0.85rem;
+		padding-right: 0.85rem;
+	}
+
+	:root[data-sidebar="collapsed"] .app-side__brand-row {
+		flex-direction: row;
+	}
+
+	:root[data-sidebar="collapsed"] .app-side__card-text,
+	:root[data-sidebar="collapsed"] .app-side__quick a span,
+	:root[data-sidebar="collapsed"] .app-side__promo,
+	:root[data-sidebar="collapsed"] .app-side__stats,
+	:root[data-sidebar="collapsed"] .app-side__mode,
+	:root[data-sidebar="collapsed"] .app-side__user > div {
+		display: revert;
+	}
+
+	:root[data-sidebar="collapsed"] .app-side__quick {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	:root[data-sidebar="collapsed"] .app-side__card {
+		justify-content: flex-start;
+		padding: 0.7rem 0.75rem;
+	}
+
+	:root[data-sidebar="collapsed"] .app-side__quick a {
+		padding: 0.5rem 0.25rem;
+	}
+
+	.app-side__collapse .app-side__icon--collapse,
+	:root[data-sidebar="collapsed"] .app-side__collapse .app-side__icon--expand {
+		display: none;
+	}
+
+	/* 抽屉模式：关闭按钮取代展开/收起按钮 */
+	.app-side__collapse {
+		display: none;
+	}
+
+	.app-side__drawer-close {
+		display: inline-flex;
+	}
+
+	.app-side__brand {
+		padding: 0.35rem 0.4rem 0.6rem;
+		flex-shrink: 0;
+	}
+
+	.app-side__brand img {
+		height: 24px;
+	}
+
+	/* 顶栏弹出菜单按钮仅移动端可见 */
+	.app-shell__topbar-menu {
+		display: inline-flex;
+	}
+
+	.app-shell__content {
+		padding: 1rem;
+	}
+}
+
+/* 遮罩：抽屉展开时盖住正文 */
+.app-shell__scrim {
+	display: none;
+}
+
+@media (max-width: 1023px) {
+	.app-shell__scrim {
+		position: fixed;
+		inset: 0;
+		z-index: 55;
+		background: rgb(0 0 0 / 45%);
+		opacity: 0;
+		transition: opacity 0.2s ease;
+		pointer-events: none;
+	}
+
+	.app-shell[data-mobile-nav="open"] .app-shell__scrim {
+		display: block;
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
