@@ -1,5 +1,4 @@
 <script lang="ts">
-import { onMount } from "svelte";
 import Icon from "@/components/common/Icon.svelte";
 import { siteConfig } from "@/config";
 import iconsData from "@/constants/icons-data.json";
@@ -21,22 +20,9 @@ export let avatarSelector: string | null = null;
 let showModal = false;
 let posterImage: string | null = null;
 let generating = false;
-let themeColor = "#558e88"; // Default blue
+/* 海报为白底图，装饰色取中性深灰；站点主色在暗色下近白，直接使用会与底色重合 */
+const themeColor = "#4b5563";
 const headerTextColor = "#1f2937"; // 站点名称与 Logo 颜色
-
-onMount(() => {
-	// Get theme color from CSS variable
-	const temp = document.createElement("div");
-	temp.style.color = "var(--primary)";
-	temp.style.display = "none";
-	document.body.appendChild(temp);
-	const computedColor = getComputedStyle(temp).color;
-	document.body.removeChild(temp);
-
-	if (computedColor) {
-		themeColor = computedColor;
-	}
-});
 
 function loadImage(src: string): Promise<HTMLImageElement | null> {
 	return new Promise((resolve) => {
@@ -621,8 +607,8 @@ function portal(node: HTMLElement) {
 </script>
 
 <!-- Trigger Button -->
-<button 
-  class="btn-regular rounded-lg h-12 px-6 gap-2 hover:scale-105 active:scale-95 whitespace-nowrap"
+<button
+  class="share-trigger"
   on:click={generatePoster}
   aria-label="Generate Share Poster"
 >
@@ -630,31 +616,25 @@ function portal(node: HTMLElement) {
   <span>{i18n(I18nKey.shareArticle)}</span>
 </button>
 
-
-
 <!-- Modal -->
 {#if showModal}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div use:portal class="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 transition-opacity" on:click={closeModal}>
-    <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-[440px] w-full max-h-[90vh] overflow-y-auto flex flex-col shadow-2xl transform transition-all" on:click={(e) => e.stopPropagation()}>
-      
-      <div class="p-6 flex justify-center bg-gray-50 dark:bg-gray-900 min-h-[200px] items-center">
+  <div use:portal class="share-overlay" on:click={closeModal} on:keydown={(e) => e.key === "Escape" && closeModal()} role="presentation">
+    <div class="share-dialog" on:click={(e) => e.stopPropagation()} role="presentation">
+      <div class="share-dialog__preview">
         {#if posterImage}
-          <img src={posterImage} alt="Poster" class="max-w-full h-auto shadow-lg rounded-lg" />
+          <img src={posterImage} alt="Poster" class="share-dialog__image" />
         {:else}
-           <div class="flex flex-col items-center gap-3">
-             <div class="w-8 h-8 border-2 border-gray-200 rounded-full animate-spin" style="border-top-color: {themeColor}"></div>
-             <span class="text-sm text-gray-500">{i18n(I18nKey.generatingPoster)}</span>
-           </div>
+          <div class="share-dialog__loading">
+            <div class="share-dialog__spinner"></div>
+            <span>{i18n(I18nKey.generatingPoster)}</span>
+          </div>
         {/if}
       </div>
-      
-      <div class="p-4 border-t border-gray-100 dark:border-gray-700 grid grid-cols-2 gap-3">
-        <button 
-          class="py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-medium hover:bg-gray-200 dark:hover:bg-gray-600 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-          on:click={copyLink}
-        >
+
+      <div class="share-dialog__actions">
+        <button class="share-dialog__btn" on:click={copyLink}>
           {#if copied}
             <Icon icon="material-symbols:check" />
             <span>{i18n(I18nKey.copied)}</span>
@@ -663,9 +643,8 @@ function portal(node: HTMLElement) {
             <span>{i18n(I18nKey.copyLink)}</span>
           {/if}
         </button>
-        <button 
-          class="py-3 text-white rounded-xl font-medium active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-90"
-          style="background-color: {themeColor};"
+        <button
+          class="share-dialog__btn share-dialog__btn--accent"
           on:click={downloadPoster}
           disabled={!posterImage}
         >
@@ -676,3 +655,132 @@ function portal(node: HTMLElement) {
     </div>
   </div>
 {/if}
+
+<style>
+  /* 分享按钮：透明底 + 2px 描边 + 4px 圆角，无位移无阴影 */
+  .share-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.75rem;
+    padding: 0 1.25rem;
+    border: 2px solid var(--line-color);
+    border-radius: var(--app-radius-card, 0.25rem);
+    background: transparent;
+    color: var(--content-meta);
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .share-trigger:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .share-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .share-dialog {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 28rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 2px solid var(--line-color);
+    border-radius: var(--app-radius-card, 0.25rem);
+    background: var(--card-bg);
+  }
+
+  .share-dialog__preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 12rem;
+    padding: 1.5rem;
+  }
+
+  .share-dialog__image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--app-radius-card, 0.25rem);
+  }
+
+  .share-dialog__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--content-meta);
+    font-size: 0.875rem;
+  }
+
+  .share-dialog__spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid var(--line-color);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: share-spin 0.8s linear infinite;
+  }
+
+  @keyframes share-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .share-dialog__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-top: 2px solid var(--line-color);
+  }
+
+  .share-dialog__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: 2px solid var(--line-color);
+    border-radius: var(--app-radius-card, 0.25rem);
+    background: transparent;
+    color: var(--content-meta);
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .share-dialog__btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .share-dialog__btn--accent {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .share-dialog__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .share-dialog__btn:disabled:hover {
+    border-color: var(--line-color);
+    color: var(--content-meta);
+  }
+</style>
