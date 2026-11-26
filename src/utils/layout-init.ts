@@ -18,8 +18,9 @@ import {
 } from "@/utils/grid-layout-utils";
 import { initIconLoader } from "@/utils/icon-loader";
 import { initImageLoadFadeIn } from "@/utils/lqip-utils";
+import { initScrollRestore } from "@/utils/scroll-restore";
 import { initScroll } from "@/utils/scroll-utils";
-import { initThemeListener, initWallpaperMode } from "@/utils/setting-utils";
+import { initWallpaperMode } from "@/utils/setting-utils";
 import { setupSwupTransitions } from "@/utils/swup-transitions";
 import { initTouchCodeCopyReveal } from "@/utils/touch-copy-utils";
 
@@ -75,15 +76,13 @@ export function initLayout(): void {
 			updateMainGridCols();
 			updateSidebarComponentsVisibility();
 			initWallpaperMode();
-			initThemeListener();
-			initIconLoader();
+				initIconLoader();
 			syncFullscreenStateAfterInit();
 		});
 	} else {
 		updateMainGridCols();
 		updateSidebarComponentsVisibility();
 		initWallpaperMode();
-		initThemeListener();
 		initIconLoader();
 		syncFullscreenStateAfterInit();
 	}
@@ -104,3 +103,6 @@ export function initLayout(): void {
 		requestAnimationFrame(initImageLoadFadeIn);
 	});
 }
+
+// 列表页滚动位置记忆：进入文章再返回时恢复到上次位置
+initScrollRestore();

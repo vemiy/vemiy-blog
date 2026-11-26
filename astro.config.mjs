@@ -124,7 +124,11 @@ export default defineConfig({
 			// 应用外壳下只有主内容区随路由变化，其余（侧栏、顶栏、页脚）常驻不替换，
 			// 故容器只保留 #swup-container 与悬浮控件，避免 swup 找不到容器时退化为整页刷新
 			containers: ["#swup-container"],
-			smoothScrolling: false,
+			// 默认 true 时 swup 要等 load + requestIdleCallback 后才初始化，
+			// 空窗期内点击链接会退化为整页刷新；改为同步初始化消除该窗口
+			loadOnIdle: false,
+			// 启用 SwupScrollPlugin：切页记录滚动位置，浏览器后退时恢复
+			smoothScrolling: true,
 			cache: true,
 			preload: {
 				hover: true,
