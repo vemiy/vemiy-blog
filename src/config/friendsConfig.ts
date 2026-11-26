@@ -33,9 +33,9 @@ export const friendsSiteInfo = {
 
 // 申请友链须知
 export const friendsApplyNotes: string[] = [
-	"我已添加本站友链，并愿意长期保持互链。",
-	"网站定位为个人博客，且不以商业推广为核心。",
-	"网站以原创内容为主，符合中国大陆法律法规。",
+	"您已添加本站友链，并愿意长期保持互链。",
+	"您的网站定位为个人博客，且不以商业推广为核心。",
+	"您的网站以原创内容为主，符合中国大陆法律法规。",
 ];
 
 // 申请友链留言模板
@@ -51,7 +51,6 @@ export const friendsConfig: FriendGroup[] = [
 	{
 		id: "friends",
 		name: "友情链接",
-		desc: "按名称编码顺序排列，点我申请友链",
 		weight: 100,
 		items: [
 			{
@@ -107,7 +106,6 @@ export const friendsConfig: FriendGroup[] = [
 	{
 		id: "orgs",
 		name: "一些组织",
-		desc: "博客聚合与导航平台",
 		weight: 90,
 		items: [
 			{

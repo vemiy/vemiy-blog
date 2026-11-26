@@ -48,10 +48,11 @@ const description =
 ---
 
 <MainGridLayout title={title} description={description}>
-  <AppPanel class="app-card"
-    title={title}
-    desc={`${description} · 共 ${totalCount} 个站点`}
-  >
+  <header class="friends-page__head">
+    <h2 class="friends-page__title">{title}</h2>
+  </header>
+
+  <div class="friends-page__body">
     {
       groups.length === 0 ? (
         <div class="app-empty">
@@ -70,14 +71,14 @@ const description =
               type="text"
               data-search
               placeholder={i18n(I18nKey.searchFriends)}
-              class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-(--line-divider) bg-transparent text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:border-(--primary) focus:ring-1 focus:ring-(--primary) outline-none transition-all duration-200 text-sm"
+              class="w-full pl-10 pr-4 py-2.5 border border-(--line-divider) bg-transparent text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:border-(--primary) focus:ring-1 focus:ring-(--primary) outline-none transition-all duration-200 text-sm"
             />
           </div>
 
           <div class="flex flex-wrap gap-2 mb-6">
             <button
               data-group="all"
-              class="category-pill px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-200"
+              class="category-pill px-3 py-1.5 text-sm font-medium transition-colors duration-200"
               data-active
             >
               {i18n(I18nKey.all)}
@@ -86,7 +87,7 @@ const description =
             {groups.map((group) => (
               <button
                 data-group={group.id}
-                class="category-pill px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-200"
+                class="category-pill px-3 py-1.5 text-sm font-medium transition-colors duration-200"
               >
                 {group.name}
                 <span class="pill-count">{group.items.length}</span>
@@ -122,7 +123,7 @@ const description =
                       title={item.desc || item.title}
                       data-title={item.title.toLowerCase()}
                       data-desc={(item.desc || "").toLowerCase()}
-                      class="friend-card group flex items-center gap-3 p-2.5 rounded-xl border border-(--line-divider) hover:border-(--primary) hover:bg-(--card-bg) transition-all duration-300 hover:shadow-lg relative overflow-hidden"
+                      class="friend-card group flex items-center gap-3 p-2.5 border border-(--line-divider) hover:border-(--primary) hover:bg-(--card-bg) transition-colors duration-200 relative overflow-hidden"
                     >
                       {/* 悬停时的主题色底纹 */}
                       <div class="absolute inset-0 bg-(--primary) opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none" />
@@ -133,7 +134,7 @@ const description =
                         class="absolute top-3 right-3 text-(--primary) text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
                       />
 
-                      <div class="w-16 h-16 shrink-0 rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-black/5 dark:border-white/5 group-hover:scale-105 transition-transform duration-300">
+                      <div class="w-16 h-16 shrink-0 overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-black/5 dark:border-white/5">
                         <img
                           src={item.imgurl}
                           alt={item.title}
@@ -170,14 +171,14 @@ const description =
         </friend-list>
       )
     }
-  </AppPanel>
+  </div>
 
   {
     friendsPageConfig.showCustomContent !== false && (
       <AppPanel title="申请友链" desc="互换友链前请先阅读以下要求">
         {/* 本站信息 */}
         <div class="flex items-center gap-4 mb-4">
-          <div class="w-16 h-16 shrink-0 rounded-xl overflow-hidden border border-(--line-divider)">
+          <div class="w-16 h-16 shrink-0 overflow-hidden border border-(--line-divider)">
             <img
               src={friendsSiteInfo.avatar}
               alt={friendsSiteInfo.name}
@@ -198,7 +199,7 @@ const description =
 
         <div class="friends-info grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
           {siteInfoRows.map((row) => (
-            <div class="flex items-center justify-between gap-2 rounded-lg bg-black/5 dark:bg-white/5 px-3 py-2">
+            <div class="flex items-center justify-between gap-2 bg-black/5 dark:bg-white/5 px-3 py-2">
               <div class="min-w-0">
                 <p class="text-[0.65rem] text-neutral-400 dark:text-neutral-500 mb-0.5">
                   {row.label}
@@ -210,7 +211,7 @@ const description =
               <button
                 type="button"
                 data-copy={row.value}
-                class="friends-copy shrink-0 w-7 h-7 flex items-center justify-center rounded-md bg-black/10 dark:bg-white/10 text-(--btn-content) hover:opacity-80 transition-opacity cursor-pointer"
+                class="friends-copy shrink-0 w-7 h-7 flex items-center justify-center bg-black/10 dark:bg-white/10 text-(--btn-content) hover:opacity-80 transition-opacity cursor-pointer"
                 aria-label={`复制${row.label}`}
               >
                 <Icon
@@ -241,7 +242,26 @@ const description =
         <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-2">
           先将本站加入你的友链页面，再到评论区按以下格式留言，审核通过后会加入列表：
         </p>
-        <pre class="friends-template rounded-lg bg-black/5 dark:bg-white/5 p-4 overflow-x-auto text-xs leading-relaxed"><code>{friendsApplyTemplate}</code></pre>
+        <div class="friends-template-wrap relative">
+          <pre class="friends-template bg-black/5 dark:bg-white/5 p-4 pr-12 overflow-x-auto text-xs leading-relaxed"><code>{friendsApplyTemplate}</code></pre>
+          <button
+            type="button"
+            data-copy={friendsApplyTemplate}
+            class="friends-copy absolute top-2 right-2 shrink-0 w-7 h-7 flex items-center justify-center bg-black/10 dark:bg-white/10 text-(--btn-content) hover:opacity-80 transition-opacity cursor-pointer"
+            aria-label="复制友链格式"
+          >
+            <Icon
+              name="material-symbols:content-copy-outline"
+              class="text-sm"
+              data-copy-icon
+            />
+            <Icon
+              name="material-symbols:check-rounded"
+              class="text-sm text-green-500 hidden"
+              data-check-icon
+            />
+          </button>
+        </div>
 
         <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-3">
           本站会定时清理失效链接，如恢复访问可重新提交。
@@ -337,25 +357,45 @@ const description =
       customElements.define("friend-list", FriendList);
 
       // 本站信息复制按钮位于自定义元素之外，单独做一次全局委托
-      document.addEventListener("click", (e) => {
-        const button = e.target.closest?.("button[data-copy]");
-        if (!button) return;
+      if (!window.__friendsCopyBound) {
+        window.__friendsCopyBound = true;
+        document.addEventListener("click", (e) => {
+          const button = e.target.closest?.("button[data-copy]");
+          if (!button) return;
 
-        navigator.clipboard?.writeText(button.dataset.copy || "");
+          navigator.clipboard?.writeText(button.dataset.copy || "");
 
-        // 复制后短暂显示对勾，替代复制图标
-        const copyIcon = button.querySelector("[data-copy-icon]");
-        const checkIcon = button.querySelector("[data-check-icon]");
-        if (!copyIcon || !checkIcon) return;
+          // 复制后短暂显示对勾，替代复制图标
+          const copyIcon = button.querySelector("[data-copy-icon]");
+          const checkIcon = button.querySelector("[data-check-icon]");
+          if (!copyIcon || !checkIcon) return;
 
-        copyIcon.classList.add("hidden");
-        checkIcon.classList.remove("hidden");
+          copyIcon.classList.add("hidden");
+          checkIcon.classList.remove("hidden");
 
-        setTimeout(() => {
-          copyIcon.classList.remove("hidden");
-          checkIcon.classList.add("hidden");
-        }, 1500);
-      });
+          setTimeout(() => {
+            copyIcon.classList.remove("hidden");
+            checkIcon.classList.add("hidden");
+          }, 1500);
+        });
+      }
     }
   </script>
+<style>
+  /* 页头块。 */
+  .friends-page__head {
+    margin-bottom: 1rem;
+  }
+  .friends-page__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+  /* 筛选按钮与卡片同形。 */
+  .friends-page__body button.category-pill {
+    border-radius: var(--app-radius-card);
+  }
+</style>
+
 </MainGridLayout>

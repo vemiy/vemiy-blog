@@ -3,7 +3,7 @@
 
 /* 胶囊样式（默认） - 主题色 tonal chip 风格（配色同分类胶囊，跟随主题色） */
 .tag-item {
-    border-radius: 9999px;
+    border-radius: var(--app-radius-card);
     background: color-mix(in srgb, var(--btn-content) 8%, transparent);
     color: var(--btn-content);
 }
@@ -15,7 +15,7 @@
     background: color-mix(in srgb, var(--btn-content) 24%, transparent);
 }
 .tag-item .tag-count-badge {
-    border-radius: 9999px;
+    border-radius: var(--app-radius-card);
     background: color-mix(in srgb, var(--btn-content) 12%, transparent);
     color: inherit;
 }
