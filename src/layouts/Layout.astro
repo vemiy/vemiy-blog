@@ -106,9 +106,7 @@ let pageTitle: string;
 if (title) {
 	pageTitle = `${title} - ${siteConfig.title}`;
 } else {
-	pageTitle = siteConfig.subtitle
-		? `${siteConfig.title} - ${siteConfig.subtitle}`
-		: siteConfig.title;
+	pageTitle = siteConfig.title;
 }
 
 const favicons: Favicon[] =
