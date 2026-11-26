@@ -64,7 +64,6 @@ export { booknavConfig, booknavPageConfig } from "./booknavConfig"; // 书签导
 export { commentConfig } from "./commentConfig"; // 评论系统配置
 export { coverImageConfig } from "./coverImageConfig"; // 封面图配置
 export { displaySettingsConfig } from "./displaySettingsConfig"; // 显示设置面板开关配置
-export { dynamicConfig } from "./dynamicConfig"; // 动态页面配置
 export {
 	clickEffectConfig,
 	sakuraConfig,
@@ -81,7 +80,6 @@ export {
 	getEnabledFriendGroups,
 	getEnabledFriends,
 } from "./friendsConfig"; // 友链配置
-export { galleryConfig } from "./galleryConfig"; // 相册配置
 export { licenseConfig } from "./licenseConfig"; // 许可证配置
 // 组件配置
 export { mermaidConfig } from "./mermaidConfig"; // Mermaid 图表配置

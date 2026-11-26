@@ -86,11 +86,6 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		url: "/tags/",
 		icon: "material-symbols:tag-rounded",
 	},
-	Series: {
-		name: "系列",
-		url: "/series/",
-		icon: "material-symbols:layers",
-	},
 	Friends: {
 		name: "友链",
 		url: "/links/",
