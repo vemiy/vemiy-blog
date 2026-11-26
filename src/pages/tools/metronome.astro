@@ -1,5 +1,4 @@
 ---
-import AppPanel from "@/components/layout/AppPanel.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import "@/styles/pages/tools-common.css";
 
@@ -32,76 +31,79 @@ const ticks = MARKS.map((bpm, i) => {
 ---
 
 <MainGridLayout title={title} description={description}>
-  <AppPanel title={title}>
-    <div class="vemiy-tool vemiy-metronome" id="vemiyMetronome">
-      <div class="vemiy-tool-head vemiy-metronome-head">
-        <button
-          class="vemiy-tool-btn vemiy-tool-btn-primary vemiy-metronome-start"
-          id="vemiyMetroStart"
-          type="button">开始</button>
-        <div class="vemiy-metronome-bell">
-          <span class="vemiy-metronome-bell-label">重音</span>
-          <input
-            class="vemiy-metronome-bell-range"
-            type="range"
-            id="vemiyMetroBell"
-            min="0"
-            max="4"
-            step="1"
-            value="0"
-            aria-label="重音间隔"
-          />
-          <span class="vemiy-metronome-bell-value" id="vemiyMetroBellValue">无</span>
-        </div>
-      </div>
-      <div class="vemiy-metronome-stage">
-        <svg
-          id="vemiyMetroSvg"
-          class="vemiy-metronome-svg"
-          viewBox="0 0 340 580"
-          role="img"
-          aria-label="机械节拍器"
-        >
-          <path class="vemiy-metronome-body" d="M112 20 L228 20 L300 556 Q300 572 284 572 L56 572 Q40 572 40 556 Z" fill="#2e2e32" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"></path>
-          <path class="vemiy-metronome-plate" d="M118 108 L222 108 L284 552 L56 552 Z" fill="#26262a" stroke="rgba(255,255,255,0.06)" stroke-width="1"></path>
-          <text class="vemiy-metronome-bpm" id="vemiyMetroBpm" x="170" y="56" text-anchor="middle">120</text>
-          <text class="vemiy-metronome-bpm-unit" x="170" y="74" text-anchor="middle">BPM</text>
-          <text class="vemiy-metronome-name" id="vemiyMetroName" x="170" y="92" text-anchor="middle">Moderato</text>
-          <g class="vemiy-metronome-scale" id="vemiyMetroScale">
-            {
-              ticks.map((tick) => (
-                <>
-                  <line
-                    class="vemiy-metronome-tick"
-                    x1={tick.left ? 165 : 175}
-                    y1={tick.y.toFixed(1)}
-                    x2={tick.left ? 156 : 184}
-                    y2={tick.y.toFixed(1)}
-                  />
-                  <text
-                    class="vemiy-metronome-mark"
-                    data-bpm={tick.bpm}
-                    x={tick.left ? 136 : 204}
-                    y={(tick.y + 3.2).toFixed(1)}
-                    text-anchor="middle">{tick.bpm}</text>
-                </>
-              ))
-            }
-          </g>
-          <g class="vemiy-metronome-pendulum" id="vemiyMetroPendulum">
-            <rect class="vemiy-metronome-rod" x="166" y="108" width="8" height="420" rx="3" fill="#d6d6db"></rect>
-            <rect class="vemiy-metronome-rod-shade" x="171" y="108" width="3" height="420" rx="1.5" fill="#a8a8ae"></rect>
-            <rect class="vemiy-metronome-weight" id="vemiyMetroWeight" x="151" y="248" width="38" height="30" rx="6" fill="#4a4a50" stroke="#131315" stroke-width="1.5"></rect>
-            <rect class="vemiy-metronome-weight-top" id="vemiyMetroWeightTop" x="151" y="248" width="38" height="8" rx="4" fill="#63636a"></rect>
-            <circle class="vemiy-metronome-grip" id="vemiyMetroGrip" cx="170" cy="263" r="4"></circle>
-            <circle class="vemiy-metronome-pivot" cx="170" cy="528" r="5" fill="#b8b8bc"></circle>
-          </g>
-          <circle class="vemiy-metronome-lamp-glow" id="vemiyMetroLamp" cx="170" cy="528" r="42" fill="color-mix(in srgb, var(--primary) 16%, transparent)"></circle>
-          <circle class="vemiy-metronome-lamp" id="vemiyMetroLampDot" cx="170" cy="528" r="6" fill="#3a3a3e"></circle>
-        </svg>
+  <header class="vemiy-tool-head-block">
+    <h2 class="vemiy-tool-title">{title}</h2>
+    <p class="vemiy-tool-desc">{description}</p>
+  </header>
+
+  <div class="vemiy-tool vemiy-metronome" id="vemiyMetronome">
+    <div class="vemiy-tool-head vemiy-metronome-head">
+      <button
+        class="vemiy-tool-btn vemiy-tool-btn-primary vemiy-metronome-start"
+        id="vemiyMetroStart"
+        type="button">开始</button>
+      <div class="vemiy-metronome-bell">
+        <span class="vemiy-metronome-bell-label">重音</span>
+        <input
+          class="vemiy-metronome-bell-range"
+          type="range"
+          id="vemiyMetroBell"
+          min="0"
+          max="4"
+          step="1"
+          value="0"
+          aria-label="重音间隔"
+        />
+        <span class="vemiy-metronome-bell-value" id="vemiyMetroBellValue">无</span>
       </div>
     </div>
-  </AppPanel>
+    <div class="vemiy-metronome-stage">
+      <svg
+        id="vemiyMetroSvg"
+        class="vemiy-metronome-svg"
+        viewBox="0 0 340 580"
+        role="img"
+        aria-label="机械节拍器"
+      >
+        <path class="vemiy-metronome-body" d="M112 20 L228 20 L300 556 Q300 572 284 572 L56 572 Q40 572 40 556 Z" fill="#2e2e32" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"></path>
+        <path class="vemiy-metronome-plate" d="M118 108 L222 108 L284 552 L56 552 Z" fill="#26262a" stroke="rgba(255,255,255,0.06)" stroke-width="1"></path>
+        <text class="vemiy-metronome-bpm" id="vemiyMetroBpm" x="170" y="56" text-anchor="middle">120</text>
+        <text class="vemiy-metronome-bpm-unit" x="170" y="74" text-anchor="middle">BPM</text>
+        <text class="vemiy-metronome-name" id="vemiyMetroName" x="170" y="92" text-anchor="middle">Moderato</text>
+        <g class="vemiy-metronome-scale" id="vemiyMetroScale">
+          {
+            ticks.map((tick) => (
+              <>
+                <line
+                  class="vemiy-metronome-tick"
+                  x1={tick.left ? 165 : 175}
+                  y1={tick.y.toFixed(1)}
+                  x2={tick.left ? 156 : 184}
+                  y2={tick.y.toFixed(1)}
+                />
+                <text
+                  class="vemiy-metronome-mark"
+                  data-bpm={tick.bpm}
+                  x={tick.left ? 136 : 204}
+                  y={(tick.y + 3.2).toFixed(1)}
+                  text-anchor="middle">{tick.bpm}</text>
+              </>
+            ))
+          }
+        </g>
+        <g class="vemiy-metronome-pendulum" id="vemiyMetroPendulum">
+          <rect class="vemiy-metronome-rod" x="166" y="108" width="8" height="420" rx="3" fill="#d6d6db"></rect>
+          <rect class="vemiy-metronome-rod-shade" x="171" y="108" width="3" height="420" rx="1.5" fill="#a8a8ae"></rect>
+          <rect class="vemiy-metronome-weight" id="vemiyMetroWeight" x="151" y="248" width="38" height="30" rx="6" fill="#4a4a50" stroke="#131315" stroke-width="1.5"></rect>
+          <rect class="vemiy-metronome-weight-top" id="vemiyMetroWeightTop" x="151" y="248" width="38" height="8" rx="4" fill="#63636a"></rect>
+          <circle class="vemiy-metronome-grip" id="vemiyMetroGrip" cx="170" cy="263" r="4"></circle>
+          <circle class="vemiy-metronome-pivot" cx="170" cy="528" r="5" fill="#b8b8bc"></circle>
+        </g>
+        <circle class="vemiy-metronome-lamp-glow" id="vemiyMetroLamp" cx="170" cy="528" r="42" fill="color-mix(in srgb, var(--primary) 16%, transparent)"></circle>
+        <circle class="vemiy-metronome-lamp" id="vemiyMetroLampDot" cx="170" cy="528" r="6" fill="#3a3a3e"></circle>
+      </svg>
+    </div>
+  </div>
   <script is:inline src="/js/tools/metronome.js"></script>
 </MainGridLayout>
 
@@ -174,8 +176,8 @@ const ticks = MARKS.map((bpm, i) => {
   .vemiy-metronome-stage {
     display: flex;
     justify-content: center;
-    border: 1px solid var(--line-color);
-    border-radius: var(--app-radius);
+    border: var(--app-card-stroke);
+    border-radius: var(--app-radius-card);
     background: var(--app-glass-bg);
     padding: 1.25rem 1rem;
     margin-bottom: 0.85rem;

@@ -1,5 +1,4 @@
 ---
-import AppPanel from "@/components/layout/AppPanel.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import "@/styles/pages/tools-common.css";
 
@@ -8,42 +7,45 @@ const description = "麦克风识别音高，附带标准音。";
 ---
 
 <MainGridLayout title={title} description={description}>
-  <AppPanel title={title}>
-    <div class="vemiy-tool vemiy-tuner" id="vemiyTuner">
-      <div class="vemiy-tool-head vemiy-tuner-head">
-        <button class="vemiy-tool-btn vemiy-tuner-start" id="vemiyTunerStart">开启麦克风</button>
-        <div class="vemiy-tool-sub vemiy-tuner-sub" id="vemiyTunerStatus">点击开启麦克风开始识别音高</div>
-      </div>
+  <header class="vemiy-tool-head-block">
+    <h2 class="vemiy-tool-title">{title}</h2>
+    <p class="vemiy-tool-desc">{description}</p>
+  </header>
 
-      <div class="vemiy-tuner-dial" id="vemiyTunerDial">
-        <div class="vemiy-tuner-note" id="vemiyTunerNote">--</div>
-        <div class="vemiy-tuner-octave" id="vemiyTunerOctave"></div>
-        <div class="vemiy-tuner-cents" id="vemiyTunerCents">--</div>
-        <div class="vemiy-tuner-track">
-          <div class="vemiy-tuner-center"></div>
-          <div class="vemiy-tuner-needle" id="vemiyTunerNeedle"></div>
-        </div>
-        <div class="vemiy-tuner-scale">
-          <span>-50</span><span>-25</span><span>0</span><span>+25</span><span>+50</span>
-        </div>
-        <div class="vemiy-tuner-freq" id="vemiyTunerFreq">-- Hz</div>
-      </div>
-
-      <div class="vemiy-tool-section">
-        <h3 class="vemiy-tool-section-title">参考音</h3>
-        <div class="vemiy-tuner-refs" id="vemiyTunerRefs"></div>
-        <div class="vemiy-tool-row vemiy-tuner-refrow">
-          <label class="vemiy-tool-range vemiy-tuner-a4">
-            A4 基准
-            <span id="vemiyTunerA4Val">440</span> Hz
-            <input type="range" id="vemiyTunerA4" min="415" max="466" step="1" value="440">
-          </label>
-        </div>
-      </div>
-
-      <div class="vemiy-tool-foot vemiy-tuner-foot">所有处理均在本地完成 - 音频不上传服务器</div>
+  <div class="vemiy-tool vemiy-tuner" id="vemiyTuner">
+    <div class="vemiy-tool-head vemiy-tuner-head">
+      <button class="vemiy-tool-btn vemiy-tuner-start" id="vemiyTunerStart">开启麦克风</button>
+      <div class="vemiy-tool-sub vemiy-tuner-sub" id="vemiyTunerStatus">点击开启麦克风开始识别音高</div>
     </div>
-  </AppPanel>
+
+    <div class="vemiy-tuner-dial" id="vemiyTunerDial">
+      <div class="vemiy-tuner-note" id="vemiyTunerNote">--</div>
+      <div class="vemiy-tuner-octave" id="vemiyTunerOctave"></div>
+      <div class="vemiy-tuner-cents" id="vemiyTunerCents">--</div>
+      <div class="vemiy-tuner-track">
+        <div class="vemiy-tuner-center"></div>
+        <div class="vemiy-tuner-needle" id="vemiyTunerNeedle"></div>
+      </div>
+      <div class="vemiy-tuner-scale">
+        <span>-50</span><span>-25</span><span>0</span><span>+25</span><span>+50</span>
+      </div>
+      <div class="vemiy-tuner-freq" id="vemiyTunerFreq">-- Hz</div>
+    </div>
+
+    <div class="vemiy-tool-section">
+      <h3 class="vemiy-tool-section-title">参考音</h3>
+      <div class="vemiy-tuner-refs" id="vemiyTunerRefs"></div>
+      <div class="vemiy-tool-row vemiy-tuner-refrow">
+        <label class="vemiy-tool-range vemiy-tuner-a4">
+          A4 基准
+          <span id="vemiyTunerA4Val">440</span> Hz
+          <input type="range" id="vemiyTunerA4" min="415" max="466" step="1" value="440">
+        </label>
+      </div>
+    </div>
+
+    <div class="vemiy-tool-foot vemiy-tuner-foot">所有处理均在本地完成 - 音频不上传服务器</div>
+  </div>
   <script is:inline src="/js/tools/tuner.js"></script>
 </MainGridLayout>
 
@@ -64,8 +66,8 @@ const description = "麦克风识别音高，附带标准音。";
     }
     .vemiy-tuner-dial {
       position: relative;
-      border: 1px solid var(--line-color);
-      border-radius: var(--app-radius);
+      border: var(--app-card-stroke);
+      border-radius: var(--app-radius-card);
       background: var(--app-glass-bg);
       padding: 2rem 1.4rem 1.4rem;
       text-align: center;

@@ -1,5 +1,4 @@
 ---
-import AppPanel from "@/components/layout/AppPanel.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import "@/styles/pages/tools-common.css";
 
@@ -8,55 +7,58 @@ const description = "出口 IP 归属、机房判定与黑名单命中。";
 ---
 
 <MainGridLayout title={title} description={description}>
-  <AppPanel title={title}>
-    <div class="vemiy-tool vemiy-ipcheck" id="vemiyIpCheck">
-      <div class="vemiy-tool-head vemiy-ipcheck-head">
-        <button class="vemiy-tool-btn vemiy-ipcheck-start" id="vemiyIpStart" type="button">开始检测</button>
-        <div class="vemiy-tool-sub vemiy-ipcheck-status" id="vemiyIpStatus">点击开始检测当前出口 IP</div>
-      </div>
-      <div class="vemiy-ipcheck-scorecard">
-        <div class="vemiy-ipcheck-score-main">
-          <div class="vemiy-ipcheck-score-num" id="vemiyIpScoreNum">--</div>
-          <div class="vemiy-ipcheck-score-meta">
-            <div class="vemiy-ipcheck-score-band" id="vemiyIpScoreBand">未检测</div>
-            <div class="vemiy-ipcheck-score-desc" id="vemiyIpScoreDesc">开始检测后显示纯净度</div>
-          </div>
-        </div>
-        <div class="vemiy-ipcheck-track">
-          <div class="vemiy-ipcheck-track-mark" id="vemiyIpTrackMark"></div>
-        </div>
-        <div class="vemiy-ipcheck-scale">
-          <span style="left:0">0</span><span style="left:15%">15</span><span style="left:25%">25</span><span style="left:40%">40</span><span style="left:50%">50</span><span style="left:70%">70</span><span style="left:100%">100</span>
-        </div>
-      </div>
-      <div class="vemiy-tool-section">
-        <h3 class="vemiy-tool-section-title">IP 信息</h3>
-        <div class="vemiy-ipcheck-grid" id="vemiyIpInfo"></div>
-      </div>
-      <div class="vemiy-tool-section">
-        <h3 class="vemiy-tool-section-title">风险信号</h3>
-        <div class="vemiy-ipcheck-grid" id="vemiyIpRisk"></div>
-      </div>
-      <div class="vemiy-tool-section">
-        <h3 class="vemiy-tool-section-title">归属地多源对比</h3>
-        <div class="vemiy-ipcheck-lists" id="vemiyIpGeo"></div>
-      </div>
-      <div class="vemiy-tool-section">
-        <h3 class="vemiy-tool-section-title">黑名单查询</h3>
-        <div class="vemiy-ipcheck-lists" id="vemiyIpLists"></div>
-      </div>
-      <div class="vemiy-tool-section">
-        <h3 class="vemiy-tool-section-title">浏览器指纹</h3>
-        <div class="vemiy-ipcheck-grid" id="vemiyIpFp"></div>
-      </div>
-      <div class="vemiy-tool-section">
-        <h3 class="vemiy-tool-section-title">环境一致性</h3>
-        <div class="vemiy-ipcheck-grid" id="vemiyIpEnv"></div>
-      </div>
+  <header class="vemiy-tool-head-block">
+    <h2 class="vemiy-tool-title">{title}</h2>
+    <p class="vemiy-tool-desc">{description}</p>
+  </header>
 
-      <div class="vemiy-tool-foot">数据来自 ipwho.is、ipinfo.io、Cloudflare 与 Cloudflare DNS，请求会携带你的出口 IP</div>
+  <div class="vemiy-tool vemiy-ipcheck" id="vemiyIpCheck">
+    <div class="vemiy-tool-head vemiy-ipcheck-head">
+      <button class="vemiy-tool-btn vemiy-ipcheck-start" id="vemiyIpStart" type="button">开始检测</button>
+      <div class="vemiy-tool-sub vemiy-ipcheck-status" id="vemiyIpStatus">点击开始检测当前出口 IP</div>
     </div>
-  </AppPanel>
+    <div class="vemiy-ipcheck-scorecard">
+      <div class="vemiy-ipcheck-score-main">
+        <div class="vemiy-ipcheck-score-num" id="vemiyIpScoreNum">--</div>
+        <div class="vemiy-ipcheck-score-meta">
+          <div class="vemiy-ipcheck-score-band" id="vemiyIpScoreBand">未检测</div>
+          <div class="vemiy-ipcheck-score-desc" id="vemiyIpScoreDesc">开始检测后显示纯净度</div>
+        </div>
+      </div>
+      <div class="vemiy-ipcheck-track">
+        <div class="vemiy-ipcheck-track-mark" id="vemiyIpTrackMark"></div>
+      </div>
+      <div class="vemiy-ipcheck-scale">
+        <span style="left:0">0</span><span style="left:15%">15</span><span style="left:25%">25</span><span style="left:40%">40</span><span style="left:50%">50</span><span style="left:70%">70</span><span style="left:100%">100</span>
+      </div>
+    </div>
+    <div class="vemiy-tool-section">
+      <h3 class="vemiy-tool-section-title">IP 信息</h3>
+      <div class="vemiy-ipcheck-grid" id="vemiyIpInfo"></div>
+    </div>
+    <div class="vemiy-tool-section">
+      <h3 class="vemiy-tool-section-title">风险信号</h3>
+      <div class="vemiy-ipcheck-grid" id="vemiyIpRisk"></div>
+    </div>
+    <div class="vemiy-tool-section">
+      <h3 class="vemiy-tool-section-title">归属地多源对比</h3>
+      <div class="vemiy-ipcheck-lists" id="vemiyIpGeo"></div>
+    </div>
+    <div class="vemiy-tool-section">
+      <h3 class="vemiy-tool-section-title">黑名单查询</h3>
+      <div class="vemiy-ipcheck-lists" id="vemiyIpLists"></div>
+    </div>
+    <div class="vemiy-tool-section">
+      <h3 class="vemiy-tool-section-title">浏览器指纹</h3>
+      <div class="vemiy-ipcheck-grid" id="vemiyIpFp"></div>
+    </div>
+    <div class="vemiy-tool-section">
+      <h3 class="vemiy-tool-section-title">环境一致性</h3>
+      <div class="vemiy-ipcheck-grid" id="vemiyIpEnv"></div>
+    </div>
+
+    <div class="vemiy-tool-foot">数据来自 ipwho.is、ipinfo.io、Cloudflare 与 Cloudflare DNS，请求会携带你的出口 IP</div>
+  </div>
   <script is:inline src="/js/tools/ip-pure.js"></script>
 </MainGridLayout>
 
@@ -86,8 +88,8 @@ const description = "出口 IP 归属、机房判定与黑名单命中。";
     word-break: break-word;
   }
   .vemiy-ipcheck-scorecard {
-    border: 1px solid var(--line-color);
-    border-radius: var(--app-radius);
+    border: var(--app-card-stroke);
+    border-radius: var(--app-radius-card);
     background: var(--app-glass-bg);
     padding: 1.1rem 1.2rem 1rem;
     margin-bottom: 0.85rem;

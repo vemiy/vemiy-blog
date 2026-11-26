@@ -1,5 +1,4 @@
 ---
-import AppPanel from "@/components/layout/AppPanel.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import "@/styles/pages/tools-common.css";
 
@@ -8,43 +7,46 @@ const description = "点击图片任意位置提取颜色，支持 HEX / RGB。"
 ---
 
 <MainGridLayout title={title} description={description}>
-  <AppPanel title={title}>
-    <div class="vemiy-tool vemiy-image-color" id="vemiyImageColor">
-      <div class="vemiy-tool-head vemiy-image-color-head">
-        <button class="vemiy-tool-btn vemiy-image-color-btn" id="vemiyUploadBtn">选择图片</button>
-        <div class="vemiy-tool-sub vemiy-image-color-sub">上传图片 - 点击图片任意位置取色 - 支持拖拽上传</div>
-        <input type="file" id="vemiyFileInput" class="vemiy-tool-file-input" accept="image/jpeg,image/png,image/webp">
-      </div>
-      <div class="vemiy-image-color-preview" id="vemiyPreviewArea">
-        <div class="vemiy-image-color-placeholder">
-          <div class="vemiy-image-color-placeholder-inner">
-            <div id="vemiyEmptyTip">拖拽图片至此区域</div>
-            <img id="vemiyPreviewImage" class="vemiy-image-color-img" alt="" draggable="false">
-          </div>
-        </div>
-      </div>
-      <div class="vemiy-image-color-bottom">
-        <div class="vemiy-tool-section vemiy-image-color-block">
-          <div class="vemiy-image-color-preview-block" id="vemiyColorPreview"></div>
-        </div>
-        <div class="vemiy-tool-section vemiy-image-color-block">
-          <div class="vemiy-image-color-value-row">
-            <label>HEX</label>
-            <code id="vemiyHexValue">——</code>
-            <button class="vemiy-tool-mini-btn vemiy-image-color-mini-btn" id="vemiyCopyHexBtn">复制</button>
-          </div>
-        </div>
-        <div class="vemiy-tool-section vemiy-image-color-block">
-          <div class="vemiy-image-color-value-row">
-            <label>RGB</label>
-            <code id="vemiyRgbValue">——</code>
-            <button class="vemiy-tool-mini-btn vemiy-image-color-mini-btn" id="vemiyCopyRgbBtn">复制</button>
-          </div>
-        </div>
-      </div>
-      <div class="vemiy-tool-foot vemiy-image-color-foot">所有处理均在本地完成 - 图片不上传服务器</div>
+  <header class="vemiy-tool-head-block">
+    <h2 class="vemiy-tool-title">{title}</h2>
+    <p class="vemiy-tool-desc">{description}</p>
+  </header>
+
+  <div class="vemiy-tool vemiy-image-color" id="vemiyImageColor">
+    <div class="vemiy-tool-head vemiy-image-color-head">
+      <button class="vemiy-tool-btn vemiy-image-color-btn" id="vemiyUploadBtn">选择图片</button>
+      <div class="vemiy-tool-sub vemiy-image-color-sub">上传图片 - 点击图片任意位置取色 - 支持拖拽上传</div>
+      <input type="file" id="vemiyFileInput" class="vemiy-tool-file-input" accept="image/jpeg,image/png,image/webp">
     </div>
-  </AppPanel>
+    <div class="vemiy-image-color-preview" id="vemiyPreviewArea">
+      <div class="vemiy-image-color-placeholder">
+        <div class="vemiy-image-color-placeholder-inner">
+          <div id="vemiyEmptyTip">拖拽图片至此区域</div>
+          <img id="vemiyPreviewImage" class="vemiy-image-color-img" alt="" draggable="false">
+        </div>
+      </div>
+    </div>
+    <div class="vemiy-image-color-bottom">
+      <div class="vemiy-tool-section vemiy-image-color-block">
+        <div class="vemiy-image-color-preview-block" id="vemiyColorPreview"></div>
+      </div>
+      <div class="vemiy-tool-section vemiy-image-color-block">
+        <div class="vemiy-image-color-value-row">
+          <label>HEX</label>
+          <code id="vemiyHexValue">——</code>
+          <button class="vemiy-tool-mini-btn vemiy-image-color-mini-btn" id="vemiyCopyHexBtn">复制</button>
+        </div>
+      </div>
+      <div class="vemiy-tool-section vemiy-image-color-block">
+        <div class="vemiy-image-color-value-row">
+          <label>RGB</label>
+          <code id="vemiyRgbValue">——</code>
+          <button class="vemiy-tool-mini-btn vemiy-image-color-mini-btn" id="vemiyCopyRgbBtn">复制</button>
+        </div>
+      </div>
+    </div>
+    <div class="vemiy-tool-foot vemiy-image-color-foot">所有处理均在本地完成 - 图片不上传服务器</div>
+  </div>
   <script is:inline src="/js/tools/image-color.js"></script>
 </MainGridLayout>
 
@@ -60,8 +62,8 @@ const description = "点击图片任意位置提取颜色，支持 HEX / RGB。"
       background: var(--state-accent-bg-hover);
     }
     .vemiy-image-color-preview {
-      border: 1px solid var(--line-color);
-      border-radius: var(--app-radius);
+      border: var(--app-card-stroke);
+      border-radius: var(--app-radius-card);
       background: var(--app-glass-bg);
       min-height: 620px;
       padding: 0.8rem;
@@ -101,14 +103,15 @@ const description = "点击图片任意位置提取颜色，支持 HEX / RGB。"
       user-select: none;
       -webkit-user-drag: none;
     }
+    /* 底部三块各自成卡，网格仅负责排列 */
     .vemiy-image-color-bottom {
       display: grid;
       grid-template-columns: 140px minmax(0, 1fr) minmax(0, 1fr);
-      gap: 0.75rem;
+      gap: 0.85rem;
       align-items: stretch;
     }
     .vemiy-image-color-block {
-      border-radius: var(--app-radius);
+      border-radius: var(--app-radius-card);
       padding: 0.55rem 0.65rem;
       margin-bottom: 0;
     }
@@ -151,8 +154,7 @@ const description = "点击图片任意位置提取颜色，支持 HEX / RGB。"
     }
     .vemiy-image-color-foot {
       margin-top: 0.8rem;
-      padding-top: 0.6rem;
-      border-top: 1px solid var(--line-color);
+      opacity: 0.75;
     }
     @media (max-width: 980px) {
       .vemiy-image-color-preview {

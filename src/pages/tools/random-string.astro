@@ -1,5 +1,4 @@
 ---
-import AppPanel from "@/components/layout/AppPanel.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import "@/styles/pages/tools-common.css";
 
@@ -8,51 +7,54 @@ const description = "生成安全 token、临时密码和一次性凭证。";
 ---
 
 <MainGridLayout title={title} description={description}>
-  <AppPanel title={title}>
-    <div class="vemiy-tool vemiy-random-string" id="vemiyRandomString">
-      <div class="vemiy-tool-sub vemiy-random-string-sub">安全 token / 临时密码 / 一次性凭证</div>
-      <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-basic">
-        <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptUpper" checked> 大写 A-Z</label>
-        <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptLower" checked> 小写 a-z</label>
-        <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptNum" checked> 数字 0-9</label>
-      </div>
-      <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-custom">
-        <div class="vemiy-random-string-custom-item">
-          <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptCustomSym" checked> 包含符号</label>
-          <input type="text" class="vemiy-tool-input" id="vemiyCustomSymbols" value="!@#$%^&amp;*()-_=+">
-        </div>
-        <div class="vemiy-random-string-custom-item">
-          <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptExclude"> 排除字符</label>
-          <input type="text" class="vemiy-tool-input" id="vemiyExcludeChars" value="iIl1o0O">
-        </div>
-      </div>
-      <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-params">
-        <div class="vemiy-random-string-param">
-          <label for="vemiyStrLen">长度</label>
-          <input type="number" class="vemiy-tool-input" id="vemiyStrLen" value="12" min="1" max="128">
-        </div>
-        <div class="vemiy-random-string-param">
-          <label for="vemiyBatchCount">数量</label>
-          <input type="number" class="vemiy-tool-input" id="vemiyBatchCount" value="10" min="1" max="200">
-        </div>
-        <div class="vemiy-random-string-actions">
-          <button class="vemiy-tool-btn vemiy-tool-btn-secondary" id="vemiyResetBtn">重置设定</button>
-          <button class="vemiy-tool-btn vemiy-tool-btn-primary" id="vemiyGenBtn">生成</button>
-        </div>
-      </div>
-      <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-output-wrap">
-        <div class="vemiy-random-string-output-head">
-          <div class="vemiy-random-string-output-title">生成结果（每行一个）</div>
-          <div class="vemiy-tool-actions vemiy-random-string-output-actions">
-            <button class="vemiy-tool-mini-btn" id="vemiyDownloadBtn">下载结果</button>
-            <button class="vemiy-tool-mini-btn" id="vemiyCopyAllBtn">复制全部</button>
-          </div>
-        </div>
-        <textarea class="vemiy-tool-input vemiy-random-string-output" id="vemiyBatchOutput" rows="12" readonly wrap="off" placeholder="点击「生成」按钮，结果将显示在此处..."></textarea>
-      </div>
-      <div class="vemiy-tool-foot">所有处理均在本地完成 - 数据不上传服务器</div>
+  <header class="vemiy-tool-head-block">
+    <h2 class="vemiy-tool-title">{title}</h2>
+    <p class="vemiy-tool-desc">{description}</p>
+  </header>
+
+  <div class="vemiy-tool vemiy-random-string" id="vemiyRandomString">
+    <div class="vemiy-tool-sub vemiy-random-string-sub">安全 token / 临时密码 / 一次性凭证</div>
+    <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-basic">
+      <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptUpper" checked> 大写 A-Z</label>
+      <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptLower" checked> 小写 a-z</label>
+      <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptNum" checked> 数字 0-9</label>
     </div>
-  </AppPanel>
+    <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-custom">
+      <div class="vemiy-random-string-custom-item">
+        <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptCustomSym" checked> 包含符号</label>
+        <input type="text" class="vemiy-tool-input" id="vemiyCustomSymbols" value="!@#$%^&amp;*()-_=+">
+      </div>
+      <div class="vemiy-random-string-custom-item">
+        <label class="vemiy-tool-check"><input type="checkbox" id="vemiyOptExclude"> 排除字符</label>
+        <input type="text" class="vemiy-tool-input" id="vemiyExcludeChars" value="iIl1o0O">
+      </div>
+    </div>
+    <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-params">
+      <div class="vemiy-random-string-param">
+        <label for="vemiyStrLen">长度</label>
+        <input type="number" class="vemiy-tool-input" id="vemiyStrLen" value="12" min="1" max="128">
+      </div>
+      <div class="vemiy-random-string-param">
+        <label for="vemiyBatchCount">数量</label>
+        <input type="number" class="vemiy-tool-input" id="vemiyBatchCount" value="10" min="1" max="200">
+      </div>
+      <div class="vemiy-random-string-actions">
+        <button class="vemiy-tool-btn vemiy-tool-btn-secondary" id="vemiyResetBtn">重置设定</button>
+        <button class="vemiy-tool-btn vemiy-tool-btn-primary" id="vemiyGenBtn">生成</button>
+      </div>
+    </div>
+    <div class="vemiy-tool-section vemiy-random-string-section vemiy-random-string-output-wrap">
+      <div class="vemiy-random-string-output-head">
+        <div class="vemiy-random-string-output-title">生成结果（每行一个）</div>
+        <div class="vemiy-tool-actions vemiy-random-string-output-actions">
+          <button class="vemiy-tool-mini-btn" id="vemiyDownloadBtn">下载结果</button>
+          <button class="vemiy-tool-mini-btn" id="vemiyCopyAllBtn">复制全部</button>
+        </div>
+      </div>
+      <textarea class="vemiy-tool-input vemiy-random-string-output" id="vemiyBatchOutput" rows="12" readonly wrap="off" placeholder="点击「生成」按钮，结果将显示在此处..."></textarea>
+    </div>
+    <div class="vemiy-tool-foot">所有处理均在本地完成 - 数据不上传服务器</div>
+  </div>
   <script is:inline src="/js/tools/random-string.js"></script>
 </MainGridLayout>
 
