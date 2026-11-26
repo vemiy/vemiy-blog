@@ -20,7 +20,7 @@ export let avatarSelector: string | null = null;
 let showModal = false;
 let posterImage: string | null = null;
 let generating = false;
-/* 海报装饰色。 */
+/* 海报装饰色 */
 const themeColor = "#4b5563";
 const headerTextColor = "#1f2937"; // 站点名称与 Logo 颜色
 
@@ -56,18 +56,18 @@ function resolveImageSource(
 	return image?.currentSrc || image?.src || src;
 }
 
-// 解析站点 Logo 来源。
+// 解析站点 Logo
 function serializeNavbarIcon(color: string, size: number): string | null {
 	const svg = document.querySelector<SVGSVGElement>("#navbar svg.navbar-logo");
 	if (!svg) return null;
 
 	const clone = svg.cloneNode(true) as SVGSVGElement;
 	clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-	// 设置图标尺寸。
+	// 设置图标尺寸
 	clone.setAttribute("width", String(size));
 	clone.setAttribute("height", String(size));
 	clone.removeAttribute("class");
-	// 设置图标颜色。
+	// 设置图标颜色
 	clone.setAttribute("style", `color:${color}`);
 
 	const markup = new XMLSerializer().serializeToString(clone);
@@ -103,7 +103,7 @@ function resolveSiteLogoSource(color: string, size: number): string | null {
 	if (!logo?.value) return null;
 
 	if (logo.type === "icon") {
-		// 优先取导航栏 SVG。
+		// 优先取导航栏图标
 		return (
 			serializeNavbarIcon(color, size) ?? buildIconDataUrl(logo.value, color)
 		);
@@ -198,14 +198,14 @@ async function generatePoster() {
 
 	generating = true;
 	try {
-		// 按需加载二维码库。
+		// 按需加载二维码库
 		const { default: QRCode } = await import("qrcode");
 		const scale = 2;
 		const width = 425 * scale;
 		const padding = 24 * scale;
 		const logoBox = 22 * scale; // 站点 Logo 尺寸
 
-		// 准备资源。
+		// 1. Prepare resources
 		const qrCodeUrl = await QRCode.toDataURL(url, {
 			margin: 1,
 			width: 100 * scale,
@@ -226,25 +226,25 @@ async function generatePoster() {
 			resolvedSiteLogo ? loadImage(resolvedSiteLogo) : Promise.resolve(null),
 		]);
 
-		// 初始化画布。
+		// 2. Setup Canvas for measuring
 		const canvas = document.createElement("canvas");
 		const ctx = canvas.getContext("2d");
 		if (!ctx) throw new Error("Canvas context not available");
 
 		canvas.width = width;
-		// 初始高度。
+		// Initial height estimation, will be adjusted
 		canvas.height = 1000 * scale;
 
-		// 计算布局。
+		// 3. Layout Calculation
 		const contentWidth = width - padding * 2;
 		let currentY = 0;
 
-		// 封面。
+		// Cover
 		const coverHeight = (coverImg ? 200 : 64) * scale;
 		currentY += coverHeight;
 		currentY += padding; // Gap after cover
 
-		// 标题。
+		// Title
 		ctx.font = `700 ${24 * scale}px 'Roboto', sans-serif`;
 		const titleLines = getLines(ctx, title, contentWidth);
 		const titleLineHeight = 30 * scale;
@@ -252,12 +252,12 @@ async function generatePoster() {
 		currentY += titleHeight;
 		currentY += 16 * scale; // Gap
 
-		// 描述。
+		// Description
 		let descHeight = 0;
 		if (description) {
 			ctx.font = `${14 * scale}px 'Roboto', sans-serif`;
 			const descLines = getLines(ctx, description, contentWidth - 16 * scale); // minus border width and gap
-			// 描述最多六行。
+			// Limit to 6 lines
 			const maxDescLines = 6;
 			const displayDescLines = descLines.slice(0, maxDescLines);
 			const descLineHeight = 25 * scale; // 1.8 line-height approx
@@ -268,43 +268,43 @@ async function generatePoster() {
 			currentY += 8 * scale; // Smaller gap if no desc
 		}
 
-		// 页脚。
-		// 分隔线间距。
+		// Footer (Author + QR)
+		// Divider spacing before and after the line
 		currentY += 16 * scale;
-		const footerHeight = 80 * scale; // 页脚高度。
+		const footerHeight = 80 * scale; // Avatar/QR plus QR caption
 		currentY += footerHeight;
-		currentY += 12 * scale; // 底部内边距。
+		currentY += 12 * scale; // Bottom padding
 
-		// 调整画布高度。
+		// 4. Resize Canvas to fit content
 		canvas.height = currentY;
 
-		// 绘制内容。
-		// 填充底色。
+		// 5. Draw Content
+		// Fill Background
 		ctx.fillStyle = "#ffffff";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-		// 绘制装饰圆。
+		// Draw Decorative Circles
 		ctx.save();
 		ctx.globalAlpha = 0.1;
 		ctx.fillStyle = themeColor;
 
-		// 右上圆。
-		// 右上圆位置。
-		// 右上圆半径。
-		// 右上圆圆心 X。
-		// 右上圆圆心 Y。
+		// Top Right Circle
+		// CSS: top: -50px, right: -50px, width: 150px, height: 150px
+		// Radius = 75px
+		// Center X = width + 50 - 75 = width - 25
+		// Center Y = -50 + 75 = 25
 		ctx.beginPath();
 		ctx.arc(width - 25 * scale, 25 * scale, 75 * scale, 0, Math.PI * 2);
 		ctx.fill();
 
-		// 左下圆。
-		// 左下圆位置。
+		// Bottom Left Circle
+		// Adjusted to cover the avatar
 		ctx.beginPath();
 		ctx.arc(10 * scale, canvas.height - 10 * scale, 50 * scale, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.restore();
 
-		// 解析日期。
+		// Parse Date
 		let dateObj: { day: string; month: string; year: string } | null = null;
 		try {
 			const d = new Date(pubDate);
@@ -317,9 +317,9 @@ async function generatePoster() {
 			}
 		} catch (e) {}
 
-		// 绘制封面。
+		// Draw Cover
 		if (coverImg) {
-			// 封面裁切。
+			// Object-fit: cover implementation
 			const imgRatio = coverImg.width / coverImg.height;
 			const targetRatio = width / coverHeight;
 			let sx: number;
@@ -357,7 +357,7 @@ async function generatePoster() {
 			ctx.restore();
 		}
 
-		// 绘制页头。
+		// Draw Header Overlay
 		const headerHeight = (coverImg ? 44 : 64) * scale;
 		const headerCenterY = headerHeight / 2;
 		const dateText = dateObj
@@ -401,7 +401,7 @@ async function generatePoster() {
 		);
 
 		if (logoImg) {
-			// 按字形高度居中。
+			// 按字形高度居中
 			const metrics = ctx.measureText(siteTitleText);
 			const ascent = metrics.actualBoundingBoxAscent;
 			const descent = metrics.actualBoundingBoxDescent;
@@ -414,10 +414,10 @@ async function generatePoster() {
 
 		ctx.fillText(siteTitleText, siteTitleX, headerCenterY);
 
-		// 重置绘制起点。
+		// Reset Y for drawing
 		let drawY = coverHeight + padding;
 
-		// 绘制标题。
+		// Draw Title
 		ctx.textBaseline = "top";
 		ctx.textAlign = "left";
 		ctx.font = `700 ${24 * scale}px 'Roboto', sans-serif`;
@@ -428,12 +428,12 @@ async function generatePoster() {
 		});
 		drawY += 16 * scale - (titleLineHeight - 24 * scale); // Adjust for line-height diff
 
-		// 绘制描述。
+		// Draw Description
 		if (description) {
-			// 绘制竖线。
+			// Draw vertical line
 			ctx.fillStyle = "#e5e7eb";
 			const descLineH = descHeight; // Approximate
-			// 竖线延伸。
+			// Extend the line slightly above and below the text
 			drawRoundedRect(
 				ctx,
 				padding,
@@ -451,36 +451,36 @@ async function generatePoster() {
 
 			descLines.slice(0, maxDescLines).forEach((line) => {
 				ctx.fillText(line, padding + 16 * scale, drawY);
-				drawY += 25 * scale; // 行高。
+				drawY += 25 * scale; // line height
 			});
-			// drawY += 24 * scale; // 省略间距。
+			// drawY += 24 * scale; // Removed to reduce whitespace
 		} else {
 			drawY += 8 * scale;
 		}
 
-		// 绘制分隔线。
-		drawY += 8 * scale; // 分隔线前间距。
+		// Draw Footer Divider
+		drawY += 8 * scale; // Spacing before line
 		ctx.beginPath();
 		ctx.strokeStyle = "#f3f4f6";
 		ctx.lineWidth = 1 * scale;
 		ctx.moveTo(padding, drawY);
 		ctx.lineTo(width - padding, drawY);
 		ctx.stroke();
-		drawY += 8 * scale; // 分隔线后间距。
+		drawY += 8 * scale; // Spacing after line
 
-		// 绘制页脚。
+		// Draw Footer Content
 		const footerY = drawY;
 		const qrSize = 64 * scale;
 		const qrX = width - padding - qrSize;
 		const authorY = footerY + 8 * scale;
 
-		// 作者区。
+		// Left: Author
 		if (avatarImg) {
 			ctx.save();
 			const avatarSize = 64 * scale;
 			const avatarX = padding;
 
-			// 头像圆形裁切。
+			// Circle clip
 			ctx.beginPath();
 			ctx.arc(
 				avatarX + avatarSize / 2,
@@ -495,7 +495,7 @@ async function generatePoster() {
 			ctx.drawImage(avatarImg, avatarX, authorY, avatarSize, avatarSize);
 			ctx.restore();
 
-			// 头像描边。
+			// Border for avatar
 			ctx.beginPath();
 			ctx.arc(
 				avatarX + (64 * scale) / 2,
@@ -528,10 +528,10 @@ async function generatePoster() {
 			textCenterY + 4 * scale,
 		);
 
-		// 二维码区。
-		// 二维码底色。
+		// Right: QR Code
+		// QR Background/Shadow effect (simplified as border)
 		ctx.fillStyle = "#ffffff";
-		// 二维码浅阴影。
+		// Shadow simulation
 		ctx.shadowColor = "rgba(0, 0, 0, 0.05)";
 		ctx.shadowBlur = 4 * scale;
 		ctx.shadowOffsetY = 2 * scale;
@@ -539,7 +539,7 @@ async function generatePoster() {
 		ctx.fill();
 		ctx.shadowColor = "transparent"; // Reset shadow
 
-		// 绘制二维码。
+		// Draw QR
 		const qrInnerSize = 56 * scale;
 		const qrPadding = (qrSize - qrInnerSize) / 2;
 		if (qrImg) {
@@ -552,7 +552,7 @@ async function generatePoster() {
 			);
 		}
 
-		// 二维码说明。
+		// QR caption
 		ctx.textAlign = "center";
 		ctx.textBaseline = "top";
 		ctx.fillStyle = "#9ca3af";
@@ -563,7 +563,7 @@ async function generatePoster() {
 			footerY + qrSize + 6 * scale,
 		);
 
-		// 输出海报。
+		// Finalize
 		posterImage = canvas.toDataURL("image/png");
 		generating = false;
 	} catch (error) {
@@ -657,7 +657,7 @@ function portal(node: HTMLElement) {
 {/if}
 
 <style>
-  /* 分享按钮：透明底 + 2px 描边 + 4px 圆角，无位移无阴影 */
+  /* 分享按钮 */
   .share-trigger {
     display: inline-flex;
     align-items: center;

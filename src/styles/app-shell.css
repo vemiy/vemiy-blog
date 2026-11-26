@@ -1,23 +1,23 @@
 /* 应用外壳布局 */
 
-/* 卡片外形令牌。 */
+/* 卡片外形令牌 */
 :root {
-	/* 卡片圆角。 */
+	/* 卡片圆角 */
 	--app-radius-card: 0.25rem;
-	/* 卡片描边占位。 */
+	/* 卡片描边占位 */
 	--app-card-stroke: 2px solid transparent;
 }
 
-/* 设计令牌。 */
+/* 设计令牌：内页统一以这套变量取值，避免各处硬编码 */
 .app-shell {
 	--app-radius: 0.25rem;
 	--app-gap: 0.9rem;
 	--app-pad: 1.25rem;
 	--app-sidebar-width: 17.5rem;
 	--app-sidebar-rail: 4.25rem;
-	/* 正文阅读宽度上限。 */
+	/* 正文阅读宽度上限 */
 	--app-reading-width: 72rem;
-	/* 文章页横向内缩。 */
+	/* 文章页横向内缩 */
 	--article-inline-pad: 1.25rem;
 
 	--app-glass-bg: var(--card-bg);
@@ -32,7 +32,7 @@
 	background: transparent;
 }
 
-/* 左侧固定导航栏。 */
+/* 左侧固定导航栏：脱离文档流，滚动时位置恒定 */
 .app-shell__sidebar {
 	position: fixed;
 	top: 0;
@@ -56,7 +56,7 @@
 		transform 0.22s ease;
 }
 
-/* 主区域。 */
+/* 主区域：左侧留出侧栏宽度，随侧栏收起同步左移 */
 .app-shell__main {
 	display: flex;
 	flex-direction: column;
@@ -129,27 +129,27 @@
 	gap: 2rem;
 }
 
-/* 文章页外层上限。 */
+/* 文章页外层上限 */
 .app-shell__content:has(#article-toc) {
 	max-width: none;
 }
 
-/* 正文宽度。 */
+/* 正文宽度 */
 #swup-container:has(#article-toc) #content-wrapper {
 	flex: 1 1 auto;
 	width: auto;
 	max-width: var(--app-reading-width, 54rem);
 	min-width: 0;
-	/* 横向内缩。 */
+	/* 横向内缩 */
 	padding-inline: var(--article-inline-pad);
 }
 
-/* 文章详情正文去卡片。 */
+/* 文章详情正文 */
 #swup-container:has(#article-toc) #post-container {
 	border: 0;
 	border-radius: 0;
 	background: transparent;
-	/* 横向内缩清零。 */
+	/* 横向内缩清零 */
 	padding-inline: 0;
 }
 
@@ -169,7 +169,7 @@
 	min-width: 0;
 }
 
-/* 通用面板。
+/* 通用面板：仅作语义容器与纵向流，不绘制背景与描边，
    内容块各自浮在页面底色上 */
 .app-panel {
 	display: flex;
@@ -179,7 +179,7 @@
 	min-width: 0;
 }
 
-/* 独立卡片。 */
+/* 独立卡片 */
 .app-card {
 	border: var(--app-card-stroke);
 	border-radius: var(--app-radius-card);
@@ -559,7 +559,7 @@
 	padding-right: 0.5rem;
 }
 
-/* 侧栏收起态。 */
+/* 侧栏收起后正文随之左移 */
 :root[data-sidebar="collapsed"] .app-shell__main {
 	margin-left: var(--app-sidebar-rail);
 }
@@ -643,7 +643,7 @@
 		transform: translateX(-100%);
 	}
 
-	/* 抽屉模式主区。 */
+	/* 抽屉模式下正文不再为侧栏留位 */
 	.app-shell__main,
 	:root[data-sidebar="collapsed"] .app-shell__main {
 		margin-left: 0;
@@ -745,7 +745,7 @@
    卡片外观统一：实底 + 透明描边占位 + 4px 圆角 + 零阴影
    ========================================================================== */
 
-/* 卡片外观统一。 */
+/* 卡片外观统一 */
 .enable-card-border .card-base,
 .enable-card-border .card-base-transparent,
 .enable-card-border .btn-card,
@@ -756,7 +756,7 @@
 	box-shadow: none;
 }
 
-/* 大块容器圆角。 */
+/* 大块容器圆角 */
 .post-card-wrapper.card-base,
 .page-entry.card-base,
 .project-card.card-base,
@@ -765,12 +765,12 @@
 	border-radius: var(--app-radius-card);
 }
 
-/* 浮动按钮。 */
+/* 浮动按钮 */
 .floating-btn.card-base {
 	box-shadow: none;
 }
 
-/* 许可证与搜索面板圆角。 */
+/* 许可证与搜索面板圆角 */
 [class*="bg-(--license-block-bg)"] {
 	border-radius: var(--app-radius-card);
 }

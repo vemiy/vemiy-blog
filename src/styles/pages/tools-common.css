@@ -1,6 +1,6 @@
-/* 工具页通用样式。 */
+/* 工具页通用样式 */
 
-/* 页头块。 */
+/* 页头块 */
 .vemiy-tool-head-block {
   margin-bottom: 1rem;
 }
@@ -16,7 +16,7 @@
   opacity: 0.65;
 }
 
-/* 工具根节点。 */
+/* 工具根节点 */
 .vemiy-tool {
   width: 100%;
   max-width: 100%;
@@ -27,7 +27,7 @@
 .vemiy-tool * {
   box-sizing: border-box;
 }
-/* 工具操作条。 */
+/* 工具操作条 */
 .vemiy-tool-head {
   display: flex;
   align-items: center;
@@ -117,7 +117,7 @@
 .vemiy-tool-mini-btn i {
   font-size: 0.85rem;
 }
-/* 分区卡片。 */
+/* 分区卡片 */
 .vemiy-tool-section {
   border: var(--app-card-stroke);
   border-radius: var(--app-radius-card);

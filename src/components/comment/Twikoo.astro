@@ -22,7 +22,7 @@ const config = {
 <script is:inline src={jsUrl} defer></script>
 {cssUrl && <link rel="stylesheet" href={cssUrl.startsWith("http") ? cssUrl : url(cssUrl)} />}
 <script is:inline define:vars={{ config }}>
-  // 规范化评论路径。
+  // 规范化评论路径
   function getCurrentPath() {
     const requestedPath = new URLSearchParams(window.location.search).get("path");
     if (requestedPath) return requestedPath;
@@ -32,7 +32,7 @@ const config = {
       : pathname;
   }
 
-  // 幂等初始化。
+  // 幂等初始化
   function initTwikoo() {
     const el = document.getElementById("tcomment");
     if (!el) return;
