@@ -87,6 +87,8 @@ function registerSwupHooks(): void {
 			if (!isSamePage) {
 				// 添加页面切换保护，防止导航栏闪烁
 				document.documentElement.classList.add("is-page-transitioning");
+				// 切页期间禁用平滑滚动
+				document.documentElement.style.scrollBehavior = "auto";
 			}
 
 			const navbar = document.getElementById("navbar-wrapper");
@@ -137,15 +139,7 @@ function registerSwupHooks(): void {
 		// Start progress bar（WAAPI 合成线程动画，不强制回流）
 		startProgressBar();
 
-		// 先回顶，让后续 FLIP 在 scroll=0 的坐标系内计算：
-		// 若在切页后才回顶，FLIP 的 invert 是按切页前滚动位置校准的，scroll 一复位就会导致
-		// 内容区从视口上方之外（滚动较深时 top<0）开始、再落回，表现为“冲过头再回落”。
-		// 必须用 instant：html 上有 scroll-behavior:smooth（main.css），behavior:"auto" 会被当作平滑滚动，
-		// 在 FLIP 期间与内容位移叠加、同样造成“顶到最顶部再回落”。
-		// 移动端（<768）不使用即时回顶，避免闪烁（由 swup 默认滚动接管）
-		if (window.innerWidth >= 768) {
-			window.scrollTo({ top: 0, behavior: "instant" });
-		}
+		// 回顶由 Swup 在内容换入后执行
 
 		// 更新首页状态（body.is-home 驱动 CSS --content-top 等）
 		const bodyElement = document.querySelector("body") as HTMLElement;
@@ -297,6 +291,8 @@ function registerSwupHooks(): void {
 			// Just make the transition looks better
 			// 移除页面切换保护，恢复过渡动画
 			document.documentElement.classList.remove("is-page-transitioning");
+			// 恢复锚点平滑滚动
+			document.documentElement.style.scrollBehavior = "";
 			scrollFunction();
 		}, 200);
 	});

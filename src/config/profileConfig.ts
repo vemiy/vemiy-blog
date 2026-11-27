@@ -11,9 +11,6 @@ export const profileConfig: ProfileConfig = {
 	// 名字
 	name: "vemiy",
 
-	// 个人签名
-	bio: "未铭 · 记录自托管与建站运维",
-
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons
 	// 访问https://icones.js.org/ 获取图标代码，

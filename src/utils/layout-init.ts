@@ -18,7 +18,6 @@ import {
 } from "@/utils/grid-layout-utils";
 import { initIconLoader } from "@/utils/icon-loader";
 import { initImageLoadFadeIn } from "@/utils/lqip-utils";
-import { initScrollRestore } from "@/utils/scroll-restore";
 import { initScroll } from "@/utils/scroll-utils";
 import { initWallpaperMode } from "@/utils/setting-utils";
 import { setupSwupTransitions } from "@/utils/swup-transitions";
@@ -94,15 +93,66 @@ export function initLayout(): void {
 	});
 
 	initImageLoadFadeIn();
-	// 切页换入后延到下一帧再重扫 LQIP fade-in，避免 astro:page-load 在同帧叠加
-	// 一堆游标/事件重扫阻塞换入首帧（swup:contentReplaced 已 rAF，一并延后）
+	// 切页换入后延到下一帧重扫 LQIP 淡入
 	document.addEventListener("astro:page-load", () => {
 		requestAnimationFrame(initImageLoadFadeIn);
 	});
-	document.addEventListener("swup:contentReplaced", () => {
+	document.addEventListener("swup:content:replace", () => {
 		requestAnimationFrame(initImageLoadFadeIn);
 	});
-}
 
-// 列表页滚动位置记忆：进入文章再返回时恢复到上次位置
-initScrollRestore();
+	// 切页后重播内容对焦动画
+	const replayContentFocus = (): void => {
+		const target = document.querySelector<HTMLElement>(
+			"#content-wrapper > :first-child",
+		);
+		if (!target) return;
+		target.style.animation = "none";
+		void target.offsetWidth;
+		target.style.animation = "";
+	};
+
+	// 后退时恢复页面滚动位置
+	const SCROLL_KEY = "swupScrollY:";
+	const keyOf = (path = window.location.pathname): string => SCROLL_KEY + path;
+	const scrollYOf = (path: string): number =>
+		Number(sessionStorage.getItem(keyOf(path)) ?? 0);
+
+	if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+	/** 记录当前位置，用作返回目标。 */
+	const rememberScroll = (): void => {
+		sessionStorage.setItem(keyOf(), String(Math.round(window.scrollY)));
+	};
+	// 点击站内链接时记录滚动位置
+	document.addEventListener("swup:link:click", rememberScroll);
+
+	type Visit = { to?: { url?: string }; history?: { popstate?: boolean } };
+
+	/** 在 DOM 换入后恢复滚动位置。 */
+	let pendingScrollY: number | null = null;
+	document.addEventListener("swup:visit:start", (event) => {
+		const visit = (event as CustomEvent<{ visit?: Visit }>).detail?.visit;
+		pendingScrollY =
+			visit?.history?.popstate && visit.to?.url
+				? scrollYOf(new URL(visit.to.url, location.origin).pathname) || null
+				: null;
+	});
+
+	document.addEventListener("swup:content:replace", () => {
+		if (!pendingScrollY) return;
+		const y = pendingScrollY;
+		pendingScrollY = null;
+		let tries = 0;
+		const attempt = (): void => {
+			window.scrollTo({ top: y, behavior: "instant" });
+			if (Math.abs(window.scrollY - y) < 4 || ++tries > 20) return;
+			window.setTimeout(attempt, 50);
+		};
+		attempt();
+	});
+
+	document.addEventListener("swup:page:view", () => {
+		requestAnimationFrame(replayContentFocus);
+	});
+}

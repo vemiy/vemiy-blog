@@ -13,11 +13,9 @@
         transform 120ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Leaving Animation */
+/* 离场不参与过渡 */
 .transition-leaving {
-    transition:
-        transform 120ms cubic-bezier(0.55, 0.055, 0.675, 0.19),
-        opacity 120ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    transition: none;
 }
 
 /* 切页期间将过渡元素提升到合成层，避免移动端动画在主线程绘制掉帧卡顿 */
@@ -40,16 +38,15 @@ html.is-leaving .transition-main {
         transform 120ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 
-/* State: Animating (Entering) */
+/* 切页期间保持不透明与位置不变 */
 html.is-animating .transition-main {
-    opacity: 0;
-    transform: translateY(2rem);
+    opacity: 1;
+    transform: none;
 }
 
-/* State: Leaving */
 html.is-animating.is-leaving .transition-leaving {
-    transform: translateY(-2rem);
-    opacity: 0;
+    opacity: 1;
+    transform: none;
 }
 
 /* Swup Fade Fallback */
@@ -66,14 +63,15 @@ html.is-animating .transition-swup-fade {
    2. Keyframes
    -------------------------------------------------------------------------- */
 
-@keyframes fade-in-up {
+/* 内容区入场对焦：由模糊渐变为清晰 */
+@keyframes content-focus {
     from {
-        opacity: 0;
-        transform: translateY(2rem);
+        opacity: 0.72;
+        filter: blur(3px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        filter: blur(0);
     }
 }
 
@@ -81,17 +79,10 @@ html.is-animating .transition-swup-fade {
    3. Onload Animations
    -------------------------------------------------------------------------- */
 
-.onload-animation {
-    opacity: 0;
-    animation: fade-in-up 120ms ease-out forwards;
+/* 内容首块对焦 */
+#content-wrapper > :first-child {
+    animation: content-focus 0.42s ease-out both;
 }
-
-/* 渐进式动画延迟 */
-.onload-animation:nth-child(1) { animation-delay: 0ms; }
-.onload-animation:nth-child(2) { animation-delay: 30ms; }
-.onload-animation:nth-child(3) { animation-delay: 60ms; }
-.onload-animation:nth-child(4) { animation-delay: 90ms; }
-.onload-animation:nth-child(5) { animation-delay: 120ms; }
 
 /* --------------------------------------------------------------------------
    4. Navigation Progress Bar

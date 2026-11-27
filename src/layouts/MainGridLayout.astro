@@ -95,6 +95,7 @@ const topbarLabel = topbarTitle ?? resolveTopbarLabel(Astro.url.pathname);
         id="swup-container"
         class="transition-main app-shell__main-col"
         data-current-post-category={postCategory || ""}
+        data-article-detail={articleDetail ? "true" : undefined}
       >
         <h1 class="sr-only">{heading || title}</h1>
         <div id="content-wrapper" class="onload-animation transition-leaving app-shell__wrapper">

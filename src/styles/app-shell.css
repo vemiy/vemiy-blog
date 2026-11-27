@@ -64,7 +64,19 @@
 	min-width: 0;
 	margin-left: var(--app-sidebar-width);
 	background: transparent;
-	transition: margin-left 0.22s ease;
+}
+
+/* 位移过渡仅在桌面端生效 */
+@media (min-width: 1024px) {
+	.app-shell__main {
+		transition: margin-left 0.22s ease;
+	}
+}
+
+/* 跨断点切换期间取消位移过渡 */
+.app-shell--no-anim .app-shell__main,
+.app-shell--no-anim .app-shell__sidebar {
+	transition: none;
 }
 
 /* 顶部条 */
@@ -120,32 +132,57 @@
 	box-sizing: border-box;
 }
 
-/* 文章详情页：正文与目录并排。
-   判据取容器内的目录节点，swup 替换容器内容后自动跟随，不依赖外层 class */
-#swup-container:has(#article-toc) {
-	flex-direction: row;
-	align-items: flex-start;
+/* 文章详情页：列宽固定，窄屏仅保留正文一列 */
+#swup-container[data-article-detail] {
+	display: grid;
+	grid-template-columns: minmax(0, var(--app-reading-width, 72rem));
 	justify-content: center;
-	gap: 2rem;
+	align-items: start;
 }
 
-/* 文章页外层上限 */
-.app-shell__content:has(#article-toc) {
-	max-width: none;
+/* 宽屏并排展示目录时追加第二列 */
+@media (min-width: 90rem) and (hover: hover) and (pointer: fine) {
+	#swup-container[data-article-detail] {
+		grid-template-columns:
+			minmax(0, var(--app-reading-width, 72rem))
+			var(--toc-width, 18rem);
+		column-gap: var(--toc-gap, 2rem);
+	}
 }
 
-/* 正文宽度 */
-#swup-container:has(#article-toc) #content-wrapper {
-	flex: 1 1 auto;
-	width: auto;
-	max-width: var(--app-reading-width, 54rem);
+/* 文章页与列表页共用同一外层宽度上限 */
+.app-shell__content {
+	max-width: var(--app-content-width, 82rem);
+}
+
+@media (min-width: 90rem) and (hover: hover) and (pointer: fine) {
+	.app-shell__content {
+		max-width: calc(
+			var(--app-reading-width, 72rem) + var(--toc-width, 18rem) +
+				var(--toc-gap, 2rem)
+		);
+	}
+}
+
+/* 列表页内容回到常规宽度并居中 */
+#swup-container:not([data-article-detail]) {
+	max-width: var(--app-content-width, 82rem);
+	margin-inline: auto;
+	width: 100%;
+}
+
+/* 正文宽度：占满首列 */
+#swup-container[data-article-detail] #content-wrapper {
+	grid-column: 1;
+	width: 100%;
 	min-width: 0;
+	max-width: none;
 	/* 横向内缩 */
 	padding-inline: var(--article-inline-pad);
 }
 
 /* 文章详情正文 */
-#swup-container:has(#article-toc) #post-container {
+#swup-container[data-article-detail] #post-container {
 	border: 0;
 	border-radius: 0;
 	background: transparent;
@@ -169,8 +206,7 @@
 	min-width: 0;
 }
 
-/* 通用面板：仅作语义容器与纵向流，不绘制背景与描边，
-   内容块各自浮在页面底色上 */
+/* 通用面板：仅作语义容器与纵向流 */
 .app-panel {
 	display: flex;
 	flex-direction: column;
@@ -719,7 +755,7 @@
 	}
 
 	/* 移动端文章正文与外层留白共用，取消额外内缩 */
-	#swup-container:has(#article-toc) #content-wrapper {
+	#swup-container[data-article-detail] #content-wrapper {
 		padding-inline: 0;
 	}
 }

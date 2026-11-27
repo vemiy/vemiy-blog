@@ -266,6 +266,16 @@ const quick = [
 
 		// 跨断点切换时复位抽屉，折叠态仅桌面端生效
 		mobile.addEventListener("change", function () {
+			// 跨断点时禁用位移过渡
+			var node = shell();
+			if (node) {
+				node.classList.add("app-shell--no-anim");
+				requestAnimationFrame(function () {
+					requestAnimationFrame(function () {
+						node.classList.remove("app-shell--no-anim");
+					});
+				});
+			}
 			setDrawer(false);
 			syncLabels();
 		});

@@ -611,7 +611,7 @@ const postUrlPrefix = url("/posts/");
   if (!window.__calendarInit) {
     window.__calendarInit = true;
     // 页面切换时重新渲染
-    document.addEventListener("swup:contentReplaced", () => {
+    document.addEventListener("swup:content:replace", () => {
       setTimeout(initCalendar, 100);
     });
   }

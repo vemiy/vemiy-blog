@@ -1,12 +1,18 @@
 /* 文章右侧常驻目录 */
 
+/* 目录栏宽度与展示断点提到根作用域，供外层布局计算使用 */
+:root {
+	--toc-width: 18rem;
+	--toc-gap: 2rem;
+	--toc-visible-width: 90rem;
+}
+
 /* 默认隐藏，仅在宽屏且精确指针设备下占据右侧一栏 */
 .article-toc {
 	--toc-active: var(--primary);
 	--toc-line: var(--line-color);
 	--toc-dot: var(--content-meta);
 	--toc-hover: var(--btn-plain-bg-hover);
-	--toc-width: 18rem;
 	--toc-max-height: min(40rem, calc(100dvh - 10rem));
 	--toc-dot-size: 0.55rem;
 	display: none;
@@ -19,13 +25,14 @@
 		top: 6rem;
 		z-index: 30;
 		display: block;
-		flex: 0 0 var(--toc-width);
+		grid-column: 2;
 		width: var(--toc-width);
 		max-height: var(--toc-max-height);
 	}
 
+	/* 目录未就绪时保留列宽，正文位置不随之变化 */
 	.article-toc[hidden] {
-		display: none;
+		visibility: hidden;
 	}
 
 	.article-toc__view {

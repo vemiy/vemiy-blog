@@ -36,6 +36,6 @@
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "style"] });
     observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
     document.addEventListener("astro:page-load", scheduleBrowserTheme);
-    document.addEventListener("swup:contentReplaced", scheduleBrowserTheme);
+    document.addEventListener("swup:content:replace", scheduleBrowserTheme);
     syncBrowserTheme();
 </script>

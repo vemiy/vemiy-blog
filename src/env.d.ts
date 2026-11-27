@@ -16,7 +16,6 @@ declare global {
 	}
 
 	interface Window {
-		__scrollRestoreBound?: boolean;
 		SidebarTOC: {
 			manager: ITOCManager | null;
 		};

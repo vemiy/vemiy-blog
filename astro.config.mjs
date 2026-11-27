@@ -121,21 +121,25 @@ export default defineConfig({
 			animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
 			// the default value `transition-` cause transition delay
 			// when the Tailwind class `transition-all` is used
-			// 应用外壳下只有主内容区随路由变化，其余（侧栏、顶栏、页脚）常驻不替换，
-			// 故容器只保留 #swup-container 与悬浮控件，避免 swup 找不到容器时退化为整页刷新
+			// 路由切换仅替换 #swup-container
 			containers: ["#swup-container"],
-			// 默认 true 时 swup 要等 load + requestIdleCallback 后才初始化，
-			// 空窗期内点击链接会退化为整页刷新；改为同步初始化消除该窗口
+			// 同步初始化 Swup
 			loadOnIdle: false,
-			// 启用 SwupScrollPlugin：切页记录滚动位置，浏览器后退时恢复
-			smoothScrolling: true,
+			// 滚动插件：切页缓存滚动位置，后退恢复；跨页回顶即时完成
+			smoothScrolling: {
+				animateScroll: { betweenPages: false, samePage: true, samePageWithHash: true },
+			},
 			cache: true,
 			preload: {
 				hover: true,
 				visible: true,
 			},
 			accessibility: true,
-			updateHead: true,
+			// 换页保留旧样式表至新样式表加载完成，页内 style 标签按页替换
+			updateHead: {
+				persistTags: "link[rel=stylesheet]",
+				awaitAssets: true,
+			},
 			updateBodyClass: false,
 			globalInstance: true,
 			// 滚动相关配置优化

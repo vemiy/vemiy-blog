@@ -185,7 +185,7 @@ const stats = [
   if (!window.__siteStatsInit) {
     window.__siteStatsInit = true;
     // 页面切换时重新更新
-    document.addEventListener("swup:contentReplaced", () => {
+    document.addEventListener("swup:content:replace", () => {
       setTimeout(updateDynamicStats, 100);
     });
   }
