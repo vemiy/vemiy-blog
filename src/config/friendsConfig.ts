@@ -60,12 +60,6 @@ export const friendsConfig: FriendGroup[] = [
 				desc: "我的认知，远远不能超过别人的认知，向别人学习，那才是我最高的认知！",
 			},
 			{
-				title: "小萝卜の博客",
-				siteurl: "https://www.milobo.moe/",
-				imgurl: "https://www.milobo.moe/myfile/milobo.webp",
-				desc: "致瞬息万变之物，及亘古不变之物",
-			},
-			{
 				title: "二叉树树",
 				siteurl: "https://2x.nz/",
 				imgurl: "https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&spec=0",
@@ -86,7 +80,7 @@ export const friendsConfig: FriendGroup[] = [
 			{
 				title: "MmzMing的知识库",
 				siteurl: "https://tblog.mmzhiku.xyz/",
-				imgurl: "https://tblog.mmzhiku.xyz/_astro/logo.CAGjrlGQ_Zf30fy.webp",
+				imgurl: "https://tblog.mmzhiku.xyz/assets/images/aut-master.webp",
 				desc: "哈基米，南北绿豆",
 			},
 			{
@@ -100,6 +94,18 @@ export const friendsConfig: FriendGroup[] = [
 				siteurl: "https://Vind.ink",
 				imgurl: "https://Vind.ink/icon.png",
 				desc: "风舞弦，墨凝影",
+			},
+			{
+				title: "年华",
+				siteurl: "https://blog.amamo.top",
+				imgurl: "https://q1.qlogo.cn/g?b=qq&nk=1323860289&s=640",
+				desc: "分享生活和技术。",
+			},
+			{
+				title: "拾玖的博客",
+				siteurl: "https://shijiucode.cn/",
+				imgurl: "https://shijiucode.cn/_next/static/media/avatar.00y2gb98_wb_2.jpg",
+				desc: "喜欢折腾，尝试创作。",
 			},
 		],
 	},
@@ -126,6 +132,19 @@ export const friendsConfig: FriendGroup[] = [
 				siteurl: "https://www.ygz.ink/",
 				imgurl: "https://www.ygz.ink/favicon.svg",
 				desc: "独立博客书架，收录 149 个优质中文独立博客",
+			},
+		],
+	},
+	{
+		id: "invalid",
+		name: "失效链接",
+		weight: 80,
+		items: [
+			{
+				title: "小萝卜の博客",
+				siteurl: "https://www.milobo.moe/",
+				imgurl: "https://www.milobo.moe/myfile/milobo.webp",
+				desc: "致瞬息万变之物，及亘古不变之物",
 			},
 		],
 	},

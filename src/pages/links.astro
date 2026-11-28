@@ -35,6 +35,11 @@ const siteInfoRows = [
 	{ label: "订阅地址", value: friendsSiteInfo.rss },
 ];
 
+// 一键复制用的整段本站信息
+const siteInfoAllText = siteInfoRows
+	.map((row) => `${row.label}：${row.value}`)
+	.join("\n");
+
 // 检查评论系统是否启用
 const isCommentEnabled =
 	commentConfig?.type &&
@@ -226,6 +231,26 @@ const description = friendsPageConfig.description;
               </button>
             </div>
           ))}
+          <div class="flex items-center justify-end gap-2 bg-black/5 dark:bg-white/5 px-3 py-2">
+            <button
+              type="button"
+              data-copy={siteInfoAllText}
+              class="friends-copy-all inline-flex items-center gap-1.5 px-2.5 h-7 text-xs font-medium bg-black/10 dark:bg-white/10 text-(--btn-content) rounded-(--app-radius-card) hover:opacity-80 transition-opacity cursor-pointer"
+              aria-label="复制全部本站信息"
+            >
+              <Icon
+                name="material-symbols:content-copy-outline"
+                class="text-sm"
+                data-copy-icon
+              />
+              <Icon
+                name="material-symbols:check-rounded"
+                class="text-sm text-green-500 hidden"
+                data-check-icon
+              />
+              一键复制全部
+            </button>
+          </div>
         </div>
 
         {/* 申请须知 */}
