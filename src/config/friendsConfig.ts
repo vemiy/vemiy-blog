@@ -107,6 +107,18 @@ export const friendsConfig: FriendGroup[] = [
 				imgurl: "https://shijiucode.cn/avatar.jpg",
 				desc: "喜欢折腾，尝试创作。",
 			},
+			{
+				title: "UpXuu's blog",
+				siteurl: "https://upxuu.com",
+				imgurl: "https://upxuu.com/images/me.jpg",
+				desc: "逐光而上",
+			},
+			{
+				title: "团子和蛋糕",
+				siteurl: "https://blog.tsh520.cn",
+				imgurl: "https://blog.tsh520.cn/assets/ziyuan/tx.webp",
+				desc: "如果你喜欢，那么欢迎来到我的世界！",
+			},
 		],
 	},
 	{
