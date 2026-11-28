@@ -7,10 +7,6 @@ import {
 	syncFullscreenOverlays,
 	updateFullscreenTitleParallax,
 } from "@/utils/fullscreen-wallpaper-utils";
-import {
-	updateMainGridCols,
-	updateSidebarComponentsVisibility,
-} from "@/utils/grid-layout-utils";
 import { scrollFunction } from "@/utils/scroll-utils";
 import {
 	syncBannerHomeTextVisibility,
@@ -68,9 +64,6 @@ function registerSwupHooks(): void {
 	window.swup.hooks.on(
 		"link:click",
 		(_visit: unknown, { el }: { el: HTMLAnchorElement }) => {
-			// Remove the delay for the first time page load
-			document.documentElement.style.setProperty("--content-delay", "0ms");
-
 			// 同页链接点击不需要过渡保护
 			const targetHref = el.getAttribute("href") || "";
 			const targetPathname = (() => {
@@ -144,39 +137,7 @@ function registerSwupHooks(): void {
 		// 更新首页状态（body.is-home 驱动 CSS --content-top 等）
 		const bodyElement = document.querySelector("body") as HTMLElement;
 		const isHomePage = pathsEqual(visit.to.url, url("/"));
-		const wasHome = bodyElement.classList.contains("is-home");
-		const contentPanel = document.querySelector(
-			".content-panel",
-		) as HTMLElement | null;
-		// FLIP 只在 is-home 状态变化（首页↔非首页）时才有意义；文章↔文章、首页↔首页
-		// 类未变 → delta 必为 0，直接短路，避免常见切页白付两次强制布局读取
-		if (isHomePage !== wasHome && contentPanel) {
-			const oldTop = contentPanel.getBoundingClientRect().top; // 类切换前读
-			bodyElement.classList.toggle("is-home", isHomePage);
-			const newTop = contentPanel.getBoundingClientRect().top; // 类切换后读
-			const delta = oldTop - newTop;
-			// 全屏首页↔非首页 delta ≈ 92vh，总是超过 0.75 视口，此前被跳过导致内容区瞬间跳变；
-			// 现在放行，改用与移动端横幅模式完全一致的标准 FLIP（强制回流提交 invert + CSS 过渡），
-			// 让内容区整屏丝滑上移/下移（非全屏仍受 0.75 视口阈值保护）
-			const isFullscreen =
-				document.documentElement.getAttribute("data-wallpaper-mode") ===
-				"fullscreen";
-			if (
-				delta !== 0 &&
-				(isFullscreen || Math.abs(delta) <= window.innerHeight * 0.75)
-			) {
-				// 标准 FLIP：禁用过渡→设 invert transform→回流提交→启用过渡→移除 transform（触发合成动画）
-				// 不再设置 will-change:transform——它把整个 .content-panel（含全页文字）预先且持续地提升为
-				// 独立合成层，软导航结束后的旧光栅贴图因该提示而保留，导致残留发糊（#615）。
-				// transform 过渡本身会在动画期间由浏览器自动提升到合成层（compositor 驱动，丝滑不减），
-				// 动画结束后自动降级并按普通路径重光栅，文字恢复清晰。
-				contentPanel.style.transition = "none";
-				contentPanel.style.transform = `translateY(${delta}px)`;
-				void contentPanel.offsetWidth;
-				contentPanel.style.transition = "";
-				contentPanel.style.transform = "";
-			}
-		}
+		bodyElement.classList.toggle("is-home", isHomePage);
 
 		// Control navbar transparency based on page
 		const navbar = document.getElementById("navbar");
@@ -207,14 +168,6 @@ function registerSwupHooks(): void {
 		}
 	});
 	window.swup.hooks.on("page:view", () => {
-		// 更新网格列数和侧边栏组件可见性
-		updateMainGridCols();
-		updateSidebarComponentsVisibility();
-
-		// 过渡结束后再量一次，避免顶部组件未就绪时读到 offsetHeight=0 而误删 mb-4
-		// (sticky 与 top 组件之间间距只在 refreshSidebarStickyState 里恢复，延迟补偿一次更稳)
-		window.setTimeout(() => updateSidebarComponentsVisibility(), 300);
-
 		// 页面切换完成后，同步全屏模式的标题视差位移（Swup 已替换容器内容）
 		updateFullscreenTitleParallax();
 		syncFullscreenOverlays();

@@ -5,7 +5,6 @@ import {
 	BANNER_HEIGHT_NON_HOME,
 } from "@/constants/constants";
 import { isBannerMode, isFullscreenMode } from "@/utils/banner-utils";
-import { updateSidebarStickySpacing } from "@/utils/grid-layout-utils";
 
 const backToTopBtn = document.getElementById("back-to-top-btn");
 const navbar = document.getElementById("navbar-wrapper");
@@ -22,9 +21,6 @@ export function scrollFunction(): void {
 	const scrollTop = document.documentElement.scrollTop;
 	const bannerHeight = window.innerHeight * (BANNER_HEIGHT / 100);
 	const navbarElement = document.getElementById("navbar");
-
-	// 根据滚动位置动态更新侧边栏 sticky 间距
-	updateSidebarStickySpacing();
 
 	// 使用批量DOM操作优化性能
 	const operations: (() => void)[] = [];

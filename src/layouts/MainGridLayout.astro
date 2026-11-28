@@ -98,7 +98,7 @@ const topbarLabel = topbarTitle ?? resolveTopbarLabel(Astro.url.pathname);
         data-article-detail={articleDetail ? "true" : undefined}
       >
         <h1 class="sr-only">{heading || title}</h1>
-        <div id="content-wrapper" class="onload-animation transition-leaving app-shell__wrapper">
+        <div id="content-wrapper" class="transition-leaving app-shell__wrapper">
           <slot />
         </div>
         {articleDetail && <ArticleToc />}

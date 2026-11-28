@@ -11,11 +11,6 @@ import {
 	initFullscreenWallpaper,
 	syncFullscreenStateAfterInit,
 } from "@/utils/fullscreen-wallpaper-utils";
-import {
-	refreshSidebarStickyState,
-	updateMainGridCols,
-	updateSidebarComponentsVisibility,
-} from "@/utils/grid-layout-utils";
 import { initIconLoader } from "@/utils/icon-loader";
 import { initImageLoadFadeIn } from "@/utils/lqip-utils";
 import { initScroll } from "@/utils/scroll-utils";
@@ -55,8 +50,6 @@ export function initLayout(): void {
 	setupSwupTransitions();
 	initFullscreenWallpaper();
 	registerContentOverflowListeners();
-	// 滚动路径不再读取布局；先在初始化时填充侧边栏 top 容器可见性缓存
-	refreshSidebarStickyState();
 	initScroll();
 	initTouchCodeCopyReveal();
 
@@ -72,15 +65,11 @@ export function initLayout(): void {
 	// Initialize wallpaper mode
 	if (document.readyState === "loading") {
 		document.addEventListener("DOMContentLoaded", () => {
-			updateMainGridCols();
-			updateSidebarComponentsVisibility();
 			initWallpaperMode();
-				initIconLoader();
+			initIconLoader();
 			syncFullscreenStateAfterInit();
 		});
 	} else {
-		updateMainGridCols();
-		updateSidebarComponentsVisibility();
 		initWallpaperMode();
 		initIconLoader();
 		syncFullscreenStateAfterInit();

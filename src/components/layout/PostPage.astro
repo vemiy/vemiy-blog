@@ -6,13 +6,9 @@ import { siteConfig } from "@/config";
 
 const { page } = Astro.props;
 
-let delay = 0;
-const interval = 50;
-
 // 类型别名避免Fragment语法问题
 type PostEntry = CollectionEntry<"posts">;
 
-const masonryEnabled = siteConfig.postListLayout.grid.masonry;
 const columnWidth = siteConfig.postListLayout.grid.columnWidth || 280;
 
 // 根据配置设置初始布局模式，避免闪烁
@@ -34,8 +30,6 @@ const coverPositionClass =
   class={`transition-all duration-500 ease-in-out mb-4 ${initialLayoutClass}${coverPositionClass}`}
   data-default-layout={defaultLayout}
   data-mobile-default-layout={mobileDefaultLayout}
-  data-masonry-enabled={masonryEnabled}
-  data-column-width={columnWidth}
   style={`--post-card-min-width: ${columnWidth}px;`}
 >
   {
@@ -54,8 +48,7 @@ const coverPositionClass =
         pinned={entry.data.pinned}
         password={!!entry.data.password}
         loading={index < 2 ? "eager" : "lazy"}
-        class:list="onload-animation post-card-item"
-        style={`animation-delay: calc(var(--content-delay) + ${delay++ * interval}ms);`}
+        class:list="post-card-item"
       />
     ))
   }
@@ -130,27 +123,16 @@ const coverPositionClass =
     const isCurrentList = postListContainer.classList.contains("list-mode");
     const currentLayout = isCurrentGrid ? "grid" : (isCurrentList ? "list" : null);
 
-    // Common logic vars
-    const masonryEnabled = postListContainer.getAttribute("data-masonry-enabled") === "true";
-
     // Helper to apply layout classes (Pure logic, no animation)
     const applyClasses = () => {
         postListContainer.classList.remove("list-mode", "grid-mode", "post-grid-auto");
         if (layout === "grid") {
-            postListContainer.classList.add("grid-mode");
+            postListContainer.classList.add("grid-mode", "post-grid-auto");
             postListContainer.classList.remove("flex", "flex-col");
-            if (masonryEnabled) {
-                postListContainer.classList.remove("post-grid-auto");
-                applyMasonryLayout();
-            } else {
-                postListContainer.classList.add("post-grid-auto");
-                resetMasonryLayout();
-            }
         } else {
             postListContainer.classList.add("list-mode");
             postListContainer.classList.add("flex", "flex-col", "gap-4", "md:gap-4");
             postListContainer.classList.remove("post-grid-auto");
-            resetMasonryLayout();
         }
     };
 
@@ -160,11 +142,8 @@ const coverPositionClass =
         return;
     }
 
-    // Case 2: Same layout (e.g. Resize) - No animation, just refresh masonry
+    // Case 2: Same layout (e.g. Resize) - No animation
     if (currentLayout === layout) {
-        if (layout === "grid" && masonryEnabled) {
-            applyMasonryLayout();
-        }
         return;
     }
 
@@ -188,85 +167,6 @@ const coverPositionClass =
     }, 200);
   }
 
-  function resetMasonryLayout() {
-    const container = document.getElementById("post-list-container");
-    if (!container) return;
-
-    container.style.height = "";
-    container.style.position = "";
-    container.style.display = "";
-
-    const items = container.querySelectorAll(".post-card-item");
-    items.forEach((item) => {
-      // @ts-ignore
-      item.style.position = "";
-      // @ts-ignore
-      item.style.top = "";
-      // @ts-ignore
-      item.style.left = "";
-      // @ts-ignore
-      item.style.width = "";
-    });
-  }
-
-  function applyMasonryLayout() {
-    const container = document.getElementById("post-list-container");
-    if (!container) return;
-
-    const masonryEnabled = container.getAttribute("data-masonry-enabled") === "true";
-    if (!masonryEnabled) return;
-
-    // 仅在 grid 模式下应用
-    if (!container.classList.contains("grid-mode")) return;
-
-    const items = Array.from(container.querySelectorAll(".post-card-item"));
-    if (items.length === 0) return;
-
-    // 瀑布流配置
-    const gap = 16; // 1rem = 16px
-    const columnWidth = parseInt(container.getAttribute("data-column-width") || "280");
-
-    // 重置容器样式以允许绝对定位
-    container.style.position = "relative";
-    container.style.display = "block"; // 覆盖 grid display
-
-    // 使用 offsetWidth 避免 transform: scale 的影响
-    const containerWidth = container.offsetWidth;
-    // 根据容器宽度和最小列宽动态计算列数
-    const colCount = Math.max(1, Math.floor((containerWidth + gap) / (columnWidth + gap)));
-    const itemWidth = (containerWidth - (colCount - 1) * gap) / colCount;
-
-    const colHeights = new Array(colCount).fill(0);
-
-    items.forEach((item) => {
-      // 找到最短的列放置
-      const colIndex = colHeights.indexOf(Math.min(...colHeights));
-
-      // @ts-ignore
-      item.style.position = "absolute";
-      // @ts-ignore
-      item.style.width = `${itemWidth}px`;
-      // @ts-ignore
-      item.style.setProperty('height', 'auto', 'important');
-
-      // 获取高度，优先使用 offsetHeight 避免 transform 影响
-      // @ts-ignore
-      const height = item.offsetHeight;
-
-      const top = colHeights[colIndex];
-      const left = colIndex * (itemWidth + gap);
-
-      // @ts-ignore
-      item.style.top = `${top}px`;
-      // @ts-ignore
-      item.style.left = `${left}px`;
-
-      colHeights[colIndex] += height + gap;
-    });
-
-    container.style.height = `${Math.max(...colHeights)}px`;
-  }
-
   // 防止 Swup 切页重跑脚本时重复注册监听器（initLayout 由下方一次性监听器在切页时触发）
   if (!window.__postPageInit) {
     window.__postPageInit = true;
@@ -275,16 +175,6 @@ const coverPositionClass =
     document.addEventListener("DOMContentLoaded", function () {
       // 延迟一点确保DOM完全加载
       setTimeout(initLayout, 50);
-
-      // 监听图片加载以重新计算布局
-      const imgs = document.querySelectorAll('#post-list-container img');
-      imgs.forEach(img => {
-          // @ts-ignore
-          if(img.complete) return;
-          img.addEventListener('load', () => {
-              applyMasonryLayout();
-          });
-      });
     });
 
     // 页面显示时也初始化布局（处理页面切换）
@@ -312,16 +202,6 @@ const coverPositionClass =
     // 监听页面导航事件（Astro的客户端路由）
     document.addEventListener("astro:page-load", function () {
       setTimeout(initLayout, 50);
-
-      // 监听图片加载
-      const imgs = document.querySelectorAll('#post-list-container img');
-      imgs.forEach(img => {
-          // @ts-ignore
-          if(img.complete) return;
-          img.addEventListener('load', () => {
-              applyMasonryLayout();
-          });
-      });
     });
 
     document.addEventListener("astro:after-swap", function () {

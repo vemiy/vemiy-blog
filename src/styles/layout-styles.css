@@ -324,20 +324,6 @@ html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .banner-page-title-overla
 html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .banner-post-meta-overlay {
     display: none !important;
 }
-/* none / overlay：内容区从导航栏下方开始（SSR 按 config banner 渲染时内容在横幅下方） */
-html[data-wallpaper-mode="none"] #content-panel,
-html[data-wallpaper-mode="overlay"] #content-panel {
-    top: 5.5rem !important;
-    margin-top: 0 !important;
-    min-height: calc(100vh - 5.5rem) !important;
-}
-
-/* Swup 占位容器永远为空，任何断点都不得参与布局（勿依赖 hidden 实用类压过几何规则） */
-#main-grid > #left-sidebar-dynamic[data-sidebar-placeholder="true"],
-#main-grid > #right-sidebar-dynamic[data-sidebar-placeholder="true"] {
-    display: none !important;
-}
-
 /* ============================================
  * Fullscreen 模式 - 全屏壁纸
  * 壁纸 fixed 固定全屏，标题首屏居中；内容区通过 margin-top:100vh
@@ -545,17 +531,15 @@ html[data-wallpaper-mode="fullscreen"] #wallpaper-wrapper .scroll-down-indicator
     50% { transform: translateY(8px); }
 }
 
-/* 点击滚动指示器跳转到文章列表时，避免被固定导航栏遮挡 / 贴着浏览器顶边 */
-/* 排除overlay和none模式和banner模式，避免scroll-margin-top影响视觉间距 */
-html:not([data-wallpaper-mode="overlay"]):not([data-wallpaper-mode="none"]):not([data-wallpaper-mode="banner"]) body.sticky-navbar #main-grid {
+/* 滚动指示器的目标内容区上边距：sticky 与 dynamic 导航栏下留 5.5rem */
+html:not([data-wallpaper-mode="overlay"]):not([data-wallpaper-mode="none"]):not([data-wallpaper-mode="banner"]) body.sticky-navbar .app-shell__content {
     scroll-margin-top: 5.5rem;
 }
-/* dynamic（固定在顶部，可能未隐藏）下滚动到内容区时给 main-grid 留出 5.5rem，避免被导航栏遮挡 */
-html:not([data-wallpaper-mode="overlay"]):not([data-wallpaper-mode="none"]):not([data-wallpaper-mode="banner"]) body.dynamic-navbar #main-grid {
+html:not([data-wallpaper-mode="overlay"]):not([data-wallpaper-mode="none"]):not([data-wallpaper-mode="banner"]) body.dynamic-navbar .app-shell__content {
     scroll-margin-top: 5.5rem;
 }
-/* static（无固定导航栏）只需 1rem 间距 */
-html:not([data-wallpaper-mode="overlay"]):not([data-wallpaper-mode="none"]):not([data-wallpaper-mode="banner"]) body:not(.sticky-navbar):not(.dynamic-navbar) #main-grid {
+/* static 布局下留 1rem */
+html:not([data-wallpaper-mode="overlay"]):not([data-wallpaper-mode="none"]):not([data-wallpaper-mode="banner"]) body:not(.sticky-navbar):not(.dynamic-navbar) .app-shell__content {
     scroll-margin-top: 1rem;
 }
 
@@ -600,13 +584,6 @@ html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] body:no
     max-height: var(--banner-height-non-home) !important;
 }
 
-html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] body:not(.is-home) .content-panel {
-    position: absolute !important;
-    top: calc(var(--banner-height-non-home) - 3.5rem) !important;
-    margin-top: 0 !important;
-    min-height: calc(100vh - (var(--banner-height-non-home) - 3.5rem)) !important;
-}
-
 html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] #wallpaper-wrapper img {
     width: 100% !important;
     height: 100% !important;
@@ -615,10 +592,6 @@ html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] #wallpa
     filter: none !important;
     transform: scale(1.05) !important;
     opacity: 1 !important;
-}
-
-html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] body.is-home .content-panel {
-    min-height: 100vh;
 }
 
 html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] body:not(.sticky-navbar):not(.dynamic-navbar) #top-row {
@@ -652,14 +625,10 @@ html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] #wallpa
     }
 }
 
-/* classic 非首页移动端：与其他模式一致——隐藏壁纸，内容从导航栏下方开始 */
+/* classic 非首页移动端：与其他模式一致——隐藏壁纸 */
 @media (max-width: 1023px) {
     html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] body:not(.is-home) #wallpaper-wrapper {
         display: none !important;
-    }
-    html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] body:not(.is-home) .content-panel {
-        top: 5.5rem !important;
-        min-height: calc(100vh - 5.5rem) !important;
     }
 }
 

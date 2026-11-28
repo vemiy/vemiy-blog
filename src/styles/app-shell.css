@@ -150,11 +150,6 @@
 	}
 }
 
-/* 文章页与列表页共用同一外层宽度上限 */
-.app-shell__content {
-	max-width: var(--app-content-width, 82rem);
-}
-
 @media (min-width: 90rem) and (hover: hover) and (pointer: fine) {
 	.app-shell__content {
 		max-width: calc(

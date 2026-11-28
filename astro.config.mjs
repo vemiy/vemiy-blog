@@ -352,6 +352,10 @@ export default defineConfig({
 			],
 		}),
 	},
+	// 组件样式统一输出为外部样式表
+	build: {
+		inlineStylesheets: "never",
+	},
 	vite: {
 		plugins: [tailwindcss()],
 		server: {

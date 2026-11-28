@@ -33,14 +33,23 @@
 	font-size: 0.95em;
 }
 
-/* 运行时长与访客数字：等宽数字，两侧留出与中文的间距 */
+/* 运行时长与访客数字：等宽数字 */
 #site-runtime .stand,
 #site-runtime #vercount_value_site_uv,
 #site-runtime #vercount_value_site_pv {
 	color: inherit;
 	font-weight: 600;
-	margin: 0 2px;
 	font-variant-numeric: tabular-nums;
+}
+
+/* 时长数字紧贴单位，访客数字与文字之间保留间距 */
+#site-runtime .stand {
+	margin: 0;
+}
+
+#site-runtime #vercount_value_site_uv,
+#site-runtime #vercount_value_site_pv {
+	margin: 0 2px;
 }
 
 /* 逐位数字基线对齐，相邻位之间不留额外间隙 */
@@ -69,12 +78,9 @@
 	backface-visibility: visible;
 }
 
-#site-runtime .stand + .stand {
-	margin: 0;
-}
-
-/* 数字上滑动画时长：默认 2s 长于每秒一次的更新间隔，会持续被截断而卡顿 */
+/* 数字上滑：线性过渡，脚本摘类前完成位移 */
 #site-runtime .odometer-ribbon-inner {
-	transition-duration: 0.45s;
+	transition-duration: 0.4s;
+	transition-timing-function: linear;
 }
 

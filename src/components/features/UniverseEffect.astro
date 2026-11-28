@@ -110,16 +110,27 @@
 		}
 
 		function resize() {
-			width = window.innerWidth;
-			height = window.innerHeight;
-			canvas.width = width;
-			canvas.height = height;
+			var nextWidth = window.innerWidth;
+			var nextHeight = window.innerHeight;
+			var widthChanged = nextWidth !== width;
+			width = nextWidth;
+			height = nextHeight;
+			if (canvas.width !== width) canvas.width = width;
+			if (canvas.height !== height) canvas.height = height;
+			/* 仅宽度变化时重建星点 */
+			if (!widthChanged) return;
 			stars = [];
 			var count = Math.floor(width * STAR_DENSITY);
 			for (var i = 0; i < count; i++) {
 				stars[i] = new Star();
 				stars[i].reset();
 			}
+		}
+
+		var resizeTimer = 0;
+		function scheduleResize() {
+			window.clearTimeout(resizeTimer);
+			resizeTimer = window.setTimeout(resize, 120);
 		}
 
 		function frame() {
@@ -134,7 +145,7 @@
 		}
 
 		resize();
-		window.addEventListener("resize", resize, false);
+		window.addEventListener("resize", scheduleResize, false);
 		setTimeout(function () {
 			firstRound = false;
 		}, 50);

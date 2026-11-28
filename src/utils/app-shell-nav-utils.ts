@@ -12,6 +12,7 @@ const TOPBAR_ROUTES: ReadonlyArray<{ prefix: string; label: string }> = [
 	{ prefix: "/series", label: "系列" },
 	{ prefix: "/search", label: "搜索" },
 	{ prefix: "/links", label: "友链" },
+	{ prefix: "/tools", label: "工具" },
 	{ prefix: "/about", label: "关于" },
 	{ prefix: "/privacy", label: "隐私政策" },
 ];
