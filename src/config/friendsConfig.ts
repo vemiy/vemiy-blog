@@ -104,7 +104,7 @@ export const friendsConfig: FriendGroup[] = [
 			{
 				title: "拾玖的博客",
 				siteurl: "https://shijiucode.cn/",
-				imgurl: "https://shijiucode.cn/_next/static/media/avatar.00y2gb98_wb_2.jpg",
+				imgurl: "https://shijiucode.cn/avatar.jpg",
 				desc: "喜欢折腾，尝试创作。",
 			},
 		],
