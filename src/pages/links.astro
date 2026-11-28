@@ -97,6 +97,15 @@ const description = friendsPageConfig.description;
                 <span class="pill-count">{group.items.length}</span>
               </button>
             ))}
+            <button
+              type="button"
+              data-shuffle
+              class="category-pill ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors duration-200"
+              aria-label="随机排序友情链接"
+            >
+              <Icon name="material-symbols:shuffle" class="text-base" />
+              随机排序
+            </button>
           </div>
 
           {/* 分组区块 */}
@@ -154,7 +163,7 @@ const description = friendsPageConfig.description;
                           {item.title}
                         </div>
                         <div
-                          class="text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2"
+                          class="friend-card__desc text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2"
                           title={item.desc}
                         >
                           {item.desc}
@@ -176,6 +185,49 @@ const description = friendsPageConfig.description;
       )
     }
   </div>
+
+  <script is:inline>
+    (function () {
+      if (window.__friendsShuffleBound) return;
+      window.__friendsShuffleBound = true;
+
+      // 仅打乱友情链接组的卡片顺序
+
+      var shuffleFriends = function (force) {
+        var grid = document.querySelector(
+          'section[data-group-id="friends"] .friends-grid',
+        );
+        if (!grid) return;
+        if (!force && grid.dataset.shuffled === "1") return;
+
+        var cards = Array.prototype.slice.call(grid.children);
+        for (var i = cards.length - 1; i > 0; i -= 1) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = cards[i];
+          cards[i] = cards[j];
+          cards[j] = tmp;
+        }
+        cards.forEach(function (card) {
+          grid.appendChild(card);
+        });
+        grid.dataset.shuffled = "1";
+      };
+
+      shuffleFriends(false);
+      document.addEventListener("swup:content:replace", function () {
+        shuffleFriends(false);
+      });
+      document.addEventListener("astro:page-load", function () {
+        shuffleFriends(false);
+      });
+      document.addEventListener("click", function (event) {
+        var button = event.target.closest && event.target.closest("[data-shuffle]");
+        if (!button) return;
+        event.preventDefault();
+        shuffleFriends(true);
+      });
+    })();
+  </script>
 
   {
     friendsPageConfig.showCustomContent !== false && (
@@ -419,6 +471,10 @@ const description = friendsPageConfig.description;
   /* 筛选按钮与卡片同形。 */
   .friends-page__body button.category-pill {
     border-radius: var(--app-radius-card);
+  }
+  /* 简介固定两行高度，卡片等高 */
+  .friend-card__desc {
+    min-height: 2.5rem;
   }
 </style>
 
